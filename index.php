@@ -22,7 +22,7 @@ while($file = readdir($folder)) {
 
 foreach($inc as $val) {
 	if(!isset($_GET['page'])) {
-		include_once("inc/home.php");
+		include_once("inc/wall.php");
 		$included = true;
 		break;
 	}
