@@ -4,9 +4,9 @@
 */
 
 $sql_host = "localhost";
-$sql_user = "user";
-$sql_pass = "pass";
-$sql_db = "bdd";
+$sql_user = "root";
+$sql_pass = "";
+$sql_db = "tweet_academie";
 
 setlocale(LC_ALL, 'fr_FR');
 
