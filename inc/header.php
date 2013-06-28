@@ -14,7 +14,7 @@
 	<body>
 		<header>
 			<div class="container header">
-				<div style="display:inline-block;" class="nav_left">
+				<div class="nav_left">
 					<ul class="inline text_degrade">
 						<li><a href="#"><i class="icon-home icon-white"></i> Accueil</a></li>
 						<li><a href="#"><i class="icon-star icon-white"></i> Connecter</a></li>
@@ -22,8 +22,47 @@
 						<li><a href="#"><i class="icon-user icon-white"></i> Moi</a></li>
 					</ul>
 				</div>
-					<img style="display:inline-block;" src="../img/logo-header.png" alt="logo-header">
+				<div class="separation-header">
+					<img src="img/logo-header.png" alt="logo-header">
+				</div>
 
-			</div>
+				<div class="nav_right">
+					<ul class="inline nav_right-recherche">
+							<li>
+								<form method="POST">
+									<div class="input-append">
+										<input class="span2" id="appendedInputButton" type="text">
+										<button class="btn recherche" type="button"><i class="icon-search"></i></button>
+									</div>
+								</from>
+							</li>
+							<li class="divider-vertical"></li>
+							<li>
+								<div class="btn-group config">
+									<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i><span class="caret"></span></a>
+										<ul class="dropdown-menu pull-right">
+							   				<li>
+							   					<a class="link_sub" href="">
+							   						<div>
+							   							<img class="sub_avatar" src="img/avatar.png" alt="sub_avatar">
+							   							<p class="sub_user">Rubio Nicolas</p>
+							   							<p class="sub_edit">Editer profil</p>
+							   						</div>
+							   					</a>
+							   				</li>
+							   				<li class="divider"></li>
+							   				<li>Messages privés</li>
+							   				<li></li>
+							   				<li></li>
+
+
+
+							  			</ul>
+								</div>
+							</li>
+					</ul>
+					
+
+				</div>
 
 		</header>
