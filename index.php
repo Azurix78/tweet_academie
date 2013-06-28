@@ -1,7 +1,7 @@
 <?php
 /**
- * [Projet -42]
- * @author [bach_d, rivier_n, rubio_n, devill_p]
+ * [Projet Tweet Academie]
+ * @author [rivier_n, rubio_n, christ_a]
  */
 
 require_once("inc/config.php");

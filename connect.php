@@ -1,10 +1,34 @@
 <?php 
+require_once("inc/config.php");
+require_once("inc/db.php");
+require_once("inc/functions.php");
+require_once("inc/header.php");
+
 if(isset($_POST['bouton']))
 {
+	if(isset($_POST['signin-email']) && isset($_POST['signin-password']))
+	{
+		$user = htmlentities($_POST['signin-email']);
+		$password = htmlentities($_POST['signin-password']);
+		if(CheckLogin($bdd, $user, $password) == 1)
+		{
+			echo 'coucou';
+		}
+		else
+		{
+			$error = "<div class=\"alert alert-error\">
+  				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+  				<strong>Erreur :</strong> Vos identifiants sont incorrects.
+			</div>";	
+		}
+	}
+	else
+	{
 	$error = "<div class=\"alert alert-error\">
   				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
-  				<strong>Erreur :</strong> Ce nom est déjà pris.
+  				<strong>Erreur :</strong> Merci de remplir tous les champs.
 			</div>";
+	}
 }
 
 
