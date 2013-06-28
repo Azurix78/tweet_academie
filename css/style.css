@@ -47,34 +47,123 @@ header
 	line-height: 40px;
 }
 
-.wall_bloc
+.nav_left
 {
-
+	display: inline-block;
 }
 
 .nav_left a 
 {
-	height: 30px;
+	height: 40px;
+	color:#bbb;
     background: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(white));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
+    padding: 0px 5px;
 }
 
 .nav_left a:hover
 {
-	color: white;
+	background: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    color: white;
 }
 
-.separation_header
+.nav_right
 {
+	height: 40px;
+    padding: 0px 5px;
+    float: right;
+    line-height: 40px;
+}
+
+.nav_right input
+{
+	height: 28px;
+	color:#bbb;
+    background-color: #bbb;
+    padding: 0px 5px;
+    margin-top: 5px;
+}
+
+.recherche
+{
+	margin-top: 5px;
+}
+
+.nav_right-recherche
+{
+	height: 40px;
+    margin: auto;
+    padding: 0px 5px;
+}
+
+.nav_right input:select
+{
+	background-color: white;
+}
+
+.nav_right form
+{
+	margin: 0px;
+}
+
+.config
+{
+	padding-bottom: 5px;
+}
+
+.separation-header
+{
+	width: 40px;
+	display: inline-block;
 	margin: auto;
+	height: 40px;
 }
 
-.text_degrade
+.dropdown-menu > li > a
 {
-    
+	padding: 0px;
 }
+
+.dropdown-menu > li
+{
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.link_sub
+{
+	margin: 10px;
+}
+
+.sub_avatar
+{
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin-right:5px;
+}
+
+.sub_user
+{
+	font-size: 15px;
+}
+
+.sub_edit
+{
+	font-size: 13px;
+	color: #bbb;
+	margin-top: -15px;
+	margin-bottom: 0px;
+}
+
+
+
 
 
 
