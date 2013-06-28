@@ -2,8 +2,6 @@
 require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
-require_once("inc/header.php");
-
 if(isset($_POST['bouton']))
 {
 	if(isset($_POST['signin-email']) && isset($_POST['signin-password']))
