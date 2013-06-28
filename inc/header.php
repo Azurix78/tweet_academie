@@ -22,7 +22,7 @@
 						<li><a href="#"><i class="icon-user icon-white"></i> Moi</a></li>
 					</ul>
 				</div>
-					<img style="display:inline-block;" src="../img/logo-header.png" alt="logo-header">
+					<img style="display:inline-block;margin:auto;" src="/img/logo-header.png" alt="logo-header">
 
 			</div>
 
