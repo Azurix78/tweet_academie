@@ -12,3 +12,18 @@
 		</script>
 	</head>
 	<body>
+		<header>
+			<div class="container header">
+				<div style="display:inline-block;" class="nav_left">
+					<ul class="inline text_degrade">
+						<li><a href="#"><i class="icon-home icon-white"></i> Accueil</a></li>
+						<li><a href="#"><i class="icon-star icon-white"></i> Connecter</a></li>
+						<li><a href="#"><i class="icon-eye-open icon-white"></i> D&eacute;couvrir</a></li>
+						<li><a href="#"><i class="icon-user icon-white"></i> Moi</a></li>
+					</ul>
+				</div>
+					<img style="display:inline-block;" src="../img/logo-header.png" alt="logo-header">
+
+			</div>
+
+		</header>
