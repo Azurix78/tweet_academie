@@ -1,0 +1,369 @@
+/* Projet SWIFFER connect */
+/*----------------------------------*/
+/*### Nico ###*/
+
+
+/*### Ambroise ###*/
+
+
+
+/*### Ricky ###*/
+html
+{
+	margin:0;
+	padding: 0;
+	width:100%;
+	height:100%;
+}
+
+body
+{
+	background-image: url('../img/bg.png');
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-color: #00ccff;
+	margin:0;
+	padding: 0;
+	width:100%;
+	height:100%;
+}
+
+header
+{
+	height: 40px;
+	background-color: rgb(37, 37, 37);
+	background-image: url('../img/bg-header.png');
+	background-repeat: repeat-x;
+	width: 100%;
+	color: white;
+	margin: 0px;
+	line-height: 40px;
+
+}
+
+.header
+{
+	height: 40px;
+	line-height: 40px;
+}
+
+.nav_left
+{
+	display: inline-block;
+}
+
+.nav_left a 
+{
+	height: 40px;
+	color:#bbb;
+    background: -webkit-gradient(linear, left top, left bottom, from(#bbb), to(white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    padding: 0px 5px;
+}
+
+.nav_left a:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    color: white;
+}
+
+.nav_right
+{
+	height: 40px;
+    padding: 0px 5px;
+    float: right;
+    line-height: 40px;
+}
+
+.nav_right input
+{
+	height: 28px;
+	color:#bbb;
+    background-color: #bbb;
+    padding: 0px 5px;
+    margin-top: 5px;
+}
+
+.recherche
+{
+	margin-top: 5px;
+}
+
+.nav_right-recherche
+{
+	height: 40px;
+    margin: auto;
+    padding: 0px 5px;
+}
+
+.nav_right input:select
+{
+	background-color: white;
+}
+
+.nav_right form
+{
+	margin: 0px;
+}
+
+.config
+{
+	padding-bottom: 5px;
+}
+
+.separation-header
+{
+	width: 40px;
+	display: inline-block;
+	margin: auto;
+	height: 40px;
+}
+
+.dropdown-menu > li > a
+{
+	padding: 0px;
+}
+
+.dropdown-menu > li
+{
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.link_sub
+{
+	margin: 10px;
+}
+
+.sub_avatar
+{
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin-right:5px;
+}
+
+.sub_user
+{
+	font-size: 15px;
+}
+
+.sub_edit
+{
+	font-size: 13px;
+	color: #bbb;
+	margin-top: -15px;
+	margin-bottom: 0px;
+}
+
+
+/*### Nico ###*/
+.body-complete{
+	background-color: rgba(255,255,255,0.3);
+	height:100%;
+}
+
+.bloc{
+	position: relative;
+	padding:0;
+	margin: 10px 0;
+	background-color: #F9F9F9;
+	border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+    position: relative;
+}
+
+.left{
+	width:37%;
+	float:left;
+	margin-left:15px;
+}
+
+.right{
+	width:58%;
+	float:left;
+	margin-left:15px;
+}
+
+.wall-profil img{
+	width:32px;
+	height:32px;
+	-webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+    float: left;
+}
+
+.wall-profil a{
+	text-decoration: none;
+	color:rgba(0,0,0,0.3);
+	font-size: 11px;
+	display: block;
+}
+
+.wall-profil .fullname{
+	float: left;
+	margin : 0 10px;
+}
+
+.wall-profil{
+	height:100px;
+	line-height: 16px;
+}
+
+.imgfullname{
+	margin:10px;
+}
+
+.wall-profil .newtweet{
+	width:100%;
+	background-color: rgba(0,0,0,0.02);
+	height:50px;
+	margin:0;
+	padding:0;
+	display: block;
+	float: left;
+	position: absolute;
+	bottom:0;
+}
+
+.wall-profil .newtweet input[type=text]{
+	margin: 10px 25px;
+	width:276px;
+}
+
+.wall-profil .newtweet input[type=submit]{
+	display:none;
+}
+
+.wall-menu ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.wall-menu li{
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+	padding:5px 0px;
+}
+
+.wall-menu li a{	
+	width:250px;
+	padding:6px 190px 6px 10px;
+}
+
+.wall-menu li i{	
+	margin-right:10px;
+}
+
+.wall-menu li a:hover, .wall-menu li:hover{
+	background-color: rgba(255,255,255,1);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.wall-menu .fin-li{
+	border-bottom: 0;
+}
+
+.wall-footer ul{
+	list-style: none;
+	margin:10px;
+	font-size:13px;
+}
+
+
+.wall-footer ul li{
+	display: inline;
+	color:rgba(0,0,0,0.4);
+	margin-left:8px;
+
+}
+
+.wall-footer ul li a{
+	display: inline;
+	color:rgba(0,0,0,0.4);
+}
+
+.wall-tweets .tweets{
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+	margin:10px 0px;
+	padding: 0px 5px 10px 10px;
+}
+
+.wall-tweets .tweets{
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+	margin:10px 0px 0px;
+	padding: 0px 5px 10px 10px;
+}
+
+.wall-tweets ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.wall-tweets ul li{
+	border-bottom: solid 1px rgba(0,0,0,0.1);
+	padding:5px 0px;
+	position: relative;
+	padding-left:15%;
+}
+
+.wall-tweets ul li:hover{
+	background-color: rgba(0,0,0,0.07);
+	cursor: pointer;
+}
+
+.wall-tweets .imgtweets{
+	width:20%;
+	height:100%;
+	display: inline;
+	margin:0;
+	position: absolute;
+	left: 0;
+}
+
+.wall-tweets .imgtweets img{
+	width:48px;
+	height:48px;
+	margin:5px 10px;
+	-webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.wall-tweets .tweet{
+	width:85%;
+	height:auto;
+	display: inline;
+	margin:0;
+	position: relative;
+}
+
+.wall-tweets span{
+	color:rgba(0,0,0,0.25);
+	font-size: 12px;
+}
+
+.wall-tweets .date-tweet{
+	float: right;
+	margin:5px 10px;
+}
+
+.wall-tweets p{
+	margin:0;
+}
+
+.wall-tweets .open-tweet{
+	color:rgba(0,0,0,0.4);
+	font-size:12px;
+}
