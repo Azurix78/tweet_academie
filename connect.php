@@ -2,15 +2,19 @@
 require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
+
+$amp = html_entity_decode('&amp;');
+
 if(isset($_POST['bouton']))
 {
 	if(isset($_POST['signin-email']) && isset($_POST['signin-password']))
 	{
 		$user = htmlentities($_POST['signin-email']);
 		$password = htmlentities($_POST['signin-password']);
-		if(CheckLogin($bdd, $user, $password) == 1)
+		if(CheckLogin($bdd, $user, $password) == true)
 		{
 			$userinfo = getUserInfo($bdd,$user);
+			$_SESSION['id'] = $userinfo[0]['id'];
 			$_SESSION['username'] = $userinfo[0]['username'];
 			$_SESSION['email'] = $userinfo[0]['email'];
 			unset($_POST['signin-email']);
@@ -50,7 +54,8 @@ if(isset($_POST['bouton-register']))
 				{
 					if(strlen($password) >= 6)
 					{
-						Inscription($bdd, $fullname, $email, $password);
+						$session_id = Inscription($bdd, $fullname, $email, $password);
+						$_SESSION['id'] = $session_id;
 						$_SESSION['username'] = $fullname;
 						$_SESSION['email'] = $email;
 						header('Location: index.php');

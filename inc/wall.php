@@ -2,9 +2,9 @@
 	<div class="left">
 		<div class="bloc wall-profil">
 			<div class="imgfullname">
-				<img src="upload/img/nico.png" alt="avatar">
+				<img src="<?php echo getAvatar($_SESSION['id']); ?>" alt="avatar">
 				<span class="fullname">
-					<b>RIVIERE Nicolas</b>
+					<b><?php echo $_SESSION['username']; ?></b>
 					<a href="#">Voir ma page de profil</a>
 				</span>
 			</div>
@@ -45,160 +45,29 @@
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Tweets</h4>
 			<ul>
+<?php
+$tweets = getTweetsAll($bdd, $_SESSION['id']);
+foreach($tweets AS $key => $value)
+{
+
+?>
 				<li>
 					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
+						<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
 					</div>
 					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
+						<b><?php echo $value['username']; ?></b>
+						<span>@<?php echo $value['username']; ?></span>
+						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
+						<p><?php echo $value['content']; ?></p>
 						<a href="#" class="open-tweet">Ouvrir</a>
 					</div>
 				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
+<?php
 
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
+}
 
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
+?>
 				<li id="back">
 					<div class="div-back">
 						<img class="back-top" src="img/back-logo.png" alt="logo retour en haut"><br>
