@@ -15,4 +15,10 @@ function getAvatar($id)
 	}
 }
 
+function logOut()
+{
+	session_destroy();
+	header('Location: ../index.php');
+}
+
 ?>

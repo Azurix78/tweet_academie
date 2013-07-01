@@ -33,8 +33,8 @@
 					<ul class="inline text_degrade">
 						<li><a href="index.php?page=wall&amp;id=<?php echo $_SESSION['id']; ?>"><i class="icon-home icon-white"></i> Accueil</a></li>
 						<li><a href="connect.php"><i class="icon-star icon-white"></i> Connecter</a></li>
-						<li><a href="#"><i class="icon-eye-open icon-white"></i> D&eacute;couvrir</a></li>
-						<li><a href="#"><i class="icon-user icon-white"></i> Moi</a></li>
+						<li><a href=""><i class="icon-eye-open icon-white"></i> D&eacute;couvrir</a></li>
+						<li><a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>"><i class="icon-user icon-white"></i> Moi</a></li>
 					</ul>
 				</div>
 				<div class="separation-header">
@@ -72,7 +72,7 @@
 							   				<li><a href="">Messages privés</a></li>
 							   				<li class="divider"></li>
 							   				<li><a href="">Paramètres</a></li>
-							   				<li><a href="">Deconnexion</a></li>
+							   				<li><a href="inc/logout.php">Deconnexion</a></li>
 							  			</ul>
 								</div>
 							</li>

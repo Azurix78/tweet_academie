@@ -23,12 +23,13 @@ while($file = readdir($folder)) {
 }
 
 foreach($inc as $val) {
-	if(!isset($_GET['page'])) {
+	if(!isset($_GET['page']) AND isset($_SESSION['id'])) {
 		include_once("inc/wall.php");
 		$included = true;
 		break;
 	}
-	if (isset($_GET['page']) && $_GET['page'] != "index" && $_GET['page'] != "config" && $_GET['page'] != "header" && $_GET['page'] != "footer" && $_GET['page'] != "functions" && $_GET['page'] != "db") {
+
+	if (isset($_SESSION['id']) && isset($_GET['page']) && $_GET['page'] != "index" && $_GET['page'] != "config" && $_GET['page'] != "header" && $_GET['page'] != "footer" && $_GET['page'] != "functions" && $_GET['page'] != "db") {
 		if($_GET['page'] == $val) {
 			include_once("inc/".$val.".php");
 			$included = true;
@@ -36,10 +37,13 @@ foreach($inc as $val) {
 		}
 	}
 }
-if(!$included) {
+if(!$included AND isset($_SESSION['id'])) {
 	include_once("inc/404.php");
 }
-
+if(!isset($_SESSION['id']))
+	{
+		header('Location:connect.php');
+	}
 require_once("inc/footer.php");
 bddclose($bdd);
 ?>
