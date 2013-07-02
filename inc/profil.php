@@ -14,8 +14,8 @@ if(count($follows) == 1 && empty($follows[0]))
 		<div class="bloc wall-menu">
 			<ul>
 				<li><a href="">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=following">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=follower">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Favoris<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Listes<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>

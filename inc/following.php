@@ -26,6 +26,14 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 }
 
 
+$id = $_SESSION['id'];
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+
 
 
 ?>
@@ -70,18 +78,18 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 	</div>
 	<div class="right ban-profil">
 		<div class="ban-info">
-			<img class="avatar-ban" src="img/avatar.png" alt="avatar">
+			<img class="avatar-ban" src="<?php echo getAvatar($id); ?>" alt="avatar">
 			<div class="text_ban">
-				<h1>USERNAME</h1>
-				<h2>@htags_user</h2>
-				<p>Locacity</p>
+				<h1><?php echo $tab_infos['username']; ?></h1>
+				<h2>@<?php echo $tab_infos['username']; ?></h2>
+				<p><?php echo $tab_infos['locality']; ?></p>
 			</div>
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href=""><p><strong>202</strong>Tweet</p></a></li>
+				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweet</p></a></li>
 				<li><a href=""><p><strong>202</strong>Abonnement</p></a></li>
-				<li><a href=""><p><strong>202</strong>Abonn&eacute;</p></a></li>
+				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonn&eacute;</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
