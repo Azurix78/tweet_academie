@@ -1,5 +1,5 @@
 <?php
-$user_abo = getUserInfo($bdd, $_SESSION['id']);
+$user_abo = getUserInfo($bdd, $_GET['id']);
 
 if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 {
@@ -26,7 +26,7 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 }
 
 
-$id = $_SESSION['id'];
+$id = $_GET['id'];
 $tab_infos = getUserInfo($bdd, $id);
 $follows = explode(';', $tab_infos['follows']);
 if(count($follows) == 1 && empty($follows[0]))
@@ -42,7 +42,7 @@ if(count($follows) == 1 && empty($follows[0]))
 		<div class="bloc wall-menu">
 			<ul>
 				<li><a href="">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Favoris<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Listes<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
@@ -112,12 +112,12 @@ if(count($follows) == 1 && empty($follows[0]))
 					<li>
 						<?php $follow_abo=getUserInfo($bdd, $value); ?>
 						<div class="imgtweets">
-							<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+							<a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">
 								<img src="<?php echo getAvatar($value); ?>" alt="avatar">
 							</a>
 						</div>
 						<div class="tweet">
-							<b><?php echo $follow_abo['username']; ?></b>
+							<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
 							<span>@<?php echo $follow_abo['username']; ?></span>
 							<span class="date-tweet">
 								<form method="POST">
