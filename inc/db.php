@@ -147,8 +147,8 @@ function newTweet($bdd, $id_user, $content, $image, $locality, $id_reply, $id_re
 	$id_retweet = abs(intval($id_retweet));
 	$hashtags = preg_grep("%^#.+%", explode(" ", $content));
 	$hashtags = implode(";", $hashtags);
-	$result = mysqli_prepare($bdd, "INSERT INTO tweets(id_user,content,hashtags,image,date,locality,id_reply,id_retweet) VALUES (?,?,?,?, NOW(),?,?,?)");
-	mysqli_stmt_bind_param($result, "issssii", $_SESSION['id'], $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
+	$result = mysqli_prepare($bdd, "INSERT INTO tweets(id, id_user,content,hashtags,image,`date`,locality,id_reply,id_retweet) VALUES ('', ?,?,?,?, NOW(),?,?,?)");
+	mysqli_stmt_bind_param($result, "issssii", $id_user, $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
 	mysqli_stmt_execute($result);
 }
 

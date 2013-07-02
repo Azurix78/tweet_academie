@@ -2,7 +2,7 @@
 
 if(isset($_POST['bouton-newtweet']))
 {
-	newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', '', NULL, NULL);
+	newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], '', '', '', '', '');
 	//header('Location: index.php');
 }
 
