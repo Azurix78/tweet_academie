@@ -22,6 +22,10 @@ function bddclose($bdd) {
 	return;
 }
 
+//	RICKY
+
+
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
