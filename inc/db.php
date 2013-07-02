@@ -137,17 +137,27 @@ function getTweetsPerso($bdd, $id_user)
 	return $tab;
 }
 
-function newTweet($bdd, $id_user, $content, $image, $locality, $id_reply, $id_retweet)
+function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NULL, $id_retweet=NULL)
 {
 	$id_user = abs(intval($id_user));
 	$content = mysqli_real_escape_string($bdd, $content);
-	$image = mysqli_real_escape_string($bdd, $image);
-	$locality = mysqli_real_escape_string($bdd, $locality);
-	$id_reply = abs(intval($id_reply));
-	$id_retweet = abs(intval($id_retweet));
-	$hashtags = preg_grep("%^#.+%", explode(" ", $content));
-	$hashtags = implode(";", $hashtags);
-	$result = mysqli_prepare($bdd, "INSERT INTO tweets(id, id_user,content,hashtags,image,`date`,locality,id_reply,id_retweet) VALUES ('', ?,?,?,?, NOW(),?,?,?)");
+	if ( isset($image) ) 
+		$image = mysqli_real_escape_string($bdd, $image);
+	if ( isset($locality) )
+		$locality = mysqli_real_escape_string($bdd, $locality);
+	if ( isset($id_reply) )
+		$id_reply = abs(intval($id_reply));
+	if ( isset($id_retweet) )
+		$id_retweet = abs(intval($id_retweet));
+	if ( $hashtags = preg_grep("%^#.+%", explode(" ", $content)) )
+	{
+		$hashtags = implode(";", $hashtags);
+	}
+	else
+	{
+		$hashtags = "";
+	}
+	$result = mysqli_prepare($bdd, 'INSERT INTO tweets(id_user,content,hashtags,image,date,locality,id_reply,id_retweet) VALUES (?,?,?,?, NOW(),?,?,?)');
 	mysqli_stmt_bind_param($result, "issssii", $id_user, $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
 	mysqli_stmt_execute($result);
 }
