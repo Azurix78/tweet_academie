@@ -32,12 +32,15 @@ function CheckLogin($bdd, $user, $password)
 	$result = mysqli_query($bdd, "SELECT * FROM users WHERE ( username = \"$user\" OR email = \"$user\" )");
 	if(mysqli_num_rows($result) == 1)
 	{
+		echo "ok!";
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
+			var_dump($password);
 			$password_hash = $result_fetch['password'];
 		}
 		if(crypt($password, $password_hash) == $password_hash)
 		{
+			var_dump($password_hash);
 			$return = true;
 		}
 	}
@@ -47,14 +50,14 @@ function CheckLogin($bdd, $user, $password)
 function getUserInfo($bdd, $user)
 {
 	$user = mysqli_real_escape_string($bdd, $user);
-	$result = mysqli_query($bdd, "SELECT * FROM users WHERE  username = \"$user\" OR email = \"$user\"  ");
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE  username = \"$user\" OR email = \"$user\" OR id = \"$user\" ");
 	$tab = array();
 	while($row = mysqli_fetch_assoc($result))
 	{
 		$tab[] = $row;
 	}
 	mysqli_free_result($result);
-	return $tab;
+	return $tab[0];
 }
 
 function countElement($bdd, $table, $search, $searchname)
@@ -82,6 +85,7 @@ function Inscription($bdd, $fullname, $email, $password)
 	{
 		$id_return = $id['id'];
 	}
+	mysqli_free_result($id_result);
 	return $id_return;
 }
 
@@ -97,6 +101,7 @@ function getTweetsAll($bdd, $id_user)
 			array_push($tab_followers, $followers['id']);
 		}
 	}
+	mysqli_free_result($results_followers);
 	if(count($tab_followers) > 0)
 	{
 		$string_followers = implode(" OR id_user=", $tab_followers);

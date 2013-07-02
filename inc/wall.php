@@ -47,7 +47,7 @@
 			<ul>
 <?php
 $tweets = getTweetsAll($bdd, $_SESSION['id']);
-foreach($tweets AS $key => $value)
+foreach($tweets AS $value)
 {
 
 ?>
@@ -56,7 +56,7 @@ foreach($tweets AS $key => $value)
 						<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
 					</div>
 					<div class="tweet">
-						<b><?php echo $value['username']; ?></b>
+						<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 						<span>@<?php echo $value['username']; ?></span>
 						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 						<p><?php echo $value['content']; ?></p>

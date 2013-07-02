@@ -41,9 +41,9 @@ if(!$included AND isset($_SESSION['id'])) {
 	include_once("inc/404.php");
 }
 if(!isset($_SESSION['id']))
-	{
-		header('Location:connect.php');
-	}
+{
+	header('Location:connect.php');
+}
 require_once("inc/footer.php");
 bddclose($bdd);
 ?>
