@@ -11,6 +11,15 @@ require_once("inc/header.php");
 
 anti_repost();
 
+if(isset($_GET['id']))
+{
+	$test_get_id = mysqli_query($bdd, 'SELECT * FROM users WHERE id='.$_GET['id']);
+	if(mysqli_num_rows($test_get_id) != 1)
+	{
+		header('Location: index.php?page=404');
+	}
+}
+
 $amp = html_entity_decode('&amp;');
 
 $inc = array();
