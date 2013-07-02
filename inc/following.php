@@ -13,6 +13,7 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 			{
 				unset($raw_follow[$key]);
 				$new_abo = implode(";", $raw_follow);
+				$del = 1;
 				//delFollows($bdd, $new_abo, $_SESSION['id']);
 				?>
 				<div class="alert alert-success">
@@ -21,6 +22,15 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 				</div>
 				<?php
 			}
+		}
+		if ( !isset($del))
+		{
+			?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			<?php
 		}
 	}
 }
