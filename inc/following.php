@@ -4,6 +4,20 @@ $user_abo = getUserInfo($bdd, $_SESSION['id']);
 if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 {
 	$raw_follow = explode(";", $user_abo['follows']);
+	if ( isset($_POST['btn-delabo']) AND isset($_POST['id_del']))
+	{
+		$id_del = abs(intval($_POST['id_del']));
+		foreach ($raw_follow as $key => $value)
+		{
+			if ( $value == $_POST['id_del'])
+			{
+				unset($raw_follow[$key]);
+				$new_abo = implode(";", $raw_follow);
+				delFollows($bdd, $new_abo, $_SESSION['id']);
+
+			}
+		}
+	}
 }
 
 
@@ -90,7 +104,12 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 						<div class="tweet">
 							<b><?php echo $follow_abo['username']; ?></b>
 							<span>@<?php echo $follow_abo['username']; ?></span>
-							<span class="date-tweet"><button class="btn btn-danger" type="button">Se d&eacute;sabonner</button></span>
+							<span class="date-tweet">
+								<form method="POST">
+									<input type="hidden" name="id_del" value="<?php echo $value;?>">
+									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+								</form>
+							</span>
 							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
 						</div>
 					</li>

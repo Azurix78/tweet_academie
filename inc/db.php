@@ -24,7 +24,14 @@ function bddclose($bdd) {
 
 //	RICKY
 
-
+function delFollows($bdd, $new_follow, $id_user)
+{
+	$id_user= intval($id_user);
+	$req = mysqli_prepare($bdd, 'UPDATE users SET follows = ? WHERE id = ?');
+	mysqli_stmt_bind_param($req, "si", $new_follow, $id_user);
+	mysqli_stmt_execute($req);
+	mysqli_free_result($req);
+}
 
 // Nico 
 
