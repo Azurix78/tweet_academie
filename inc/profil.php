@@ -54,7 +54,7 @@ if(count($follows) == 1 && empty($follows[0]))
 			<div class="text_ban">
 				<h1><?php echo $tab_infos['username']; ?></h1>
 				<h2>@<?php echo $tab_infos['username']; ?></h2>
-				<p>Locacity</p>
+				<p><?php echo $tab_infos['locality']; ?></p>
 			</div>
 		</div>
 		<div class="ban-nav">

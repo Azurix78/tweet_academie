@@ -32,15 +32,12 @@ function CheckLogin($bdd, $user, $password)
 	$result = mysqli_query($bdd, "SELECT * FROM users WHERE ( username = \"$user\" OR email = \"$user\" )");
 	if(mysqli_num_rows($result) == 1)
 	{
-		echo "ok!";
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
-			var_dump($password);
 			$password_hash = $result_fetch['password'];
 		}
 		if(crypt($password, $password_hash) == $password_hash)
 		{
-			var_dump($password_hash);
 			$return = true;
 		}
 	}
@@ -131,7 +128,14 @@ function getTweetsPerso($bdd, $id_user)
 
 function newTweet($bdd, $id_user, $content, $image, $locality, $id_reply, $id_retweet)
 {
-	preg_match("%#.+%", $content);
+	$id_user = abs(intval($id_user));
+	$content = mysqli_real_escape_string($bdd, $content);
+	$image = mysqli_real_escape_string($bdd, $image);
+	$locality = mysqli_real_escape_string($bdd, $locality);
+	$id_reply = abs(intval($id_reply));
+	$id_retweet = abs(intval($id_retweet));
+	$hashtags = preg_grep("%^#.+%", explode(" ", $content));
+	$hashtags = implode(";", $hashtags);
 	$result = mysqli_prepare($bdd, "INSERT INTO tweets(id_user,content,hashtags,image,date,locality,id_reply,id_retweet) VALUES (?,?,?,?, NOW(),?,?,?)");
 	mysqli_stmt_bind_param($result, "issssii", $_SESSION['id'], $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
 	mysqli_stmt_execute($result);

@@ -3,6 +3,8 @@ require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
 
+anti_repost();
+
 $amp = html_entity_decode('&amp;');
 
 if(isset($_POST['bouton']))
@@ -13,7 +15,6 @@ if(isset($_POST['bouton']))
 		$password = htmlentities($_POST['signin-password']);
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
-			echo CheckLogin($bdd, $user, $password);
 			$userinfo = getUserInfo($bdd,$user);
 			$_SESSION['id'] = $userinfo['id'];
 			$_SESSION['username'] = $userinfo['username'];
@@ -42,55 +43,68 @@ if(isset($_POST['bouton']))
 
 if(isset($_POST['bouton-register']))
 {
-	if(isset($_POST['fullname']) && isset($_POST['email']) && isset($_POST['register-password']))
+	if(isset($_POST['fullname']) && !empty($_POST['fullname']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['register-password']) && !empty($_POST['register-password']))
 	{
-		if (preg_match("#[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email']))
+		$_POST['fullname'] = trim($_POST['fullname']);
+		$_POST['email'] = trim($_POST['email']);
+		$_POST['register-password'] = trim($_POST['register-password']);
+		if(!empty($_POST['fullname']) && !empty($_POST['email']) && !empty($_POST['register-password']))
 		{
-			$email = htmlentities($_POST['email']);
-			$password = htmlentities($_POST['register-password']);
-			$fullname = htmlentities($_POST['fullname']);
-			if(countElement($bdd, 'users', 'username', $fullname) == 0)
+			if (preg_match("#[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email']))
 			{
-				if(countElement($bdd, 'users', 'email', $email) == 0)
+				$email = htmlentities($_POST['email']);
+				$password = htmlentities($_POST['register-password']);
+				$fullname = htmlentities($_POST['fullname']);
+				if(countElement($bdd, 'users', 'username', $fullname) == 0)
 				{
-					if(strlen($password) >= 6)
+					if(countElement($bdd, 'users', 'email', $email) == 0)
 					{
-						$session_id = Inscription($bdd, $fullname, $email, $password);
-						$_SESSION['id'] = $session_id;
-						$_SESSION['username'] = $fullname;
-						$_SESSION['email'] = $email;
-						header('Location: index.php');
+						if(strlen($password) >= 6)
+						{
+							$session_id = Inscription($bdd, $fullname, $email, $password);
+							$_SESSION['id'] = $session_id;
+							$_SESSION['username'] = $fullname;
+							$_SESSION['email'] = $email;
+							header('Location: index.php');
+						}
+						else
+						{
+							$error_register = "<div class=\"alert alert-error\">
+	  							<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+	  							<strong>Erreur :</strong> Votre mot de passe est trop court (6 minimum).
+							</div>";	
+						}
 					}
 					else
 					{
 						$error_register = "<div class=\"alert alert-error\">
-  							<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
-  							<strong>Erreur :</strong> Votre mot de passe est trop court (6 minimum).
+	  						<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+	  						<strong>Erreur :</strong> Ce mail est déjà utilisé.
 						</div>";	
 					}
 				}
 				else
 				{
 					$error_register = "<div class=\"alert alert-error\">
-  						<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
-  						<strong>Erreur :</strong> Ce mail est déjà utilisé.
+	  					<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+	  					<strong>Erreur :</strong> Ce nom est déjà utilisé.
 					</div>";	
 				}
 			}
 			else
 			{
-				$error_register = "<div class=\"alert alert-error\">
-  					<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
-  					<strong>Erreur :</strong> Ce nom est déjà utilisé.
-				</div>";	
+			$error_register = "<div class=\"alert alert-error\">
+	  					<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+	  					<strong>Erreur :</strong> L'adresse email n'est pas valide.
+					</div>";
 			}
 		}
 		else
 		{
 		$error_register = "<div class=\"alert alert-error\">
-  					<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
-  					<strong>Erreur :</strong> L'adresse email n'est pas valide.
-				</div>";
+  				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+  				<strong>Erreur :</strong> Merci de remplir tous les champs.
+			</div>";
 		}
 	}
 	else

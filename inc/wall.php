@@ -1,3 +1,13 @@
+<?php
+
+if(isset($_POST['bouton-newtweet']))
+{
+	newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', '', NULL, NULL);
+	//header('Location: index.php');
+}
+
+?>
+
 <div class="container body-complete">
 	<div class="left">
 		<div class="bloc wall-profil">
@@ -5,7 +15,7 @@
 				<img src="<?php echo getAvatar($_SESSION['id']); ?>" alt="avatar">
 				<span class="fullname">
 					<b><?php echo $_SESSION['username']; ?></b>
-					<a href="#">Voir ma page de profil</a>
+					<a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Voir ma page de profil</a>
 				</span>
 			</div>
 				<form method="POST" class="newtweet">

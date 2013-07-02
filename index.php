@@ -9,6 +9,8 @@ require_once("inc/db.php");
 require_once("inc/functions.php");
 require_once("inc/header.php");
 
+anti_repost();
+
 $amp = html_entity_decode('&amp;');
 
 $inc = array();
