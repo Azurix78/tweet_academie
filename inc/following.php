@@ -13,8 +13,13 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 			{
 				unset($raw_follow[$key]);
 				$new_abo = implode(";", $raw_follow);
-				delFollows($bdd, $new_abo, $_SESSION['id']);
-
+				//delFollows($bdd, $new_abo, $_SESSION['id']);
+				?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Vous n'&ecirc;tes plus abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $value);echo $alert_msg['username'];?>.
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
 			}
 		}
 	}
