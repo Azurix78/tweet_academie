@@ -85,7 +85,9 @@ foreach($tab_tweets AS $value)
 ?>
 				<li>
 					<div class="imgtweets">
-						<img src="<?php echo getAvatar($id); ?>" alt="avatar">
+						<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+							<img src="<?php echo getAvatar($id); ?>" alt="avatar">
+						</a>
 					</div>
 					<div class="tweet">
 						<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>

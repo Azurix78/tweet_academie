@@ -63,7 +63,9 @@ foreach($tweets AS $value)
 ?>
 				<li>
 					<div class="imgtweets">
-						<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
+						<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+							<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
+						</a>
 					</div>
 					<div class="tweet">
 						<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>

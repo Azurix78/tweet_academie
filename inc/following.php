@@ -112,7 +112,9 @@ if(count($follows) == 1 && empty($follows[0]))
 					<li>
 						<?php $follow_abo=getUserInfo($bdd, $value); ?>
 						<div class="imgtweets">
-							<img src="<?php echo getAvatar($value); ?>" alt="avatar">
+							<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+								<img src="<?php echo getAvatar($value); ?>" alt="avatar">
+							</a>
 						</div>
 						<div class="tweet">
 							<b><?php echo $follow_abo['username']; ?></b>
