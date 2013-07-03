@@ -101,13 +101,10 @@ function getTweetsAll($bdd, $id_user)
 {
 	$tab_followers = array();
 	$string_followers = "";
-	$results_followers = mysqli_query($bdd, 'SELECT * FROM users');
+	$results_followers = mysqli_query($bdd, 'SELECT follows FROM users WHERE id='.$id_user);
 	while($followers = mysqli_fetch_assoc($results_followers))
 	{
-		if(in_array($_SESSION['id'], explode(';', $followers['follows'])))
-		{
-			array_push($tab_followers, $followers['id']);
-		}
+		$tab_followers = explode(";", $followers['follows']);
 	}
 	mysqli_free_result($results_followers);
 	if(count($tab_followers) > 0)
@@ -140,6 +137,10 @@ function getTweetsPerso($bdd, $id_user)
 function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NULL, $id_retweet=NULL)
 {
 	$id_user = abs(intval($id_user));
+	if(strlen($content) > 140)
+	{
+		return false;
+	}
 	$content = mysqli_real_escape_string($bdd, $content);
 	if ( isset($image) ) 
 		$image = mysqli_real_escape_string($bdd, $image);
@@ -160,6 +161,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	$result = mysqli_prepare($bdd, 'INSERT INTO tweets(id_user,content,hashtags,image,date,locality,id_reply,id_retweet) VALUES (?,?,?,?, NOW(),?,?,?)');
 	mysqli_stmt_bind_param($result, "issssii", $id_user, $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
 	mysqli_stmt_execute($result);
+	return true;
 }
 
 ?>
