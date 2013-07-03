@@ -84,6 +84,7 @@ if(isset($_POST['bouton_rep_tweet']) AND isset($_POST['rep_tweet']) )
 			<ul>
 <?php
 $tweets = getTweetsAll($bdd, $_SESSION['id']);
+var_dump($tweets);
 $id_msg = 1;
 foreach($tweets AS $value)
 {
