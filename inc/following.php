@@ -46,6 +46,7 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 
 $id = $_GET['id'];
 $tab_infos = getUserInfo($bdd, $id);
+$followers = listFollower($bdd, $id);
 $follows = explode(';', $tab_infos['follows']);
 if(count($follows) == 1 && empty($follows[0]))
 {
@@ -61,7 +62,7 @@ if(count($follows) == 1 && empty($follows[0]))
 			<ul>
 				<li><a href="">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Favoris<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Listes<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
@@ -105,9 +106,9 @@ if(count($follows) == 1 && empty($follows[0]))
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweet</p></a></li>
-				<li><a href=""><p><strong>202</strong>Abonnement</p></a></li>
-				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonn&eacute;</p></a></li>
+				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
+				<li><a href=""><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
 <?php

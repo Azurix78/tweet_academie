@@ -58,7 +58,7 @@ function CheckLogin($bdd, $user, $password)
 function getUserInfo($bdd, $user)
 {
 	$user = mysqli_real_escape_string($bdd, $user);
-	$result = mysqli_query($bdd, "SELECT * FROM users WHERE  username = \"$user\" OR email = \"$user\" OR id = \"$user\" ");
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE id = \"$user\" ");
 	$tab = array();
 	while($row = mysqli_fetch_assoc($result))
 	{
@@ -66,6 +66,20 @@ function getUserInfo($bdd, $user)
 	}
 	mysqli_free_result($result);
 	return $tab[0];
+}
+
+function listFollower($bdd, $id)
+{
+	$tab = array();
+	$result = mysqli_query($bdd, 'SELECT id, follows FROM users WHERE id!='.$id);
+	while($row = mysqli_fetch_assoc($result))
+	{
+		if(in_array($id, explode(";", $row['follows'])))
+		{
+			array_push($tab, $row['id']);
+		}
+	}
+	return $tab;
 }
 
 function countElement($bdd, $table, $search, $searchname)
