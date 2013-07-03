@@ -1,9 +1,54 @@
 <?php
 
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+
+if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) )
+{
+	$raw_follow = explode(";", $tab_infos_perso['follows']);
+	if ( isset($_POST['btn-delabo']) AND isset($_POST['id_del']))
+	{
+		$id_del = abs(intval($_POST['id_del']));
+		foreach ($raw_follow as $key => $value)
+		{
+			if ( $value == $_POST['id_del'])
+			{
+				unset($raw_follow[$key]);
+				if ( !empty($raw_follow) )
+				{
+					$new_abo = implode(";", $raw_follow);
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+				else
+				{
+					$new_abo = "";
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+					$del = 1;
+				?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Vous n'&ecirc;tes plus abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $value);echo $alert_msg['username'];?>.
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
+			}
+		}
+		if ( !isset($del))
+		{
+			?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			<?php
+		}
+	}
+}
+
 $id = $_GET['id'];
 $tab_infos = getUserInfo($bdd, $id);
-$followers = listFollower($bdd, $id);
 $follows = explode(';', $tab_infos['follows']);
+$follows_perso = explode(';', $tab_infos_perso['follows']);
+$followers = listFollower($bdd, $id);
 if(count($follows) == 1 && empty($follows[0]))
 {
 	$follows = array();
@@ -109,8 +154,7 @@ if(count($followers) > 0)
 						<span>@<?php echo $follow_abo['username']; ?></span>
 						<span class="date-tweet">
 <?php
-
-		if($_GET['id'] == $_SESSION['id'])
+		if(in_array($follow_abo['id'], $follows_perso))
 		{
 ?>
 							<form method="POST">
@@ -118,14 +162,14 @@ if(count($followers) > 0)
 								<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 							</form>
 						</span>
-						<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
+						<p>Vous <?php if($id != $_SESSION['id']){ ?> et <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><?php } ?> suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 		}
 		else
 		{
 ?>
 						</span>
-						<p><?php echo $follow_abo['username']; ?> suis <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a><br><br></p>
+						<p><?php echo $follow_abo['username']; ?> suis <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><br><br></p>
 <?php
 		}
 ?>
@@ -136,11 +180,22 @@ if(count($followers) > 0)
 }
 else
 {
+	if($id == $_SESSION['id'])
+	{
 ?>
 					<div class="tweet">
 						<p style="text-align:center;">Vous n'avez aucun follower.</p>
 					</div>
 <?php
+	}
+	else
+	{
+?>
+					<div class="tweet">
+						<p style="text-align:center;"><?php echo $tab_infos['username']; ?> n'a aucun follower.</p>
+					</div>
+<?php
+	}
 }
 ?>
 				<li id="back">

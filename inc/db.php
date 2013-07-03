@@ -58,7 +58,7 @@ function CheckLogin($bdd, $user, $password)
 function getUserInfo($bdd, $user)
 {
 	$user = mysqli_real_escape_string($bdd, $user);
-	$result = mysqli_query($bdd, "SELECT * FROM users WHERE id = \"$user\" ");
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE username = \"$user\" OR email = \"$user\" OR id = \"$user\" ");
 	$tab = array();
 	while($row = mysqli_fetch_assoc($result))
 	{
