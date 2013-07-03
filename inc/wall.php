@@ -16,6 +16,23 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 	}
 }
 
+if(isset($_POST['bouton_rep_tweet']) AND isset($_POST['rep_tweet']) )
+{
+	if ( strlen($_POST['rep_tweet']) <= 140 )
+	{
+		newTweet($bdd, $_SESSION['id'], $_POST['rep_tweet'], NULL, '', NULL, NULL);
+	}
+	else
+	{
+		?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
+	}
+}
+
 ?>
 
 <div class="container body-complete">
