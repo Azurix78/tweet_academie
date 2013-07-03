@@ -56,6 +56,7 @@ if(isset($_POST['bouton-newtweet']))
 			<ul>
 <?php
 $tweets = getTweetsAll($bdd, $_SESSION['id']);
+$id_msg = 1;
 foreach($tweets AS $value)
 {
 
@@ -72,10 +73,13 @@ foreach($tweets AS $value)
 						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 						<p><?php echo $value['content']; ?></p>
 						<a href="#" class="open-tweet">Ouvrir</a>
+						<div class="" id="<?php echo $i; ?>">
+							
+						</div>
 					</div>
 				</li>
 <?php
-
+$id_msg++;
 }
 
 ?>

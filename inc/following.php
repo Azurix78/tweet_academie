@@ -12,9 +12,17 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 			if ( $value == $_POST['id_del'])
 			{
 				unset($raw_follow[$key]);
-				$new_abo = implode(";", $raw_follow);
-				$del = 1;
-				//delFollows($bdd, $new_abo, $_SESSION['id']);
+				if ( !empty($raw_follow) )
+				{
+					$new_abo = implode(";", $raw_follow);
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+				else
+				{
+					$new_abo = "";
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+					$del = 1;
 				?>
 				<div class="alert alert-success">
 					<strong>Succ&egrave;s :</strong> Vous n'&ecirc;tes plus abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $value);echo $alert_msg['username'];?>.
@@ -114,7 +122,7 @@ if(count($follows) == 1 && empty($follows[0]))
 			<ul>
 
 			<?php
-			if (isset($raw_follow) )
+			if (isset($raw_follow) AND !empty($raw_follow) )
 			{
 				foreach ($raw_follow as $value)
 				{
