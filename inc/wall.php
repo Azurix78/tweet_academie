@@ -16,23 +16,6 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 	}
 }
 
-if(isset($_POST['bouton_rep_tweet']) AND isset($_POST['rep_tweet']) )
-{
-	if ( strlen($_POST['rep_tweet']) <= 140 )
-	{
-		newTweet($bdd, $_SESSION['id'], $_POST['rep_tweet'], NULL, '', NULL, NULL);
-	}
-	else
-	{
-		?>
-				<div class="alert alert-error">
-					<strong>Erreur :</strong> Don't fuck with Swiffer !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
-	}
-}
-
 ?>
 
 <div class="container body-complete">
@@ -103,10 +86,12 @@ foreach($tweets AS $value)
 							<p><?php echo $value['content']; ?></p>
 							<a href="#" class="open-tweet">Ouvrir</a>
 						</div>
-						<div class="tweet_rep" id="<?php echo $id_msg;$id_msg++; ?>">
-							<form method="POST" class="newtweet">
-								<textarea maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
-								<input type="submit" name="bouton_rep_tweet" class="btn btn-info" value="Tweeter">
+						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
+							<form method="POST" class="newtweet" action="inc/form_rep_tweet.php?id=<?php echo $id_msg; ?>">
+								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
+								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
+								<textarea maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
+								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
 							</form>
 						</div>
 					</div>
@@ -114,6 +99,7 @@ foreach($tweets AS $value)
 						</div>
 				</li>
 <?php
+$id_msg++;
 }
 
 ?>

@@ -185,7 +185,7 @@ else
 			{
 				?>
 						<div class="tweet">
-							<p style="text-align:center;">Vous ne suivez personne.</p>
+							<li id="no_abo"><p style="text-align:center;">Vous ne suivez personne.</p></li>
 						</div>
 				<?php
 			}
