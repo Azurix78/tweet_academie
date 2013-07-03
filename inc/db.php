@@ -114,7 +114,7 @@ function getTweetsAll($bdd, $id_user)
 	}
 	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE id_user='.$id_user.$string_followers.' ORDER BY date DESC');
 	$tab = array();
-	if(mysqli_num_rows($result) > 0)
+	if($result != false)
 	{
 		while($row = mysqli_fetch_assoc($result))
 		{
@@ -129,7 +129,7 @@ function getTweetsPerso($bdd, $id_user)
 {
 	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE id_user = "'.$id_user.'" ORDER BY date DESC');
 	$tab = array();
-	if(mysqli_num_rows($result) > 0)
+	if($result != false)
 	{
 		while($row = mysqli_fetch_assoc($result))
 		{
