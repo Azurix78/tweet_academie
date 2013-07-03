@@ -167,10 +167,20 @@ if(count($followers) > 0)
 		}
 		else
 		{
+			if($_SESSION['id'] == $id)
+			{
 ?>
 						</span>
-						<p><?php echo $follow_abo['username']; ?> suis <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><br><br></p>
+						<p>Vous suivez <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
 <?php
+			}
+			else
+			{
+?>
+						</span>
+						<p><?php echo $follow_abo['username']; ?> suis <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+<?php
+			}
 		}
 ?>
 					</div>
