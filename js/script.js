@@ -11,6 +11,7 @@ function tweet_rep(id)
   else
   {
     document.getElementById(id).style.display = "block"
+    document.getElementById(id+'text').focus();
   }
 }
 

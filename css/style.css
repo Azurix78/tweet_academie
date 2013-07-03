@@ -525,8 +525,10 @@ header
 	float: right;
 }
 
-
-
+#no_abo
+{
+	padding-left: 0px;
+}
 /*### Nico ###*/
 .body-complete{
 	background-color: rgba(255,255,255,0.3);

@@ -33,6 +33,7 @@ function delFollows($bdd, $new_follow, $id_user)
 		mysqli_stmt_execute($req);
 }
 
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
