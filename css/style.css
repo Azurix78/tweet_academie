@@ -508,6 +508,24 @@ header
 	margin-bottom: 10px;
 }
 
+.tweet_rep
+{
+	display: none;
+	margin-right: 30px;
+}
+
+.tweet_rep textarea
+{
+	width: 432px;
+	overflow: auto;
+}
+
+.tweet_rep input
+{
+	float: right;
+}
+
+
 
 /*### Nico ###*/
 .body-complete{
@@ -705,7 +723,8 @@ header
 }
 
 .wall-tweets p{
-	margin:0;
+	margin:0 10px 0 0;
+	word-break: break-word;
 }
 
 .wall-tweets .open-tweet{

@@ -152,11 +152,9 @@ if(count($follows) == 1 && empty($follows[0]))
 			else
 			{
 				?>
-				<li>
 						<div class="tweet">
-							<p>Vous ne suivez personne.</p>
+							<p style="text-align:center;">Vous ne suivez personne.</p>
 						</div>
-					</li>
 				<?php
 			}
 			?>

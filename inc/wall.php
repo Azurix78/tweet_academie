@@ -1,8 +1,19 @@
 <?php
-$i=1;
-if(isset($_POST['bouton-newtweet']))
+if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 {
-	newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
+	if ( strlen($_POST['new-tweet']) <= 140 )
+	{
+		newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
+	}
+	else
+	{
+		?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
+	}
 }
 
 ?>
@@ -68,18 +79,24 @@ foreach($tweets AS $value)
 						</a>
 					</div>
 					<div class="tweet">
-						<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
-						<span>@<?php echo $value['username']; ?></span>
-						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
-						<p><?php echo $value['content']; ?></p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-						<div class="" id="<?php echo $i; ?>">
-							
+						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
+							<span>@<?php echo $value['username']; ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
+							<p><?php echo $value['content']; ?></p>
+							<a href="#" class="open-tweet">Ouvrir</a>
+						</div>
+						<div class="tweet_rep" id="<?php echo $id_msg;$id_msg++; ?>">
+							<form method="POST" class="newtweet">
+								<textarea maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
+								<input type="submit" name="bouton_rep_tweet" class="btn btn-info" value="Tweeter">
+							</form>
 						</div>
 					</div>
+					<div style="clear:both; padding-bottom:10px;">
+						</div>
 				</li>
 <?php
-$id_msg++;
 }
 
 ?>

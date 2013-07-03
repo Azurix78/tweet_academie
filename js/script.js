@@ -1,3 +1,19 @@
+/*###############
+#####RICKY#######
+################*/
+
+function tweet_rep(id)
+{
+  if ( document.getElementById(id).style.display == "block")
+  {
+    document.getElementById(id).style.display = "none";
+  }
+  else
+  {
+    document.getElementById(id).style.display = "block"
+  }
+}
+
 function scrolTop() // revenir en haut de la page
 {
 	window.document.scrollTop = 0;
@@ -48,3 +64,4 @@ function nbcharTweet() // Nombre de caractères restants
      		   container.hide();
      			$('html, body').css('overflow', 'visible');
 			});
+
