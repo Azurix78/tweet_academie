@@ -64,8 +64,24 @@ if(count($follows) == 1 && empty($follows[0]))
 				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonn&eacute;</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
+<?php
+
+if($_GET['id'] == $_SESSION['id'])
+{
+?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
 				<li><button class="btn">Editer le profil</button></li>
+<?php
+}
+else
+{
+?>
+
+
+
+<?php
+}
+?>
 			</ul>
 		</div>
 

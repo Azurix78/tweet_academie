@@ -1,3 +1,12 @@
+<?php
+
+if(isset($_POST['bouton']))
+{
+	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], NULL, '', NULL, NULL);
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,7 +28,7 @@
 							<a href="#" onClick="closeTweet()"><i class="icon-remove"></i></a>
 						</div>
 						<form method="POST">
-							<textarea  id="tweet-area" maxlength="141"  onKeyDown="nbcharTweet();" onKeyUp="nbcharTweet();"></textarea>
+							<textarea  id="tweet-area" name="tweet-area" maxlength="141"  onKeyDown="nbcharTweet();" onKeyUp="nbcharTweet();"></textarea>
 							<input type="file" name="img-tweet"><span class="btn"><img class="size24" src="img/image-tweet.png" alt=""></span>
 							<b style="display:none;" id="max">Nombre de caractères maximum atteint !</b><em id="nbcaract">140</em>
 							<input type="submit" class="btn btn-info" name="bouton" value="Tweeter">

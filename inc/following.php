@@ -110,8 +110,24 @@ if(count($follows) == 1 && empty($follows[0]))
 				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonn&eacute;</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
+<?php
+
+if($_GET['id'] == $_SESSION['id'])
+{
+?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
 				<li><button class="btn">Editer le profil</button></li>
+<?php
+}
+else
+{
+?>
+
+
+
+<?php
+}
+?>
 			</ul>
 		</div>
 
@@ -138,12 +154,27 @@ if(count($follows) == 1 && empty($follows[0]))
 							<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
 							<span>@<?php echo $follow_abo['username']; ?></span>
 							<span class="date-tweet">
+<?php
+
+if($_GET['id'] == $_SESSION['id'])
+{
+?>
 								<form method="POST">
 									<input type="hidden" name="id_del" value="<?php echo $value;?>">
 									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 								</form>
 							</span>
 							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+}
+else
+{
+?>
+							</span>
+							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suis <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+}
+?>
 						</div>
 					</li>
 					<?php
