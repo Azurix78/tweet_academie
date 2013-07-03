@@ -120,8 +120,8 @@ function getTweetsAll($bdd, $id_user)
 		{
 			$tab[] = $row;
 		}
+		mysqli_free_result($result);
 	}
-	mysqli_free_result($result);
 	return $tab;
 }
 
@@ -135,8 +135,8 @@ function getTweetsPerso($bdd, $id_user)
 		{
 			$tab[] = $row;
 		}
+		mysqli_free_result($result);
 	}
-	mysqli_free_result($result);
 	return $tab;
 }
 
