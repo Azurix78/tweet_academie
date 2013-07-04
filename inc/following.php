@@ -61,22 +61,18 @@ if(count($follows) == 1 && empty($follows[0]))
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href="">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Favoris<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="">Listes<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
 		</div>
-		<div class="bloc wall-menu">
+		<div class="bloc wall-menu" id="msg_priv">
 			<ul>
-				<li><a href=""><i class="icon-comment"></i>Mentions</a></li>
 				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
-				<li><a href=""><i class="icon-list"></i>Listes</a></li>
-				<li><a href=""><i class="icon-signal"></i>Activité du réseau</a></li>
-				<li class="fin-li"><a href=""><i class="icon-calendar"></i>A la une</a></li>
 			</ul>
 		</div>
+
 		<div class="bloc wall-footer">
 			<ul>
 				<li>&copy; 2013 Swiffer</li>
@@ -95,6 +91,7 @@ if(count($follows) == 1 && empty($follows[0]))
 				<li><a href="">Développeurs</a></li>
 			</ul>
 		</div>
+		<div class="separ-menu-left"></div>
 	</div>
 	<div class="right ban-profil">
 		<div class="ban-info">

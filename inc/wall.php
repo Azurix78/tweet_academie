@@ -46,11 +46,7 @@ if (isset($_SESSION['error_content']) )
 		</div>
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href=""><i class="icon-comment"></i>Mentions</a></li>
 				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
-				<li><a href=""><i class="icon-list"></i>Listes</a></li>
-				<li><a href=""><i class="icon-signal"></i>Activité du réseau</a></li>
-				<li class="fin-li"><a href=""><i class="icon-calendar"></i>A la une</a></li>
 			</ul>
 		</div>
 		<div class="bloc wall-footer">

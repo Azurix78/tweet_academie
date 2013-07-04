@@ -682,6 +682,12 @@ header
 	display: none;
 }
 
+#msg_priv
+{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
 /*### Nico ###*/
 .body-complete{
 	background-color: rgba(255,255,255,0.3);
@@ -707,8 +713,8 @@ header
 
 .right{
 	width:58%;
-	float:left;
-	margin-left:15px;
+	float:right;
+	margin-right:15px;
 }
 
 .wall-profil img{
