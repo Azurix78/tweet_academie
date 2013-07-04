@@ -172,7 +172,7 @@ else
 ?>
 							</span>
 							<br>
-							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suis <?php echo $follow_abo['username']; ?><br><br></p>
+							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 }
 ?>
