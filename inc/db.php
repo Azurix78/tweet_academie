@@ -207,4 +207,34 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	return true;
 }
 
+
+function getMessages($bdd, $id)
+{
+	$result = mysqli_query($bdd, "SELECT id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver = $id GROUP BY id_sender ORDER BY date DESC");
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab;
+}
+
+function getContent($bdd, $id_receiver, $id_sender)
+{
+	$result = mysqli_query($bdd, "SELECT content, date as date_re FROM messages WHERE id_receiver = $id_receiver AND id_sender = $id_sender ORDER BY date DESC");
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab;
+}
 ?>

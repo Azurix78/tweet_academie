@@ -1,30 +1,23 @@
+<?php
+	$msg = getMessages($bdd, $_SESSION['id']);
+	$iduser = $_SESSION['id'];
+?>
 			<div class="contain-mp" id="contain-mp">
 				<ul class="list-mp">
-					<li onClick="boutons(3);">
+					<?php foreach ($msg as $value) {
+ ?>
+					<li onClick="boutons(<?php echo $value['id_msg']; ?>);">
 					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
+						<img src="<?php echo getAvatar($value['id_sender']); ?>" alt="avatar">
 					</div>
 					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun <a href=""><i class="icon-chevron-right"></i></a></span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
+						<b><?php echo $value['username']; ?></b>
+						<span><?php echo $value['username']; ?></span>
+						<?php 	$last = getContent($bdd,$value['id_receiver'], $value['id_sender']); ?>
+						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($last[0]['date_re']))); ?> <a href=""><i class="icon-chevron-right"></i></a></span>
+						<p><?php echo $last[0]['content']; ?></p>
 					</div>
 					</li>
-					<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun <a href=""><i class="icon-chevron-right"></i></a></span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-					</div>
-					</li>
+					<?php } ?>
 				</ul>
 			</div>

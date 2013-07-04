@@ -1,5 +1,5 @@
 <?php
-
+	
 ?>
 
 <div id="mp-new" style="display:block;">
@@ -15,6 +15,7 @@
 			<?php if(isset($_GET['idmsg']))
 					{
 						require_once("inc/SendMessage.php"); 
+						$idmsg = $_GET['idmsg'];
 					}
 					else
 					{ 
