@@ -69,18 +69,17 @@ if(isset($_POST['bouton']))
 							   					<div class="pic-bulle"></div>
 							   					<a class="link_sub" href="">
 							   						<div class="profil_ul">
-							   							<img class="sub_avatar" src="img/avatar.png" alt="sub_avatar">
-							   							<p class="text-ulprofil"><b class="sub_user">Rubio Nicolas</b>
+							   							<img class="sub_avatar" src="<?php echo getAvatar($_SESSION['id']); ?>" alt="sub_avatar">
+							   							<p class="text-ulprofil"><b class="sub_user"><?php $sub_username = getUserInfo($bdd, $_SESSION['id']); echo $sub_username['username']; ?></b>
 							   							<span class="sub_edit">Editer le profil</span></p>
 							   						</div>
 							   					</a>
 							   				</li>
 							   				<li class="divider"></li>
-							   				<li><a href="">Mes abonnements</a></li>
-							   				<li><a href="">Mes abonnés</a></li>
+							   				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnements</a></li>
+							   				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnés</a></li>
 							   				<li><a href="">Messages privés</a></li>
 							   				<li class="divider"></li>
-							   				<li><a href="">Paramètres</a></li>
 							   				<li><a href="inc/logout.php">Deconnexion</a></li>
 							  			</ul>
 								</div>

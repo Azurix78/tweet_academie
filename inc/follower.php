@@ -158,6 +158,7 @@ if(count($followers) > 0)
 								<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 							</form>
 						</span>
+						<br>
 						<p>Vous <?php if($id != $_SESSION['id']){ ?> et <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><?php } ?> suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 		}
@@ -167,6 +168,7 @@ if(count($followers) > 0)
 			{
 ?>
 						</span>
+						<br>
 						<p><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a> vous suit<br><br></p>
 <?php
 			}
@@ -174,6 +176,7 @@ if(count($followers) > 0)
 			{
 ?>
 						</span>
+						<br>
 						<p><?php echo $follow_abo['username']; ?> suis <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
 <?php
 			}
@@ -198,7 +201,7 @@ else
 	{
 ?>
 					<div class="tweet">
-						<p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p>
+						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p><li>
 					</div>
 <?php
 	}

@@ -163,6 +163,7 @@ if($_GET['id'] == $_SESSION['id'])
 									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 								</form>
 							</span>
+							<br>
 							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 }
@@ -170,6 +171,7 @@ else
 {
 ?>
 							</span>
+							<br>
 							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suis <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 }

@@ -1,5 +1,24 @@
 <?php
-
+if ( isset($_GET['id_rep']) )
+{
+	if(isset($_POST['bouton_rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
+	{
+		if ( strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) <= 140 AND strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) > 0 AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
+		{
+			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
+			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
+			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
+		}
+		else
+		{
+			$_SESSION['error_content'] = 1;
+		}
+	}
+	if(isset($_POST['bouton_retweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
+	{
+		
+	}
+}
 
 if(isset($_POST['btn_add_abo']) && isset($_POST['id_add_abo']) && !empty($_POST['id_add_abo']))
 {
@@ -161,6 +180,7 @@ else
 <?php
 
 $tab_tweets = getTweetsPerso($bdd, $id);
+$id_msg = 1;
 if ( !empty($tab_tweets) )
 {
 	foreach($tab_tweets AS $value)
@@ -168,20 +188,53 @@ if ( !empty($tab_tweets) )
 
 	?>
 					<li>
-						<div class="imgtweets">
-							<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
-								<img src="<?php echo getAvatar($id); ?>" alt="avatar">
-							</a>
+					<div class="imgtweets">
+						<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+							<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
+						</a>
+					</div>
+					<div class="tweet">
+<?php
+						if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
+						{
+							$reply = getTweet($bdd, $value['id_reply']);
+?>
+						<div id="<?php echo $id_msg; ?>ans" class="answer" onclick="tweet_rep('<?php echo $id_msg; ?>')">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $reply['id_user']; ?>"><?php echo $reply['username']; ?></a></b>
+							<span>@<?php echo $reply['username']; ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
+							<br>
+							<p><?php echo nl2br2($reply['content']); ?></p>
 						</div>
-						<div class="tweet">
+<?php
+						}
+?>
+						<div>
+
+						</div>
+						<div <?php if ( isset($value['id_retweet']) ){echo "style='border:5px red solid;' ";}?>onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 							<span>@<?php echo $value['username']; ?></span>
-							<span class="date-tweet"><?php echo date("F j Y", date_timestamp_get(date_create($value['date']))); ?></span>
-							<p><?php echo $value['content']; ?></p>
-							<a href="#" class="open-tweet">Ouvrir</a>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
+							<br>
+							<p><?php echo nl2br2($value['content']); ?></p>
 						</div>
-					</li>
+						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
+							<form method="POST" class="newtweet" action="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>&amp;id_rep=<?php echo $id_msg; ?>">
+								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
+								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
+								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
+								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
+								<div class="separ_btn_rep"></div>
+								<input type="submit" name="bouton_retweet<?php echo $id_msg; ?>" class="btn btn-info" value="Retweet">
+							</form>
+						</div>
+					</div>
+					<div style="clear:both; padding-bottom:10px;">
+					</div>
+				</li>
 	<?php
+	$id_msg++;
 	}
 }
 else
