@@ -80,7 +80,6 @@ $tweets = getTweetsAll($bdd, $_SESSION['id']);
 $id_msg = 1;
 foreach($tweets AS $value)
 {
-
 ?>
 				<li>
 					<div class="imgtweets">
@@ -89,6 +88,23 @@ foreach($tweets AS $value)
 						</a>
 					</div>
 					<div class="tweet">
+<?php
+						if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
+						{
+							$reply = getTweet($bdd, $value['id_reply']);
+?>
+						<div id="<?php echo $id_msg; ?>ans" class="answer">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $reply['id_user']; ?>"><?php echo $reply['username']; ?></a></b>
+							<span>@<?php echo $reply['username']; ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
+							<p><?php echo nl2br2($reply['content']); ?></p>
+						</div>
+<?php
+						}
+?>
+						<div>
+
+						</div>
 						<div <?php if ( isset($value['id_retweet']) ){echo "style='border:5px red solid;' ";}?>onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 							<span>@<?php echo $value['username']; ?></span>
