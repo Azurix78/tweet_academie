@@ -1,11 +1,42 @@
-<div class="container body-complete" id="container">
+
+<?php
+if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
+{
+	if ( strlen($_POST['new-tweet']) <= 140 )
+	{
+		newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
+	}
+	else
+	{
+		?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
+	}
+}
+
+if (isset($_SESSION['error_content']) )
+{
+		?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
+		unset($_SESSION['error_content']);
+}
+?>
+
+<div class="container body-complete">
 	<div class="left">
 		<div class="bloc wall-profil">
 			<div class="imgfullname">
-				<img src="upload/img/nico.png" alt="avatar">
+				<img src="<?php echo getAvatar($_SESSION['id']); ?>" alt="avatar">
 				<span class="fullname">
-					<b>RIVIERE Nicolas</b>
-					<a href="#">Voir ma page de profil</a>
+					<b><?php echo $_SESSION['username']; ?></b>
+					<a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Voir ma page de profil</a>
 				</span>
 			</div>
 				<form method="POST" class="newtweet">
@@ -45,160 +76,62 @@
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Tweets</h4>
 			<ul>
+
+<?php
+$tweets = getTweetsAll($bdd, $_SESSION['id']);
+$id_msg = 1;
+foreach($tweets AS $value)
+{
+?>
 				<li>
 					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
+						<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+							<img src="<?php echo getAvatar($value['id_user']); ?>" alt="avatar">
+						</a>
 					</div>
 					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
+<?php
+						if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
+						{
+							$reply = getTweet($bdd, $value['id_reply']);
+?>
+						<div id="<?php echo $id_msg; ?>ans" class="answer">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $reply['id_user']; ?>"><?php echo $reply['username']; ?></a></b>
+							<span>@<?php echo $reply['username']; ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
+							<p><?php echo nl2br2($reply['content']); ?></p>
+						</div>
+<?php
+						}
+?>
+						<div>
 
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
+						</div>
+						<div <?php if ( isset($value['id_retweet']) ){echo "style='border:5px red solid;' ";}?>onclick="tweet_rep('<?php echo $id_msg; ?>')">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
+							<span>@<?php echo $value['username']; ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
+							<p><?php echo nl2br2($value['content']); ?></p>
+						</div>
+						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
+							<form method="POST" class="newtweet" action="inc/form_rep_tweet.php?id=<?php echo $id_msg; ?>">
+								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
+								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
+								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
+								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
+								<div style="width:20px;float:right;height:30px;"></div>
+								<input type="submit" name="bouton_retweet<?php echo $id_msg; ?>" class="btn btn-info" value="Retweet">
+							</form>
+						</div>
 					</div>
+					<div style="clear:both; padding-bottom:10px;">
+						</div>
 				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
+<?php
+$id_msg++;
+}
 
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-				<li>
-					<div class="imgtweets">
-						<img src="upload/img/nico.png" alt="avatar">
-					</div>
-					<div class="tweet">
-						<b>RIVIERE Nicolas</b>
-						<span>@Happy_Portfolio</span>
-						<span class="date-tweet">16 Jun</span>
-						<p>Bonjour à tous,<br>
-
-						10 nouveaux jeux pour vos serveurs sont installable/gérable sur vos serveurs dédiés OVH avec JSI... http://fb.me/1Inzk8TA0 </p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
+?>
 				<li id="back">
 					<div class="div-back">
 						<img class="back-top" src="img/back-logo.png" alt="logo retour en haut"><br>

@@ -1,7 +1,28 @@
+
+/*###############
+#####RICKY#######
+################*/
+
+function tweet_rep(id)
+{
+  if ( document.getElementById(id).style.display == "block")
+  {
+    document.getElementById(id).style.display = "none";
+    document.getElementById(id+'ans').style.display = "none";
+  }
+  else
+  {
+    document.getElementById(id).style.display = "block"
+    document.getElementById(id+'text').focus();
+    document.getElementById(id+'ans').style.display = "block"
+  }
+}
+
 function scrolTop() // revenir en haut de la page
 {
 	window.document.scrollTop = 0;
 }
+
 
 function nbcharTweet(area,compteur,max) // Nombre de caractères restants
     {
@@ -10,14 +31,17 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
     indic = document.getElementById(compteur).innerHTML;
 
 
+
     if (champ.length > maximum)
     {
+
     	document.getElementById(max).style.display = "block";
     	document.getElementById(area).value = champ.substr(0, maximum);
     	
   	}
     else 
     {
+
     	document.getElementById(max).style.display = "none";
     	document.getElementById(compteur).innerHTML = maximum - champ.length;
     }
@@ -49,8 +73,10 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
      			$('html, body').css('overflow', 'visible');
 			});
 
+
       function boutons(url)
       {
                 var loc = window.location;
                 window.location = loc + "&idmsg=" + url;
       }
+

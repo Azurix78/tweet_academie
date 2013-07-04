@@ -1,7 +1,75 @@
 <?php
 
+
+if(isset($_POST['btn_add_abo']) && isset($_POST['id_add_abo']) && !empty($_POST['id_add_abo']))
+{
+	$id_add_abo = abs(intval($_POST['id_add_abo']));
+	$test_result = mysqli_query($bdd, 'SELECT * FROM users WHERE id="'.$id_add_abo.'"');
+	if(mysqli_num_rows($test_result) > 0 && mysqli_num_rows($test_result) != null && $test_result != false)
+	{
+		$results_abos = mysqli_query($bdd, 'SELECT follows FROM users WHERE id='.$_SESSION['id']);
+		if($results_abos != false)
+		{
+			while($abos = mysqli_fetch_assoc($results_abos))
+			{
+				$liste_abos = explode(";", $abos['follows']);
+				if(in_array($id_add_abo, $liste_abos))
+				{
+?>
+					<div class="alert alert-error">
+						<strong>Erreur :</strong> Vous &ecirc;tes d&eacute;j&agrave; abonn&eacute; &agrave;  <?php $alert_msg=getUserInfo($bdd, $id_add_abo);echo $alert_msg['username'];?>.
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+					break;
+				}
+				array_push($liste_abos, $id_add_abo);
+				$new_liste_abos = implode(";", $liste_abos);
+				$update_abos = mysqli_query($bdd, 'UPDATE users SET follows="'.$new_liste_abos.'" WHERE id='.$_SESSION['id']);
+				if($update_abos == true)
+				{
+?>
+					<div class="alert alert-success">
+						<strong>Succ&egrave;s :</strong> Vous &ecirc;tes abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $id_add_abo);echo $alert_msg['username'];?>.
+	  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+				}
+				else
+				{
+?>
+					<div class="alert alert-error">
+						<strong>Erreur :</strong> Don't fuck with Swiffer !
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+				}
+			}
+		}
+		else
+		{
+?>
+			<div class="alert alert-error">
+				<strong>Erreur :</strong> Don't fuck with Swiffer !
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+<?php
+		}
+	}
+	else
+	{
+?>
+		<div class="alert alert-error">
+			<strong>Erreur :</strong> Don't fuck with Swiffer !
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+<?php
+	}
+}
+
 $id = $_GET['id'];
 $tab_infos = getUserInfo($bdd, $id);
+$followers = listFollower($bdd, $id);
 $follows = explode(';', $tab_infos['follows']);
 if(count($follows) == 1 && empty($follows[0]))
 {
@@ -15,7 +83,8 @@ if(count($follows) == 1 && empty($follows[0]))
 			<ul>
 				<li><a href="">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=follower">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Favoris<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 				<li><a href="">Listes<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
@@ -59,9 +128,9 @@ if(count($follows) == 1 && empty($follows[0]))
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweet</p></a></li>
-				<li><a href=""><p><strong>202</strong>Abonnement</p></a></li>
-				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonn&eacute;</p></a></li>
+				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
+				<li><a href=""><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
 <?php
@@ -76,8 +145,10 @@ if($_GET['id'] == $_SESSION['id'])
 else
 {
 ?>
-
-
+				<form method="POST">
+					<input type="hidden" name="id_add_abo" value="<?php echo $id; ?>">
+					<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
+				</form>
 
 <?php
 }

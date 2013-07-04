@@ -3,6 +3,13 @@
 
 session_start();
 
+
+function nl2br2($string)
+{ 
+    $string = str_replace(array("\\r\\n", "\\r", "\\n"), "<br>", $string); 
+    return $string;
+} 
+
 function anti_repost()
 {
     if(!empty($_POST) OR !empty($_FILES))

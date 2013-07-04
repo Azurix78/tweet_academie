@@ -33,6 +33,21 @@ function delFollows($bdd, $new_follow, $id_user)
 		mysqli_stmt_execute($req);
 }
 
+function getTweet($bdd, $id)
+{
+	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE t.id='.$id);
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab[0];
+}
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
@@ -58,7 +73,8 @@ function CheckLogin($bdd, $user, $password)
 function getUserInfo($bdd, $user)
 {
 	$user = mysqli_real_escape_string($bdd, $user);
-	$result = mysqli_query($bdd, "SELECT * FROM users WHERE  username = \"$user\" OR email = \"$user\" OR id = \"$user\" ");
+
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE username = \"$user\" OR email = \"$user\" OR id = \"$user\" ");
 	$tab = array();
 	while($row = mysqli_fetch_assoc($result))
 	{
@@ -68,6 +84,20 @@ function getUserInfo($bdd, $user)
 	return $tab[0];
 }
 
+function listFollower($bdd, $id)
+{
+	$tab = array();
+	$result = mysqli_query($bdd, 'SELECT id, follows FROM users WHERE id!='.$id);
+	while($row = mysqli_fetch_assoc($result))
+	{
+		if(in_array($id, explode(";", $row['follows'])))
+		{
+			array_push($tab, $row['id']);
+		}
+	}
+	return $tab;
+}
+
 function countElement($bdd, $table, $search, $searchname)
 {
 	$table = mysqli_real_escape_string($bdd, $table);
@@ -75,6 +105,7 @@ function countElement($bdd, $table, $search, $searchname)
 	$search = mysqli_real_escape_string($bdd, $search);
 	$result = mysqli_query($bdd, "SELECT COUNT(*) FROM $table WHERE $search = \"$searchname\"");
 	$row = mysqli_fetch_array($result, MYSQL_NUM);
+
 	mysqli_free_result($result);
 	return $row[0];
 }
@@ -101,45 +132,57 @@ function getTweetsAll($bdd, $id_user)
 {
 	$tab_followers = array();
 	$string_followers = "";
-	$results_followers = mysqli_query($bdd, 'SELECT * FROM users');
+	$results_followers = mysqli_query($bdd, 'SELECT follows FROM users WHERE id='.$id_user);
 	while($followers = mysqli_fetch_assoc($results_followers))
 	{
-		if(in_array($_SESSION['id'], explode(';', $followers['follows'])))
+		$tab_followers = explode(";", $followers['follows']);
+		if(count($tab_followers) == 1 && $tab_followers[0] == "")
 		{
-			array_push($tab_followers, $followers['id']);
+			$tab_followers = array();
 		}
 	}
 	mysqli_free_result($results_followers);
 	if(count($tab_followers) > 0)
 	{
-		$string_followers = implode(" OR id_user=", $tab_followers);
-		$string_followers = ' OR id_user='.$string_followers;
+		$string_followers = implode(" OR t.id_user=", $tab_followers);
+		$string_followers = ' OR t.id_user='.$string_followers;
 	}
-	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE id_user='.$id_user.$string_followers.' ORDER BY date DESC');
+	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE t.id_user='.$id_user.$string_followers.' ORDER BY date DESC');
 	$tab = array();
-	while($row = mysqli_fetch_assoc($result))
+	if($result != false)
 	{
-		$tab[] = $row;
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
 	}
-	mysqli_free_result($result);
 	return $tab;
 }
 
 function getTweetsPerso($bdd, $id_user)
 {
-	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE id_user = "'.$id_user.'" ORDER BY date DESC');
+	$result = mysqli_query($bdd, 'SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE t.id_user = "'.$id_user.'" ORDER BY date DESC');
 	$tab = array();
-	while($row = mysqli_fetch_assoc($result))
+	if($result != false)
 	{
-		$tab[] = $row;
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
 	}
-	mysqli_free_result($result);
 	return $tab;
 }
 
 function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NULL, $id_retweet=NULL)
 {
 	$id_user = abs(intval($id_user));
+
+	if(strlen($content) > 140)
+	{
+		return false;
+	}
 	$content = mysqli_real_escape_string($bdd, $content);
 	if ( isset($image) ) 
 		$image = mysqli_real_escape_string($bdd, $image);
@@ -160,6 +203,8 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	$result = mysqli_prepare($bdd, 'INSERT INTO tweets(id_user,content,hashtags,image,date,locality,id_reply,id_retweet) VALUES (?,?,?,?, NOW(),?,?,?)');
 	mysqli_stmt_bind_param($result, "issssii", $id_user, $content, $hashtags, $image, $locality, $id_reply, $id_retweet);
 	mysqli_stmt_execute($result);
+
+	return true;
 }
 
 ?>
