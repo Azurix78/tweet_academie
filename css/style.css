@@ -675,6 +675,8 @@ header
 #no_abo
 {
 	padding-left: 0px;
+	text-align:center;
+
 }
 
 .answer
@@ -848,12 +850,10 @@ header
 }
 
 .wall-tweets .imgtweets{
-	width:20%;
-	height:100%;
 	display: inline;
-	margin:0;
-	position: absolute;
-	left: 0;
+	float:left;
+	line-height: 48px;
+	margin-left: -80px;
 }
 
 .wall-tweets .imgtweets img{

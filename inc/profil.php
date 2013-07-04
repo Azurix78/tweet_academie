@@ -123,9 +123,9 @@ if(count($follows) == 1 && empty($follows[0]))
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
-				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
-				<li><a href=""><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
 <?php
@@ -161,28 +161,37 @@ else
 <?php
 
 $tab_tweets = getTweetsPerso($bdd, $id);
-foreach($tab_tweets AS $value)
+if ( !empty($tab_tweets) )
 {
+	foreach($tab_tweets AS $value)
+	{
 
-?>
-				<li>
-					<div class="imgtweets">
-						<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
-							<img src="<?php echo getAvatar($id); ?>" alt="avatar">
-						</a>
-					</div>
-					<div class="tweet">
-						<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
-						<span>@<?php echo $value['username']; ?></span>
-						<span class="date-tweet"><?php echo date("F j Y", date_timestamp_get(date_create($value['date']))); ?></span>
-						<p><?php echo $value['content']; ?></p>
-						<a href="#" class="open-tweet">Ouvrir</a>
-					</div>
-				</li>
-<?php
-
+	?>
+					<li>
+						<div class="imgtweets">
+							<a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>">
+								<img src="<?php echo getAvatar($id); ?>" alt="avatar">
+							</a>
+						</div>
+						<div class="tweet">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
+							<span>@<?php echo $value['username']; ?></span>
+							<span class="date-tweet"><?php echo date("F j Y", date_timestamp_get(date_create($value['date']))); ?></span>
+							<p><?php echo $value['content']; ?></p>
+							<a href="#" class="open-tweet">Ouvrir</a>
+						</div>
+					</li>
+	<?php
+	}
 }
-
+else
+{
+?>
+						<div class="tweet">
+							<li id="no_abo"><p>Vous n'avez pas encore de tweet !</p></li>
+						</div>
+<?php
+}
 ?>
 				<li id="back">
 					<div class="div-back">

@@ -101,9 +101,9 @@ if(count($follows) == 1 && empty($follows[0]))
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href=""><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
-				<li><a href=""><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
-				<li><a href=""><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
 			<ul class="inline btn-nav">
 <?php
@@ -190,7 +190,7 @@ else
 	{
 ?>
 					<div class="tweet">
-						<p style="text-align:center;">Vous n'avez aucun follower.</p>
+						<li id="no_abo"><p>Vous n'avez aucun follower.</p></li>
 					</div>
 <?php
 	}
@@ -198,7 +198,7 @@ else
 	{
 ?>
 					<div class="tweet">
-						<p style="text-align:center;"><?php echo $tab_infos['username']; ?> n'a aucun follower.</p>
+						<p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p>
 					</div>
 <?php
 	}

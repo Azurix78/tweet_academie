@@ -91,7 +91,7 @@ foreach($tweets AS $value)
 						{
 							$reply = getTweet($bdd, $value['id_reply']);
 ?>
-						<div id="<?php echo $id_msg; ?>ans" class="answer">
+						<div id="<?php echo $id_msg; ?>ans" class="answer" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $reply['id_user']; ?>"><?php echo $reply['username']; ?></a></b>
 							<span>@<?php echo $reply['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
