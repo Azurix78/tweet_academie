@@ -89,12 +89,11 @@ foreach($tweets AS $value)
 						</a>
 					</div>
 					<div class="tweet">
-						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
+						<div <?php if ( isset($value['id_retweet']) ){echo "style='border:5px red solid;' ";}?>onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
-							<p><?php echo $value['content']; ?></p>
-							<a href="#" class="open-tweet">Ouvrir</a>
+							<p><?php echo nl2br2($value['content']); ?></p>
 						</div>
 						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
 							<form method="POST" class="newtweet" action="inc/form_rep_tweet.php?id=<?php echo $id_msg; ?>">
@@ -102,6 +101,8 @@ foreach($tweets AS $value)
 								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
 								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
 								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
+								<div style="width:20px;float:right;height:30px;"></div>
+								<input type="submit" name="bouton_retweet<?php echo $id_msg; ?>" class="btn btn-info" value="Retweet">
 							</form>
 						</div>
 					</div>

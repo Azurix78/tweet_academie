@@ -77,9 +77,10 @@ if($_GET['id'] == $_SESSION['id'])
 else
 {
 ?>
-
-
-
+								<form method="POST">
+									<input type="hidden" name="" value="">
+									<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
+								</form>
 <?php
 }
 ?>
