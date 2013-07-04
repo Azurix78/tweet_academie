@@ -3882,9 +3882,9 @@ input[type="submit"].btn.btn-mini {
 }
 
 .alert {
-  padding: 8px 0 8px 0;
-  width:98%;
-  margin-bottom: 15px;
+  padding: 8px 10px 8px 10px;
+  width:920px;
+  margin: 15px auto;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   background-color: #fcf8e3;
   border: 1px solid #fbeed5;
@@ -3905,7 +3905,7 @@ input[type="submit"].btn.btn-mini {
 .alert .close {
   position: relative;
   top: -2px;
-  right: -21px;
+  right: 0px;
   line-height: 20px;
 }
 
