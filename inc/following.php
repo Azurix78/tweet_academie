@@ -152,7 +152,7 @@ else
 						<div class="tweet">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
 							<span>@<?php echo $follow_abo['username']; ?></span>
-							<span class="date-tweet">
+							<div class="date-tweet">
 <?php
 
 if($_GET['id'] == $_SESSION['id'])
@@ -162,7 +162,7 @@ if($_GET['id'] == $_SESSION['id'])
 									<input type="hidden" name="id_del" value="<?php echo $value;?>">
 									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 								</form>
-							</span>
+							</div>
 							<br>
 							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
@@ -170,7 +170,7 @@ if($_GET['id'] == $_SESSION['id'])
 else
 {
 ?>
-							</span>
+							</div>
 							<br>
 							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
