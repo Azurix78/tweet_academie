@@ -6,7 +6,7 @@
 				<ul class="list-mp">
 					<?php foreach ($msg as $value) {
  ?>
-					<li onClick="boutons(<?php echo $value['id_msg']; ?>);">
+					<li onClick="boutons(<?php echo $value['id_sender']; ?>);">
 					<div class="imgtweets">
 						<img src="<?php echo getAvatar($value['id_sender']); ?>" alt="avatar">
 					</div>

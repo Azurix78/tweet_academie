@@ -48,6 +48,18 @@ function getTweet($bdd, $id)
 	return $tab[0];
 }
 
+function searchUsername($bdd, $recherche)
+{
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE username LIKE '%$recherche%' ");
+		$tab=array();
+		while($result_fetch = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $result_fetch;
+		}
+	return $tab;
+}
+
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
@@ -150,7 +162,22 @@ function getMessages($bdd, $id)
 
 function getContent($bdd, $id_receiver, $id_sender)
 {
-	$result = mysqli_query($bdd, "SELECT content, date as date_re FROM messages WHERE id_receiver = $id_receiver AND id_sender = $id_sender ORDER BY date DESC");
+	$result = mysqli_query($bdd, "SELECT id_parent,content, date as date_re FROM messages WHERE id_receiver  AND id_sender in ($id_receiver, $id_sender) ORDER BY id_parent DESC");
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab;
+}
+
+function getMessagesId($bdd, $id_receiver, $id_sender)
+{
+	$result = mysqli_query($bdd, "SELECT date, content,id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver  AND id_sender in ($id_receiver, $id_sender)");
 	$tab = array();
 	if($result != false)
 	{

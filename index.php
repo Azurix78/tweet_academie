@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 /**
  * [Projet Tweet Academie]
  * @author [rivier_n, rubio_n, christ_a]
@@ -7,6 +8,10 @@
 require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
+if(!isset($_SESSION['id']))
+{
+	header('Location:connect.php');
+}
 require_once("inc/header.php");
 
 anti_repost();
@@ -52,10 +57,6 @@ foreach($inc as $val) {
 }
 if(!$included AND isset($_SESSION['id'])) {
 	include_once("inc/404.php");
-}
-if(!isset($_SESSION['id']))
-{
-	header('Location:connect.php');
 }
 require_once("inc/footer.php");
 bddclose($bdd);
