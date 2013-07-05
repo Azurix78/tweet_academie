@@ -50,15 +50,12 @@ function getTweet($bdd, $id)
 
 function searchUsername($bdd, $recherche)
 {
-	$password = mysqli_real_escape_string($bdd, $password);
-	$result = mysqli_prepare($bdd, "SELECT * FROM tweets WHERE username LIKE \"%$recherche%\" ");
-	mysqli_stmt_bind_param($result, "s", $recherche);
-
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE username LIKE '%$recherche%' ");
+		$tab=array();
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
 			$tab[] = $result_fetch;
 		}
-		var_dump($tab);
 	return $tab;
 }
 

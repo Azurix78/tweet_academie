@@ -177,7 +177,7 @@ if(count($followers) > 0)
 ?>
 						</span>
 						<br>
-						<p><?php echo $tab_infos['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+						<p><?php echo $tab_infos['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
 <?php
 			}
 		}
