@@ -255,7 +255,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	{
 		return false;
 	}
-	$content = htmlentities($bdd, $content);
+	$content = htmlentities($content);
 	$content = mysqli_real_escape_string($bdd, $content);
 	if ( isset($image) ) 
 		$image = mysqli_real_escape_string($bdd, $image);
