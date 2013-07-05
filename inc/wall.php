@@ -15,9 +15,14 @@ if ( isset($_GET['id_rep']) )
 			$_SESSION['error_content'] = 1;
 		}
 	}
-	if(isset($_POST['bouton_retweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
+}
+
+if(isset($_POST['bouton_retweet']))
+{
+	if(isset($_POST['id_ans_tweet']) && !empty($_POST['id_ans_tweet']))
 	{
-		
+		$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
+		newTweet($bdd, $_SESSION['id'], "", '', '', NULL, $id_ans_tweet);
 	}
 }
 
@@ -99,6 +104,22 @@ $tweets = getTweetsAll($bdd, $_SESSION['id']);
 $id_msg = 1;
 foreach($tweets AS $value)
 {
+if(isset($value['id_retweet']) && $value['id_retweet'] != NULL)
+{
+	$retweet = getTweet($bdd, $value['id_retweet']);
+	$username = getUserInfo($bdd, $value['id_user']);
+?>
+				<li>
+					<div class="imgtweets">
+						<a href="index.php?page=profil&amp;id=<?php echo $retweet['id_user']; ?>">
+							<img src="<?php echo getAvatar($retweet['id_user']); ?>" alt="avatar">
+						</a>
+					</div>
+					<div class="tweet">
+<?php
+}
+else
+{
 ?>
 				<li>
 					<div class="imgtweets">
@@ -108,8 +129,9 @@ foreach($tweets AS $value)
 					</div>
 					<div class="tweet">
 <?php
-						if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
-						{
+}
+if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
+{
 							$reply = getTweet($bdd, $value['id_reply']);
 ?>
 						<div id="<?php echo $id_msg; ?>ans" class="answer" onclick="tweet_rep('<?php echo $id_msg; ?>')">
@@ -120,18 +142,34 @@ foreach($tweets AS $value)
 							<p><?php echo nl2br2($reply['content']); ?></p>
 						</div>
 <?php
-						}
+}
+if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
+{
 ?>
-						<div>
-
+						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
+							<b><a href="index.php?page=profil&amp;id=<?php echo $retweet['id_user']; ?>"><?php echo $retweet['username']; ?></a></b>
+							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($retweet['date']))); ?></span>
+							<br>
+							<p><?php echo nl2br2($retweet['content']); ?></p>
 						</div>
-						<div <?php if ( isset($value['id_retweet']) ){echo "style='border:5px red solid;' ";}?>onclick="tweet_rep('<?php echo $id_msg; ?>')">
+<?php
+$id_real_tweet = $retweet['id'];
+}
+else
+{
+?>
+						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
 							<p><?php echo nl2br2($value['content']); ?></p>
 						</div>
+<?php
+$id_real_tweet = $value['id'];
+}
+?>
 						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
 							<form method="POST" class="newtweet" action="index.php?id_rep=<?php echo $id_msg; ?>">
 								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
@@ -139,7 +177,10 @@ foreach($tweets AS $value)
 								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
 								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
 								<div class="separ_btn_rep"></div>
-								<input type="submit" name="bouton_retweet<?php echo $id_msg; ?>" class="btn btn-info" value="Retweet">
+							</form>
+							<form action="index.php?id_rep=<?php echo $id_msg; ?>" class="newtweet" method="POST">
+								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $id_real_tweet; ?>">
+								<input type="submit" value="Retweet" class="btn btn-info" name="bouton_retweet<?php echo $id_msg; ?>">
 							</form>
 						</div>
 					</div>
