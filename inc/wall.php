@@ -12,12 +12,8 @@ if ( isset($_GET['id_rep']) )
 		}
 		else
 		{
-			$_SESSION['error_content'] = 1;
+			$error_content = 1;
 		}
-	}
-	if(isset($_POST['bouton_retweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
-	{
-		
 	}
 }
 
@@ -38,7 +34,7 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 	}
 }
 
-if (isset($_SESSION['error_content']) )
+if (isset($error_content))
 {
 		?>
 				<div class="alert alert-error">
@@ -46,7 +42,7 @@ if (isset($_SESSION['error_content']) )
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 		<?php
-		unset($_SESSION['error_content']);
+		unset($error_content);
 }
 ?>
 

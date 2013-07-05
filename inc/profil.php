@@ -1,4 +1,65 @@
 <?php
+if ( !isset($_GET['id']))
+	header("Location: index.php?page=404");
+
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+
+$id = $_GET['id'];
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$follows_perso = explode(';', $tab_infos_perso['follows']);
+$followers = listFollower($bdd, $id);
+
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+
+
+if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) )
+{
+	$raw_follow = explode(";", $tab_infos_perso['follows']);
+	if ( isset($_POST['btn-delabo']) AND isset($_POST['id_del']))
+	{
+		$id_del = abs(intval($_POST['id_del']));
+		foreach ($raw_follow as $key => $value)
+		{
+			if ( $value == $_POST['id_del'])
+			{
+				unset($raw_follow[$key]);
+				if ( !empty($raw_follow) )
+				{
+					$new_abo = implode(";", $raw_follow);
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+				else
+				{
+					$new_abo = "";
+					delFollows($bdd, $new_abo, $_SESSION['id']);
+				}
+					$del = 1;
+				?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Vous n'&ecirc;tes plus abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $value);echo $alert_msg['username'];?>.
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
+			}
+		}
+		if ( !isset($del))
+		{
+			?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			<?php
+		}
+	}
+}
+
+
+
 if ( isset($_GET['id_rep']) )
 {
 	if(isset($_POST['bouton_rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
@@ -9,92 +70,35 @@ if ( isset($_GET['id_rep']) )
 			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
 		}
-		else
-		{
-			$_SESSION['error_content'] = 1;
-		}
 	}
-	if(isset($_POST['bouton_retweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
+}
+
+if ( isset($_GET['id_abo']) )
+{
+	if( isset($_POST['btn_add_abo' . $_GET['id_abo'] ]) AND isset($_POST['id_add_abo' . $_GET['id_abo'] ]) )
 	{
-		
+			addAbo($bdd, $_POST['id_add_abo' . $_GET['id_abo'] ]);
 	}
 }
 
 if(isset($_POST['btn_add_abo']) && isset($_POST['id_add_abo']) && !empty($_POST['id_add_abo']))
 {
-	$id_add_abo = abs(intval($_POST['id_add_abo']));
-	$test_result = mysqli_query($bdd, 'SELECT * FROM users WHERE id="'.$id_add_abo.'"');
-	if(mysqli_num_rows($test_result) > 0 && mysqli_num_rows($test_result) != null && $test_result != false)
-	{
-		$results_abos = mysqli_query($bdd, 'SELECT follows FROM users WHERE id='.$_SESSION['id']);
-		if($results_abos != false)
-		{
-			while($abos = mysqli_fetch_assoc($results_abos))
-			{
-				$liste_abos = explode(";", $abos['follows']);
-				if(in_array($id_add_abo, $liste_abos))
-				{
-?>
-					<div class="alert alert-error">
-						<strong>Erreur :</strong> Vous &ecirc;tes d&eacute;j&agrave; abonn&eacute; &agrave;  <?php $alert_msg=getUserInfo($bdd, $id_add_abo);echo $alert_msg['username'];?>.
-  						<button type="button" class="close" data-dismiss="alert">&times;</button>
-					</div>
-<?php
-					break;
-				}
-				array_push($liste_abos, $id_add_abo);
-				$new_liste_abos = implode(";", $liste_abos);
-				$update_abos = mysqli_query($bdd, 'UPDATE users SET follows="'.$new_liste_abos.'" WHERE id='.$_SESSION['id']);
-				if($update_abos == true)
-				{
-?>
-					<div class="alert alert-success">
-						<strong>Succ&egrave;s :</strong> Vous &ecirc;tes abonn&eacute; &agrave; <?php $alert_msg=getUserInfo($bdd, $id_add_abo);echo $alert_msg['username'];?>.
-	  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					</div>
-<?php
-				}
-				else
-				{
-?>
-					<div class="alert alert-error">
-						<strong>Erreur :</strong> Don't fuck with Swiffer !
-  						<button type="button" class="close" data-dismiss="alert">&times;</button>
-					</div>
-<?php
-				}
-			}
-		}
-		else
-		{
-?>
-			<div class="alert alert-error">
-				<strong>Erreur :</strong> Don't fuck with Swiffer !
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-			</div>
-<?php
-		}
-	}
-	else
-	{
-?>
-		<div class="alert alert-error">
-			<strong>Erreur :</strong> Don't fuck with Swiffer !
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
-<?php
-	}
+	addAbo($bdd, $_POST['id_add_abo']);
 }
 
-$id = $_GET['id'];
-$tab_infos = getUserInfo($bdd, $id);
-$followers = listFollower($bdd, $id);
-$follows = explode(';', $tab_infos['follows']);
-if(count($follows) == 1 && empty($follows[0]))
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($myfollows) == 1 && empty($myfollows[0]))
 {
-	$follows = array();
+	$myfollows = array();
 }
-
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 ?>
 <div class="container body-complete">
 	<div class="left">
@@ -148,12 +152,20 @@ if(count($follows) == 1 && empty($follows[0]))
 			</ul>
 			<ul class="inline btn-nav">
 <?php
-
 if($_GET['id'] == $_SESSION['id'])
 {
 ?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
 				<li><button class="btn">Editer le profil</button></li>
+<?php
+}
+elseif ( isset($abo) )
+{
+?>
+				<form method="POST">
+					<input type="hidden" name="id_del" value="<?php echo $_GET['id'];?>">
+					<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+				</form>
 <?php
 }
 else
