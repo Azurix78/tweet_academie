@@ -70,7 +70,10 @@ function addAbo($bdd, $id_add_abo)
 		{
 			while($abos = mysqli_fetch_assoc($results_abos))
 			{
-				$liste_abos = explode(";", $abos['follows']);
+				if($abos['follows'] != "")
+					$liste_abos = explode(";", $abos['follows']);
+				else
+					$liste_abos = array();
 				if(in_array($id_add_abo, $liste_abos))
 				{
 ?>
