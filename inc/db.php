@@ -50,7 +50,7 @@ function getTweet($bdd, $id)
 
 function search_select($bdd, $table, $champ, $recherche)
 {
-	$result = mysqli_query($bdd, "SELECT * FROM $table WHERE $champ LIKE '%$recherche%' ");
+	$result = mysqli_query($bdd, "SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE t.hashtags LIKE '%$recherche%' ORDER BY date DESC");
 		$tab=array();
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
@@ -59,7 +59,16 @@ function search_select($bdd, $table, $champ, $recherche)
 	return $tab;
 }
 
-
+function getUsers($bdd)
+{
+	$result = mysqli_query($bdd, "SELECT * FROM users ORDER BY username DESC ");
+		$tab=array();
+		while($result_fetch = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $result_fetch;
+		}
+	return $tab;
+}
 
 function addAbo($bdd, $id_add_abo)
 {

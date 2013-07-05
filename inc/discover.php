@@ -90,7 +90,7 @@ if (isset($error_content) )
 			<ul>
 
 <?php
-$users = searchUsername($bdd, "");
+$users = getUsers($bdd);
 foreach($users AS $value)
 {
 ?>
