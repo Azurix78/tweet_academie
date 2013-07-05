@@ -267,7 +267,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 		$id_retweet = abs(intval($id_retweet));
 	if ( $hashtags = preg_grep("%^#.+%", explode(" ", $content)) )
 	{
-		$hashtags = implode(";", $hashtags);
+		$hashtags = implode("", $hashtags);
 	}
 	else
 	{
