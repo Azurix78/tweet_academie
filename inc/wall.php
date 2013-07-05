@@ -9,6 +9,12 @@ if ( isset($_GET['id_rep']) )
 			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
 			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
+			?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			<?php
 		}
 		else
 		{
@@ -26,11 +32,23 @@ if(isset($_POST['bouton_retweet']))
 			$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
 			$id_retweeted_reply = abs(intval($_POST['id_retweeted_reply']));
 			newTweet($bdd, $_SESSION['id'], "", '', '', $id_retweeted_reply, $id_ans_tweet);
+			?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			<?php
 		}
 		else
 		{
 				$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
 				newTweet($bdd, $_SESSION['id'], "", '', '', NULL, $id_ans_tweet);
+				?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
 		}
 	}
 	else
@@ -50,6 +68,12 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 	if ( strlen($_POST['new-tweet']) <= 140 )
 	{
 		newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
+		?>
+				<div class="alert alert-success">
+					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
 	}
 	else
 	{
