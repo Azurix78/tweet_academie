@@ -162,6 +162,18 @@ if(count($followers) > 0)
 						<p>Vous <?php if($id != $_SESSION['id']){ ?> et <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><?php } ?> suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 		}
+		else if($follow_abo['id'] != $_SESSION['id'])
+		{
+?>
+				<form method="POST">
+					<input type="hidden" name="id_add_abo" value="<?php echo $follow_abo['id']; ?>">
+					<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
+				</form>
+			</span>
+			<br>
+			<p>Vous <?php if($id != $_SESSION['id']){ ?> et <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><?php } ?> suivez <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+		}
 		else
 		{
 			if($_SESSION['id'] == $id)
@@ -172,12 +184,20 @@ if(count($followers) > 0)
 						<p><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a> vous suit<br><br></p>
 <?php
 			}
+			else if($follow_abo['id'] == $_SESSION['id'])
+			{
+?>
+						</span>
+						<br>
+						<p>Vous suivez <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><br><br></p>
+<?php
+			}
 			else
 			{
 ?>
 						</span>
 						<br>
-						<p><?php echo $tab_infos['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+						<p><?php echo $follow_abo['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><br><br></p>
 <?php
 			}
 		}
