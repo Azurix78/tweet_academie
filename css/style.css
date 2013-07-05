@@ -757,7 +757,7 @@ header
 	vertical-align: top;
 }
 
-.ban-nav button
+.ban-nav input
 {
 	font-weight: bold;
 }
@@ -889,6 +889,11 @@ header
 	height:30px;
 }
 
+#edit_link
+{
+	font-weight: bold;
+	color: black;
+}
 
 /*### Nico ###*/
 .body-complete{

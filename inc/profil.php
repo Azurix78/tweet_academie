@@ -201,7 +201,7 @@ if($_GET['id'] == $_SESSION['id'])
 {
 ?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
-				<li><button class="btn">Editer le profil</button></li>
+				<li><a class="btn" id="edit_link" href="index.php?page=edit_user">Editer le profil</a></li>
 <?php
 }
 elseif ( isset($abo) )

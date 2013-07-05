@@ -67,7 +67,7 @@ if(isset($_POST['bouton']))
 										<ul class="dropdown-menu pull-right">
 							   				<li>
 							   					<div class="pic-bulle"></div>
-							   					<a class="link_sub" href="">
+							   					<a class="link_sub" href="index.php?page=edit_user">
 							   						<div class="profil_ul">
 							   							<img class="sub_avatar" src="<?php echo getAvatar($_SESSION['id']); ?>" alt="sub_avatar">
 							   							<p class="text-ulprofil"><b class="sub_user"><?php $sub_username = getUserInfo($bdd, $_SESSION['id']); echo $sub_username['username']; ?></b>
