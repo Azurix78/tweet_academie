@@ -15,10 +15,6 @@ if ( isset($_GET['id_rep']) )
 			$error_content = 1;
 		}
 	}
-	if(isset($_POST['bouton_retweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
-	{
-		
-	}
 }
 
 if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
@@ -94,7 +90,7 @@ if (isset($error_content) )
 			<ul>
 
 <?php
-$users = searchUsername($bdd, "i");
+$users = searchUsername($bdd, "");
 foreach($users AS $value)
 {
 ?>

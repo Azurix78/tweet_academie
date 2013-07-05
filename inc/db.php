@@ -48,9 +48,9 @@ function getTweet($bdd, $id)
 	return $tab[0];
 }
 
-function searchUsername($bdd, $recherche)
+function search_select($bdd, $table, $champ, $recherche)
 {
-	$result = mysqli_query($bdd, "SELECT * FROM users WHERE username LIKE '%$recherche%' ");
+	$result = mysqli_query($bdd, "SELECT * FROM $table WHERE $champ LIKE '%$recherche%' ");
 		$tab=array();
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
@@ -58,6 +58,8 @@ function searchUsername($bdd, $recherche)
 		}
 	return $tab;
 }
+
+
 
 function addAbo($bdd, $id_add_abo)
 {
