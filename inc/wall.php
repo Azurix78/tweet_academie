@@ -129,7 +129,7 @@ foreach($tweets AS $value)
 							<p><?php echo nl2br2($value['content']); ?></p>
 						</div>
 						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
-							<form method="POST" class="newtweet" action="index.php?id=<?php echo $_GET['id']; ?>&amp;id_rep=<?php echo $id_msg; ?>">
+							<form method="POST" class="newtweet" action="index.php?id_rep=<?php echo $id_msg; ?>">
 								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
 								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
 								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>

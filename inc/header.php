@@ -40,7 +40,7 @@ if(isset($_POST['bouton']))
 			<div class="container header">
 				<div class="nav_left">
 					<ul class="inline text_degrade">
-						<li><a href="index.php?page=wall&amp;id=<?php echo $_SESSION['id']; ?>"><i class="icon-home icon-white"></i> Accueil</a></li>
+						<li><a href="index.php?page=wall"><i class="icon-home icon-white"></i> Accueil</a></li>
 						<li><a href="connect.php"><i class="icon-star icon-white"></i> Connecter</a></li>
 						<li><a href="index.php?page=discover"><i class="icon-eye-open icon-white"></i> D&eacute;couvrir</a></li>
 						<li><a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>"><i class="icon-user icon-white"></i> Moi</a></li>

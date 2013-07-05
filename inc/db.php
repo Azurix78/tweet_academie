@@ -139,7 +139,7 @@ function CheckLogin($bdd, $user, $password)
 		{
 			$password_hash = $result_fetch['password'];
 		}
-		if(crypt($password, $password_hash) == $password_hash)
+		if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
 		{
 			setcookie('id', $result_fetch['id'], time()+(60*60*24*30));
 			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
@@ -197,7 +197,7 @@ function Inscription($bdd, $fullname, $email, $password)
 	$fullname = mysqli_real_escape_string($bdd, $fullname);
 	$email = mysqli_real_escape_string($bdd, $email);
 	$password = mysqli_real_escape_string($bdd, $password);
-	$password = crypt($password);
+	$password = hash("ripemd160", $password."si tu aime la wac leve les bras");
 	$result = mysqli_prepare($bdd, "INSERT INTO users(username,email,password,registered) VALUES (?,?,?, NOW())");
 	mysqli_stmt_bind_param($result, "sss", $fullname, $email, $password);
 	mysqli_stmt_execute($result);
@@ -320,7 +320,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	{
 		return false;
 	}
-	$content = htmlentities($bdd, $content);
+	$content = htmlentities($content);
 	$content = mysqli_real_escape_string($bdd, $content);
 	if ( isset($image) ) 
 		$image = mysqli_real_escape_string($bdd, $image);
@@ -332,7 +332,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 		$id_retweet = abs(intval($id_retweet));
 	if ( $hashtags = preg_grep("%^#.+%", explode(" ", $content)) )
 	{
-		$hashtags = implode(";", $hashtags);
+		$hashtags = implode("", $hashtags);
 	}
 	else
 	{
