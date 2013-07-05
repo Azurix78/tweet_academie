@@ -19,12 +19,31 @@ if ( isset($_GET['id_rep']) )
 
 if(isset($_POST['bouton_retweet']))
 {
-	if(isset($_POST['id_ans_tweet']) && !empty($_POST['id_ans_tweet']))
+	if( isset($_POST['id_ans_tweet']) && !empty($_POST['id_ans_tweet']) )
 	{
-		$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
-		newTweet($bdd, $_SESSION['id'], "", '', '', NULL, $id_ans_tweet);
+		if ( isset($_POST['id_retweeted_reply']) && !empty($_POST['id_retweeted_reply']) )
+		{
+			$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
+			$id_retweeted_reply = abs(intval($_POST['id_retweeted_reply']));
+			newTweet($bdd, $_SESSION['id'], "", '', '', $id_retweeted_reply, $id_ans_tweet);
+		}
+		else
+		{
+				$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
+				newTweet($bdd, $_SESSION['id'], "", '', '', NULL, $id_ans_tweet);
+		}
+	}
+	else
+	{
+		?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Don't fuck with Swiffer !
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		<?php
 	}
 }
+
 
 if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 {
@@ -133,6 +152,10 @@ else
 if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 {
 							$reply = getTweet($bdd, $value['id_reply']);
+							if ( isset($reply['id_retweet']) )
+							{
+								$reply = getTweet($bdd, $reply['id_retweet']);
+							}
 ?>
 						<div id="<?php echo $id_msg; ?>ans" class="answer" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $reply['id_user']; ?>"><?php echo $reply['username']; ?></a></b>
@@ -146,10 +169,10 @@ if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 {
 ?>
-						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
+						<div id="<?php echo $id_msg; ?>" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $retweet['id_user']; ?>"><?php echo $retweet['username']; ?></a></b>
 							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
-							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($retweet['date']))); ?></span>
+							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
 							<p><?php echo nl2br2($retweet['content']); ?></p>
 						</div>
@@ -159,7 +182,7 @@ $id_real_tweet = $retweet['id'];
 else
 {
 ?>
-						<div onclick="tweet_rep('<?php echo $id_msg; ?>')">
+						<div id="<?php echo $id_msg; ?>" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $value['id_user']; ?>"><?php echo $value['username']; ?></a></b>
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
@@ -170,7 +193,7 @@ else
 $id_real_tweet = $value['id'];
 }
 ?>
-						<div class="tweet_rep" id="<?php echo $id_msg; ?>">
+						<div class="tweet_rep" id="<?php echo $id_msg; ?>rep">
 							<form method="POST" class="newtweet" action="index.php?id_rep=<?php echo $id_msg; ?>">
 								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
 								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
@@ -178,9 +201,10 @@ $id_real_tweet = $value['id'];
 								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
 								<div class="separ_btn_rep"></div>
 							</form>
-							<form action="index.php?id_rep=<?php echo $id_msg; ?>" class="newtweet" method="POST">
-								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $id_real_tweet; ?>">
-								<input type="submit" value="Retweet" class="btn btn-info" name="bouton_retweet<?php echo $id_msg; ?>">
+							<form class="newtweet" method="POST">
+								<input type="hidden" name="id_ans_tweet" value="<?php echo $id_real_tweet; ?>">
+								<input type="hidden" name="id_retweeted_reply" value="<?php echo $value['id_reply']; ?>">
+								<input type="submit" value="Retweet" class="btn btn-info" name="bouton_retweet">
 							</form>
 						</div>
 					</div>

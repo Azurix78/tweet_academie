@@ -5,16 +5,22 @@
 
 function tweet_rep(id)
 {
-  if ( document.getElementById(id).style.display == "block")
+  if ( document.getElementById(id+'rep').style.display == "block")
   {
-    document.getElementById(id).style.display = "none";
-    document.getElementById(id+'ans').style.display = "none";
+    document.getElementById(id+'rep').style.display = "none";
+    if(document.getElementById(id+'ans'))
+    { 
+      document.getElementById(id+'ans').style.display = "none";
+    }
   }
   else
   {
-    document.getElementById(id).style.display = "block"
     document.getElementById(id+'text').focus();
-    document.getElementById(id+'ans').style.display = "block"
+    document.getElementById(id+'rep').style.display = "block";
+    if(document.getElementById(id+'ans'))
+    { 
+      document.getElementById(id+'ans').style.display = "block";
+    }
   }
 }
 
