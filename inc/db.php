@@ -64,6 +64,11 @@ function CheckLogin($bdd, $user, $password)
 		}
 		if(crypt($password, $password_hash) == $password_hash)
 		{
+			setcookie('id', $result_fetch['id'], time()+(60*60*24*30));
+			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
+			setcookie('email', $result_fetch['email'], time()+(60*60*24*30));
+			setcookie('password', $result_fetch['password'], time()+(60*60*24*30));
+
 			$return = true;
 		}
 	}
@@ -128,6 +133,46 @@ function Inscription($bdd, $fullname, $email, $password)
 	return $id_return;
 }
 
+function getMessages($bdd, $id)
+{
+	$result = mysqli_query($bdd, "SELECT id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver = $id GROUP BY id_sender ORDER BY date DESC");
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab;
+}
+
+function getContent($bdd, $id_receiver, $id_sender)
+{
+	$result = mysqli_query($bdd, "SELECT content, date as date_re FROM messages WHERE id_receiver = $id_receiver AND id_sender = $id_sender ORDER BY date DESC");
+	$tab = array();
+	if($result != false)
+	{
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$tab[] = $row;
+		}
+		mysqli_free_result($result);
+	}
+	return $tab;
+}
+
+// AMBROISE
+
+function checkCookies()
+{
+	if(isset($_COOKIE['id']) && !empty($_COOKIE['id']) && isset($_COOKIE['username']) && !empty($_COOKIE['username']) && isset($_COOKIE['email']) && !empty($_COOKIE['email']) && isset($_COOKIE['password']) && !empty($_COOKIE['password']))
+	{
+		CheckLogin($bdd, $_COOKIE['email'], $_COOKIE['password']);
+	}
+}
+
 function getTweetsAll($bdd, $id_user)
 {
 	$tab_followers = array();
@@ -183,6 +228,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	{
 		return false;
 	}
+	$content = htmlentities($bdd, $content);
 	$content = mysqli_real_escape_string($bdd, $content);
 	if ( isset($image) ) 
 		$image = mysqli_real_escape_string($bdd, $image);
@@ -207,34 +253,4 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	return true;
 }
 
-
-function getMessages($bdd, $id)
-{
-	$result = mysqli_query($bdd, "SELECT id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver = $id GROUP BY id_sender ORDER BY date DESC");
-	$tab = array();
-	if($result != false)
-	{
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$tab[] = $row;
-		}
-		mysqli_free_result($result);
-	}
-	return $tab;
-}
-
-function getContent($bdd, $id_receiver, $id_sender)
-{
-	$result = mysqli_query($bdd, "SELECT content, date as date_re FROM messages WHERE id_receiver = $id_receiver AND id_sender = $id_sender ORDER BY date DESC");
-	$tab = array();
-	if($result != false)
-	{
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$tab[] = $row;
-		}
-		mysqli_free_result($result);
-	}
-	return $tab;
-}
 ?>

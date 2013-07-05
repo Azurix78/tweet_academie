@@ -11,6 +11,8 @@ require_once("inc/header.php");
 
 anti_repost();
 
+checkCookies();
+
 if(isset($_GET['id']))
 {
 	$test_get_id = mysqli_query($bdd, 'SELECT * FROM users WHERE id='.$_GET['id']);
