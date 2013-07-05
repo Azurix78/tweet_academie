@@ -50,8 +50,12 @@ function getAvatar($id)
 
 function logOut()
 {
-	session_destroy();
-	header('Location: ../index.php');
+    setcookie('id', '');
+    setcookie('username', '');
+    setcookie('email', '');
+    setcookie('password', '');
+    session_destroy();
+    header('Location: ../index.php');
 }
 
 ?>
