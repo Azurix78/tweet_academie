@@ -1,6 +1,29 @@
 <?php
+
 if ( !isset($_GET['id']))
 	header("Location: index.php?page=404");
+
+$id = $_GET['id'];
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$followers = listFollower($bdd, $id);
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+if(count($myfollows) == 1 && empty($myfollows[0]))
+{
+	$myfollows = array();
+}
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 
 if(isset($_POST['bouton_retweet']))
 {
@@ -40,20 +63,6 @@ if(isset($_POST['bouton_retweet']))
 		<?php
 	}
 }
-
-$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
-
-$id = $_GET['id'];
-$tab_infos = getUserInfo($bdd, $id);
-$follows = explode(';', $tab_infos['follows']);
-$follows_perso = explode(';', $tab_infos_perso['follows']);
-$followers = listFollower($bdd, $id);
-
-if(count($follows) == 1 && empty($follows[0]))
-{
-	$follows = array();
-}
-
 
 if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) )
 {
@@ -97,8 +106,6 @@ if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) 
 	}
 }
 
-
-
 if ( isset($_GET['id_rep']) )
 {
 	if(isset($_POST['bouton_rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
@@ -131,8 +138,16 @@ if(isset($_POST['btn_add_abo']) && isset($_POST['id_add_abo']) && !empty($_POST[
 	addAbo($bdd, $_POST['id_add_abo']);
 }
 
+unset($abo);
 $tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$followers = listFollower($bdd, $id);
 $myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
 if(count($myfollows) == 1 && empty($myfollows[0]))
 {
 	$myfollows = array();
@@ -144,6 +159,7 @@ foreach ($myfollows as $value)
 		$abo = "ok";
 	}
 }
+
 ?>
 <div class="container body-complete">
 	<div class="left">

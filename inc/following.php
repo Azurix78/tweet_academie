@@ -1,5 +1,26 @@
 <?php
 $user_abo = getUserInfo($bdd, $_GET['id']);
+$id = $_GET['id'];
+$tab_infos = getUserInfo($bdd, $id);
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$followers = listFollower($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+if(count($myfollows) == 1 && empty($myfollows[0]))
+{
+	$myfollows = array();
+}
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 
 if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 {
@@ -40,29 +61,6 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 				</div>
 			<?php
 		}
-	}
-}
-
-
-$id = $_GET['id'];
-$tab_infos = getUserInfo($bdd, $id);
-$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
-$followers = listFollower($bdd, $id);
-$follows = explode(';', $tab_infos['follows']);
-if(count($follows) == 1 && empty($follows[0]))
-{
-	$follows = array();
-}
-$myfollows = explode(';', $tab_infos_perso['follows']);
-if(count($myfollows) == 1 && empty($myfollows[0]))
-{
-	$myfollows = array();
-}
-foreach ($myfollows as $value)
-{
-	if ( $_GET['id'] == $value )
-	{
-		$abo = "ok";
 	}
 }
 
