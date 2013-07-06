@@ -30,7 +30,11 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 	}
 }
 ?>
-<div class="container body-complete">
+<div class="container body-complete" style="<?php 
+		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
+		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
+				echo "background-color:rgba(" . $fgcolor . ",0.3)";
+		 ?>">
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
@@ -77,9 +81,8 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" id="mod_old_pass" name="mod_old_pass"></li>
 					<li><label for="mod_new_pass1">Choisissez un nouveau mot de passe :</label><input type="password" id="mod_new_pass1" name="mod_new_pass1"></li>
 					<li><label for="mod_new_pass2">Retapez le nouveau mot de passe :</label><input type="password" id="mod_new_pass2" name="mod_new_pass2"></li>
-					<li>
-		 				<button type="submit" class="btn btn-primary" name="modifier_pass_user">Enregistrer</button>
-		  				<button type="button" class="btn">Annuler</button>
+					<li id="button">
+		 				<button type="submit" class="btn btn-info" name="modifier_pass_user">Enregistrer</button>
 		  			</li>
 				</form>
 

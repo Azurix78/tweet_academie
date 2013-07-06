@@ -1,36 +1,44 @@
 <?php
 $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 
-if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isset($_POST['mod_mail']) && isset($_POST['mod_locality']))
+if(isset($_POST['modifier_infos_user']))
 {
-	if(!empty($_POST['mod_mail']))
+	if((uploadImage($bdd, "upload/img/", "avatar", $_SESSION['id'])) == true)
 	{
-		if(!empty($_POST['mod_username']))
+		if(!empty($_POST['mod_mail']))
 		{
-			updateUserInfos($bdd, $_SESSION['id'], $_POST['mod_username'], $_POST['mod_mail'], $_POST['mod_locality']);
+			if(!empty($_POST['mod_username']))
+			{
+				updateUserInfos($bdd, $_SESSION['id'], $_POST['mod_username'], $_POST['mod_mail'], $_POST['mod_locality']);
+			}
+			else
+			{
+	?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Vous devez pr&eacute;ciser une adresse e-mail
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+	<?php
+			}
 		}
 		else
 		{
-?>
+?>	
 			<div class="alert alert-error">
-				<strong>Erreur :</strong> Vous devez pr&eacute;ciser une adresse e-mail
+				<strong>Erreur :</strong> Vous devez pr&eacute;ciser un nom d'utilisateur
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
-<?php
+	<?php
 		}
 	}
-	else
-	{
-?>
-		<div class="alert alert-error">
-			<strong>Erreur :</strong> Vous devez pr&eacute;ciser un nom d'utilisateur
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
-<?php
-	}
 }
+
 ?>
-<div class="container body-complete">
+<div class="container body-complete" style="<?php 
+		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
+		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
+				echo "background-color:rgba(" . $fgcolor . ",0.3)";
+		 ?>">
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
@@ -73,13 +81,13 @@ if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isse
 		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
 			<ul>
-				<form method="POST">
+				<form method="POST" enctype="multipart/form-data">
 					<li><label for="mod_username">Nom d'utilisateur :</label><input type="text" name="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
 					<li><label for="mod_mail">Email :</label><input type="text" name="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
 					<li><label for="mod_locality">Location :</label><input type="text" name="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
-					<li>
-		 				<button type="submit" class="btn btn-primary" name="modifier_infos_user">Enregistrer</button>
-		  				<button type="button" class="btn">Annuler</button>
+					<li><label for="avatar">Ajouter un avatar :</label><input type="file" id="avatar" name="avatar"></li>
+					<li id="button">
+		 				<button type="submit" class="btn btn-info" name="modifier_infos_user">Enregistrer</button>
 		  			</li>
 				</form>
 

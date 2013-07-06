@@ -3,8 +3,6 @@ require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
 
-anti_repost();
-
 if ( isset($_POST['sup_ok']) )
 {
 	archiveUser($bdd, $_SESSION['id']);

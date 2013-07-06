@@ -10,32 +10,6 @@ function nl2br2($string)
     return $string;
 } 
 
-function anti_repost()
-{
-    if(!empty($_POST) OR !empty($_FILES))
-    {
-        $_SESSION['sauvegarde'] = $_POST;
-        $_SESSION['sauvegardeFILES'] = $_FILES;
-         
-        $fichierActuel = $_SERVER['PHP_SELF'];
-        if(!empty($_SERVER['QUERY_STRING']))
-        {
-            $fichierActuel .= '?' . $_SERVER['QUERY_STRING'];
-        }
-         
-        header('Location: ' . $fichierActuel);
-        exit;
-    }
-
-    if(isset($_SESSION['sauvegarde']))
-    {
-        $_POST = $_SESSION['sauvegarde'];
-        $_FILES = $_SESSION['sauvegardeFILES'];
-
-        unset($_SESSION['sauvegarde'], $_SESSION['sauvegardeFILES']);
-    }
-}
-
 function getAvatar($id)
 {
 	if(file_exists('upload/img/'.$id.'.png'))
@@ -117,6 +91,23 @@ function uploadImage($bdd, $destination, $name, $id = false){
     {
         return true;
     }
+}
+
+function hex2rgb($hex) {
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+   $rgb = $r ."," . $g ."," .  $b;
+   //return implode(",", $rgb); // returns the rgb values separated by commas
+   return $rgb; // returns an array with the rgb values
 }
 
 ?>
