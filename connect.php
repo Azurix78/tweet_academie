@@ -8,6 +8,9 @@ anti_repost();
 if ( isset($_POST['sup_ok']) )
 {
 	archiveUser($bdd, $_SESSION['id']);
+		$error = "<div class=\"alert alert-success\">
+				<strong>Succ&egrave;s :</strong> Votre compte a bien &eacute;t&eacute; supprim&eacute;.<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+				</div>";
 	session_destroy();
 }
 
@@ -22,7 +25,7 @@ if(isset($_POST['bouton']))
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
 			$userinfo = getUserInfo($bdd,$user);
-			if ( $userinfo['registered'] != "0000-00-00" )
+			if ( $userinfo['registered'] != "9999-01-01" )
 			{
 				$_SESSION['id'] = $userinfo['id'];
 				$_SESSION['username'] = $userinfo['username'];
@@ -40,7 +43,7 @@ if(isset($_POST['bouton']))
 				unset($_POST['signin-password']);
 				header('Location: index.php');
 			}
-			elseif( $userinfo['registered'] == "0000-00-00" )
+			elseif( $userinfo['registered'] == "9999-01-01" )
 			{
 				$error = "<div class=\"alert alert-error\">
   				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>

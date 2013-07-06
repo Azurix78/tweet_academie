@@ -1,6 +1,6 @@
 <?php
 
-if ( !isset($_GET['id']))
+if ( !isset($_GET['id']) )
 	header("Location: index.php?page=404");
 
 $id = $_GET['id'];
@@ -160,8 +160,21 @@ foreach ($myfollows as $value)
 	}
 }
 
+$sup = getUserInfo($bdd, $_GET['id']);
+if ( $sup['registered'] == "9999-01-01" )
+{
+	$user_sup = 1;
+}
+
 ?>
+
 <div class="container body-complete">
+<?php
+if ( !isset($user_sup) )
+{
+	
+}
+?>
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
