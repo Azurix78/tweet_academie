@@ -102,9 +102,10 @@ header
     margin-top: 5px;
 }
 
-.recherche
+#recherche
 {
 	margin-top: 5px;
+	border-radius: 0px 4px 4px 0px;
 }
 
 .nav_right-recherche
@@ -983,7 +984,7 @@ header
 
 .wall-menu li a{	
 	width:250px;
-	padding:6px 190px 6px 10px;
+	padding:6px 170px 6px 10px;
 }
 
 .wall-menu li i{	
@@ -1122,4 +1123,10 @@ header
 	width:200px;
 	margin: 0 auto;
 	padding-left:-15%;
+}
+
+
+.edit-user label{
+	width:150px;
+	display: inline-block;
 }

@@ -13,7 +13,8 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 		</div>
 		<div class="bloc wall-menu" id="msg_priv">
 			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
+				<li><a href="index.php?page=edit_user">Modifier mon compte<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li><a href="index.php?page=edit_password">Modifier mot de passe<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 			</ul>
 		</div>
 
@@ -39,18 +40,18 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 
 
 	<div class="right">
-		<div class="bloc wall-tweets">
+		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
 			<ul>
-				<form>
-					<li><label>Nom d'utilisateur :</label><input type="text" name="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
-					<li><label>Email :</label><input type="text" name="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
-					<li><label>Location :</label><input type="text" name="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
-					<li><label>Mot de passe :</label><input type="text" name="mod_mdp" value=""></li>
-					<li><label>Couleur de fond :</label><input name="mod_bgcolor" class="color" value="60a3d2"></li>
-					<li><label>Couleur du recouvrement  :</label><input class="color" name="mod_fgcolor" value="FFF"></li>
-					<li><label>Ajouter une image en arri&egrave;re-plan :</label><input type="file" name="mod_bgimg"></li>
-					<li><label>What is that fucking "scrollcolor" ? :</label><input name="mod_scrollcolor" class="color" value="FF61A5"></li>
+				<form method="POST" >
+					<li><label for="mod_username">Nom d'utilisateur :</label><input type="text" id="mod_username" name="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
+					<li><label for="mod_mail">Email :</label><input type="text" id="mod_mail" name="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
+					<li><label for="mod_locality">Location :</label><input type="text" id="mod_locality" name="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
+					<li><label for="mod_mdp">Mot de passe :</label><input type="text" id="mod_mdp" name="mod_mdp" value=""></li>
+					<li><label for="mod_bgcolor">Couleur de fond :</label><input id="mod_bgcolor" name="mod_bgcolor" class="color" value="60a3d2"></li>
+					<li><label for="mod_fgcolor">Couleur du recouvrement  :</label><input class="color" id="mod_fgoclor" name="mod_fgcolor" value="FFF"></li>
+					<li><label for="mod_bgimg">Ajouter une image en arri&egrave;re-plan :</label><input type="file" id="mod_bgimg" name="mod_bgimg"></li>
+					<li><label for="mod_scrollcolor">What is that fucking "scrollcolor" ? :</label><input id="mod_scrollcolor" name="mod_scrollcolor" class="color" value="FF61A5"></li>
 					<li>
 		 				<button type="submit" class="btn btn-primary">Enregistrer</button>
 		  				<button type="button" class="btn">Annuler</button>
