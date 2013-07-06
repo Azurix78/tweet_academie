@@ -59,32 +59,13 @@ function logOut()
     header('Location: ../index.php');
 }
 
-function curl_get_result($url)
-{
-    $curl = curl_init();
-    $timeout = 5;
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
-    $exec = curl_exec($curl);
-    curl_close($curl);
-    return $exec;
-}
-
-function bitly($url, $login, $appkey, $format='txt')
-{
-    $connectURL = 'http://api.bit.ly/v3/shorten?login='.$login.'&apiKey='.$appkey.'&uri='.urlencode($url).'&format='.$format;
-    return curl_get_result($connectURL);
-}
-
 function uploadImage($bdd, $destination, $name, $id = false){
     if(!empty($_FILES[$name]['name']))
     {
         if(is_writable($destination))
         {
             $fichier = basename($_FILES[$name]['name']);
-            $taille_maxi = 100000;
-            $taille = filesize($_FILES[$name]['tmp_name']);
+            $taille_maxi = 300000;
             $extensions = array('.png', '.bmp', '.jpg', '.jpeg');
             $extension = strrchr($_FILES[$name]['name'], '.'); 
             if(!in_array($extension, $extensions)) //Si l'extension est mauvaise
@@ -94,7 +75,7 @@ function uploadImage($bdd, $destination, $name, $id = false){
                         <strong>Erreur :</strong> Les formats acceptés sont .png, .bmp, .jpg, .jpeg .
                         </div>";
             }
-            if($taille>$taille_maxi)
+            if($_FILES[$name]['size'] > $taille_maxi)
             {
                  $erreur = "<div class=\"alert alert-error\">
                         <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>

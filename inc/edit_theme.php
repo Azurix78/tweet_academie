@@ -2,7 +2,7 @@
 
 if(isset($_POST['modifier_theme_user']))
 {
-		if(uploadImage($bdd, "/upload/bgimg/", "mod_bgimg", $_SESSION['id']) == true)
+		if((uploadImage($bdd, "upload/bgimg/", "mod_bgimg", $_SESSION['id'])) == true)
 		{
 			if(!empty($_FILES['mod_bgimg']['name'])){ $bgimg = "/upload/bgimg/" . $_SESSION['id'] . ".png"; } else { $bgimg = ''; }
 			updateThemeInfos($bdd, $_SESSION['id'], $_POST['mod_bgcolor'], $_POST['mod_fgcolor'], $bgimg, $_POST['mod_scrollcolor']);
@@ -57,7 +57,7 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
 			<ul>
-				<form method="POST" class="edit-theme">
+				<form method="POST" class="edit-theme" enctype="multipart/form-data">
 					<li>
 						<label for="mod_bgcolor">Couleur de fond :</label><input id="mod_bgcolor" type="text" name="mod_bgcolor"  value="<?php if(isset($_POST['mod_bgcolor'])) { echo htmlentities($_POST['mod_bgcolor']);} else { echo $infos_perso['bgcolor'];} ?>">
 						<span class="box-theme" style="background-color:<?php if(!empty($infos_perso['bgcolor'])){ echo '#' . $infos_perso['bgcolor'];} else {echo '#60a3d2';} ?>"></span>
