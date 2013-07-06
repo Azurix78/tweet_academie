@@ -65,8 +65,7 @@ function uploadImage($bdd, $destination, $name, $id = false){
         if(is_writable($destination))
         {
             $fichier = basename($_FILES[$name]['name']);
-            $taille_maxi = 100000;
-            $taille = filesize($_FILES[$name]['tmp_name']);
+            $taille_maxi = 300000;
             $extensions = array('.png', '.bmp', '.jpg', '.jpeg');
             $extension = strrchr($_FILES[$name]['name'], '.'); 
             if(!in_array($extension, $extensions)) //Si l'extension est mauvaise
@@ -76,7 +75,7 @@ function uploadImage($bdd, $destination, $name, $id = false){
                         <strong>Erreur :</strong> Les formats acceptés sont .png, .bmp, .jpg, .jpeg .
                         </div>";
             }
-            if($taille>$taille_maxi)
+            if($_FILES[$name]['size'] > $taille_maxi)
             {
                  $erreur = "<div class=\"alert alert-error\">
                         <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
