@@ -34,10 +34,9 @@ if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isse
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href="index.php?page=edit_user">Infos du compte<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_password">Mot de passe<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_theme">Th&egrave;me<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_sup">Supprimer son compte<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
 		</div>
 		<div class="bloc wall-menu" id="msg_priv">

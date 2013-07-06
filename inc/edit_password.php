@@ -34,15 +34,15 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href="index.php?page=edit_user">Infos du compte<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_password">Mot de passe<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_theme">Th&egrave;me<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_sup">Supprimer son compte<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Tweets<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
+				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
 		</div>
 		<div class="bloc wall-menu" id="msg_priv">
 			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
+				<li><a href="index.php?page=edit_user">Modifier mon compte<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li><a href="index.php?page=edit_password">Modifier mot de passe<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 			</ul>
 		</div>
 
@@ -72,9 +72,9 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 			<h4 class="tweets">Modifiez votre mot de passe</h4>
 			<ul>
 				<form method="POST">
-					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" name="mod_old_pass"</li>
-					<li><label for="mod_new_pass1">Choisissez un nouveau mot de passe :</label><input type="password" name="mod_new_pass1"</li>
-					<li><label for="mod_new_pass2">Retapez le nouveau mot de passe :</label><input type="password" name="mod_new_pass2"</li>
+					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" id="mod_old_pass" name="mod_old_pass"></li>
+					<li><label for="mod_new_pass1">Choisissez un nouveau mot de passe :</label><input type="password" id="mod_new_pass1" name="mod_new_pass1"></li>
+					<li><label for="mod_new_pass2">Retapez le nouveau mot de passe :</label><input type="password" id="mod_new_pass2" name="mod_new_pass2"></li>
 					<li>
 		 				<button type="submit" class="btn btn-primary" name="modifier_pass_user">Enregistrer</button>
 		  				<button type="button" class="btn">Annuler</button>
