@@ -72,9 +72,9 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 			<h4 class="tweets">Modifiez votre mot de passe</h4>
 			<ul>
 				<form method="POST">
-					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" name="mod_old_pass"</li>
-					<li><label for="mod_new_pass1">Choisissez un nouveau mot de passe :</label><input type="password" name="mod_new_pass1"</li>
-					<li><label for="mod_new_pass2">Retapez le nouveau mot de passe :</label><input type="password" name="mod_new_pass2"</li>
+					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" id="mod_old_pass" name="mod_old_pass"></li>
+					<li><label for="mod_new_pass1">Choisissez un nouveau mot de passe :</label><input type="password" id="mod_new_pass1" name="mod_new_pass1"></li>
+					<li><label for="mod_new_pass2">Retapez le nouveau mot de passe :</label><input type="password" id="mod_new_pass2" name="mod_new_pass2"></li>
 					<li>
 		 				<button type="submit" class="btn btn-primary" name="modifier_pass_user">Enregistrer</button>
 		  				<button type="button" class="btn">Annuler</button>

@@ -46,15 +46,25 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 
 $id = $_GET['id'];
 $tab_infos = getUserInfo($bdd, $id);
-
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
 $followers = listFollower($bdd, $id);
 $follows = explode(';', $tab_infos['follows']);
 if(count($follows) == 1 && empty($follows[0]))
 {
 	$follows = array();
 }
-
-
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($myfollows) == 1 && empty($myfollows[0]))
+{
+	$myfollows = array();
+}
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 
 ?>
 <div class="container body-complete">
@@ -118,11 +128,22 @@ if($_GET['id'] == $_SESSION['id'])
 				<li><button class="btn">Editer le profil</button></li>
 <?php
 }
+elseif ( isset($abo) )
+{
+?>
+				<form method="POST">
+					<input type="hidden" name="id_del" value="<?php echo $_GET['id'];?>">
+					<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+				</form>
+<?php
+}
 else
 {
 ?>
-
-
+				<form method="POST">
+					<input type="hidden" name="id_add_abo" value="<?php echo $id; ?>">
+					<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
+				</form>
 
 <?php
 }
@@ -135,8 +156,8 @@ else
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Abonnements</h4>
 			<ul>
-
 <?php
+$id_msg = 1;
 if (isset($raw_follow) AND !empty($raw_follow) )
 {
 	foreach ($raw_follow as $value)
@@ -155,30 +176,64 @@ if (isset($raw_follow) AND !empty($raw_follow) )
 						<div class="date-tweet">
 <?php
 
-		if($_GET['id'] == $_SESSION['id'])
+		if(in_array($follow_abo['id'], $myfollows) && $follow_abo['id'] != $_SESSION['id'])
 		{
 ?>
 							<form method="POST">
 								<input type="hidden" name="id_del" value="<?php echo $value;?>">
 								<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
 							</form>
-						</div>
-						<br>
-						<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+		}
+		else if(!in_array($follow_abo['id'], $myfollows) && $follow_abo['id'] != $_SESSION['id'])
+		{
+?>
+							<form method="POST" action="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>&amp;id_abo=<?php echo $id_msg; ?>">
+								<input type="hidden" name="id_add_abo<?php echo $id_msg; ?>" value="<?php echo $follow_abo['id']; ?>">
+								<input type="submit" class="btn btn-info" name="btn_add_abo<?php echo $id_msg; ?>" value="Suivre">
+							</form>
+<?php
+		}
+		if($follow_abo['id'] != $_SESSION['id']  && $_SESSION['id'] != $id)
+		{
+?>
+			</div>
+			<br>
+			<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
 		}
 		else
 		{
+			if($_SESSION['id'] == $id)
+			{
 ?>
 						</div>
 						<br>
-						<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
+						<p>Vous suivez <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
 <?php
+			}
+			else if($follow_abo['id'] == $_SESSION['id'])
+			{
+?>
+						</div>
+						<br>
+						<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a> vous suit<br><br></p>
+<?php
+			}
+			else
+			{
+?>
+						</div>
+						<br>
+						<p><?php echo $tab_infos['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+<?php
+			}
 		}
 ?>
 					</div>
-				</li>
+				</li>	
 <?php
+$id_msg++;
 	}
 }
 else
