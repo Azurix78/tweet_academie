@@ -136,67 +136,67 @@ else
 			<h4 class="tweets">Abonnements</h4>
 			<ul>
 
-			<?php
-			if (isset($raw_follow) AND !empty($raw_follow) )
-			{
-				foreach ($raw_follow as $value)
-				{
-					?>
-					<li>
-						<?php $follow_abo=getUserInfo($bdd, $value); ?>
-						<div class="imgtweets">
-							<a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">
-								<img src="<?php echo getAvatar($value); ?>" alt="avatar">
-							</a>
-						</div>
-						<div class="tweet">
-							<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
-							<span>@<?php echo $follow_abo['username']; ?></span>
-							<div class="date-tweet">
+<?php
+if (isset($raw_follow) AND !empty($raw_follow) )
+{
+	foreach ($raw_follow as $value)
+	{
+		$follow_abo=getUserInfo($bdd, $value);
+?>
+				<li>
+					<div class="imgtweets">
+						<a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">
+							<img src="<?php echo getAvatar($value); ?>" alt="avatar">
+						</a>
+					</div>
+					<div class="tweet">
+						<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
+						<span>@<?php echo $follow_abo['username']; ?></span>
+						<div class="date-tweet">
 <?php
 
-if($_GET['id'] == $_SESSION['id'])
-{
+		if($_GET['id'] == $_SESSION['id'])
+		{
 ?>
-								<form method="POST">
-									<input type="hidden" name="id_del" value="<?php echo $value;?>">
-									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
-								</form>
-							</div>
-							<br>
-							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
+							<form method="POST">
+								<input type="hidden" name="id_del" value="<?php echo $value;?>">
+								<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+							</form>
+						</div>
+						<br>
+						<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
 <?php
-}
-else
-{
-?>
-							</div>
-							<br>
-							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
-<?php
-}
+		}
+		else
+		{
 ?>
 						</div>
-					</li>
-					<?php
-}
+						<br>
+						<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+		}
+?>
+					</div>
+				</li>
+<?php
+	}
 }
 else
 {
 	if($_GET['id'] == $_SESSION['id'])
 	{
 ?>
-						<div class="tweet">
-							<li id="no_abo"><p>Vous ne suivez personne.</p></li>
-						</div>
+				<div class="tweet">
+					<li id="no_abo"><p>Vous ne suivez personne.</p></li>
+				</div>
 <?php
 	}
 	else
 	{
 ?>
-						<div class="tweet">
-							<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
-						</div>
+				<div class="tweet">
+					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
+				</div>
 <?php
 	}
 }

@@ -39,16 +39,10 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
 			</ul>
 		</div>
-		<div class="bloc wall-menu" id="menu_id">
-			<ul>
-				<li><a href="index.php?page=edit_user">Modifier informations<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_password">Modifier mot de passe<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-				<li><a href="index.php?page=edit_theme">Modifier thème<span class="menu-chev"><i class="icon-arrow-right"></i></span></a></li>
-			</ul>
-		</div>
 		<div class="bloc wall-menu" id="msg_priv">
 			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
+				<li><a href="index.php?page=edit_user">Modifier mon compte<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li><a href="index.php?page=edit_password">Modifier mot de passe<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 			</ul>
 		</div>
 

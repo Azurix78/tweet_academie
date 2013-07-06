@@ -253,17 +253,17 @@ else
 	if($id == $_SESSION['id'])
 	{
 ?>
-					<div class="tweet">
-						<li id="no_abo"><p>Vous n'avez aucun follower.</p></li>
-					</div>
+				<div class="tweet">
+					<li id="no_abo"><p>Vous n'avez aucun follower.</p></li>
+				</div>
 <?php
 	}
 	else
 	{
 ?>
-					<div class="tweet">
-						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p><li>
-					</div>
+				<div class="tweet">
+					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p><li>
+				</div>
 <?php
 	}
 }
