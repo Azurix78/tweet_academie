@@ -1,6 +1,29 @@
 <?php
-if ( !isset($_GET['id']))
+
+if ( !isset($_GET['id']) )
 	header("Location: index.php?page=404");
+
+$id = $_GET['id'];
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$followers = listFollower($bdd, $id);
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+if(count($myfollows) == 1 && empty($myfollows[0]))
+{
+	$myfollows = array();
+}
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 
 if(isset($_POST['bouton_retweet']))
 {
@@ -40,20 +63,6 @@ if(isset($_POST['bouton_retweet']))
 		<?php
 	}
 }
-
-$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
-
-$id = $_GET['id'];
-$tab_infos = getUserInfo($bdd, $id);
-$follows = explode(';', $tab_infos['follows']);
-$follows_perso = explode(';', $tab_infos_perso['follows']);
-$followers = listFollower($bdd, $id);
-
-if(count($follows) == 1 && empty($follows[0]))
-{
-	$follows = array();
-}
-
 
 if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) )
 {
@@ -97,8 +106,6 @@ if ( isset($tab_infos_perso['follows']) AND !empty($tab_infos_perso['follows']) 
 	}
 }
 
-
-
 if ( isset($_GET['id_rep']) )
 {
 	if(isset($_POST['bouton_rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['rep_tweet' . $_GET['id_rep'] ]) AND isset($_POST['id_ans_tweet' . $_GET['id_rep'] ]) AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
@@ -131,8 +138,16 @@ if(isset($_POST['btn_add_abo']) && isset($_POST['id_add_abo']) && !empty($_POST[
 	addAbo($bdd, $_POST['id_add_abo']);
 }
 
+unset($abo);
 $tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$tab_infos = getUserInfo($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$followers = listFollower($bdd, $id);
 $myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
 if(count($myfollows) == 1 && empty($myfollows[0]))
 {
 	$myfollows = array();
@@ -144,12 +159,25 @@ foreach ($myfollows as $value)
 		$abo = "ok";
 	}
 }
+
+$sup = getUserInfo($bdd, $_GET['id']);
+if ( $sup['registered'] == "9999-01-01" )
+{
+	$user_sup = 1;
+}
+
 ?>
 <div class="container body-complete" <?php if(isset($_GET['id'])){
 		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($tab_infos['fgcolor'])){
 				echo "style='background-color:#" . $tab_infos['fgcolor'] . "'";
 			}
 		} ?>>
+<?php
+if ( !isset($user_sup) )
+{
+	
+}
+?>
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
@@ -285,7 +313,7 @@ if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 							<span>@<?php echo $reply['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $reply['content'], $reply['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($reply['content']), $reply['id_user'])); ?></p>
 						</div>
 <?php
 }
@@ -297,7 +325,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $retweet['content'], $retweet['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $retweet['id'];
@@ -310,7 +338,7 @@ else
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $value['content'], $value['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($value['content']), $value['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $value['id'];
@@ -340,11 +368,22 @@ $id_msg++;
 }
 else
 {
+	if($id == $_SESSION['id'])
+	{
 ?>
-						<div class="tweet">
-							<li id="no_abo"><p>Vous n'avez pas encore de tweet !</p></li>
-						</div>
+					<div class="tweet">
+						<li id="no_abo"><p>Vous n'avez publi&eacute; aucun tweet pour l'instant.</p></li>
+					</div>
 <?php
+	}
+	else
+	{
+?>
+					<div class="tweet">
+						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a publi&eacute; aucun tweet pour l'instant.</p></li>
+					</div>
+<?php
+	}
 }
 ?>
 				<li id="back">

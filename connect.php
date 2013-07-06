@@ -1,10 +1,18 @@
 <?php
-
 require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
 
 anti_repost();
+
+if ( isset($_POST['sup_ok']) )
+{
+	archiveUser($bdd, $_SESSION['id']);
+		$error = "<div class=\"alert alert-success\">
+				<strong>Succ&egrave;s :</strong> Votre compte a bien &eacute;t&eacute; supprim&eacute;.<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+				</div>";
+	session_destroy();
+}
 
 $amp = html_entity_decode('&amp;');
 
@@ -16,19 +24,33 @@ if(isset($_POST['bouton']))
 		$password = htmlentities($_POST['signin-password']);
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
-			setcookie('id', $result_fetch['id'], time()+(60*60*24*30));
-			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
-			setcookie('email', $result_fetch['email'], time()+(60*60*24*30));
-			setcookie('password', $result_fetch['password'], time()+(60*60*24*30));
-			setcookie('locality', $result_fetch['locality'], time()+(60*60*24*30));
 			$userinfo = getUserInfo($bdd,$user);
-			$_SESSION['id'] = $userinfo['id'];
-			$_SESSION['username'] = $userinfo['username'];
-			$_SESSION['email'] = $userinfo['email'];
-			$_SESSION['locality'] = $userinfo['locality'];
-			unset($_POST['signin-email']);
-			unset($_POST['signin-password']);
-			header('Location: index.php');
+			if ( $userinfo['registered'] != "9999-01-01" )
+			{
+				$_SESSION['id'] = $userinfo['id'];
+				$_SESSION['username'] = $userinfo['username'];
+				$_SESSION['email'] = $userinfo['email'];
+				$_SESSION['locality'] = $userinfo['locality'];
+				if($_POST['stay_co'])
+				{
+					setcookie('id', $userinfo['id'], time()+(60*60*24*30));
+					setcookie('username', $userinfo['username'], time()+(60*60*24*30));
+					setcookie('email', $userinfo['email'], time()+(60*60*24*30));
+					setcookie('password', $userinfo['password'], time()+(60*60*24*30));
+					setcookie('locality', $userinfo['locality'], time()+(60*60*24*30));
+				}
+				unset($_POST['signin-email']);
+				unset($_POST['signin-password']);
+				header('Location: index.php');
+			}
+			elseif( $userinfo['registered'] == "9999-01-01" )
+			{
+				$error = "<div class=\"alert alert-error\">
+  				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+  				<strong>Erreur :</strong> Compte supprim&eacute;.
+				</div>";
+			}
+
 		}
 		else
 		{
@@ -161,6 +183,13 @@ if(isset($_POST['bouton-register']))
     	    	<input type="text" class="input-large" name="signin-email" id="signin-email" placeholder="Nom d'utilisateur ou email" <?php if(isset($_POST['signin-email'])) {echo "value=\"" . htmlentities($_POST['signin-email']) . "\"";} ?>>
      	   		<label for="signin-password">Mot de passe</label>
     	    	<input class="input-medium" type="password" name="signin-password" id="signin-password" placeholder="Mot de passe">
+    	    	<br>
+    	    	<br>
+    	    	<label for="stay_co" id="stay_co_label" class="checkbox">
+  					<input type="checkbox" name="stay_co" id="stay_co">
+  					Se souvenir de moi
+				</label>
+    	    	<br>
     	    	<input class="btn btn-info" type="submit" value="Se connecter" name="bouton">
    			</form>
    		</div>

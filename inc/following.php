@@ -1,5 +1,26 @@
 <?php
 $user_abo = getUserInfo($bdd, $_GET['id']);
+$id = $_GET['id'];
+$tab_infos = getUserInfo($bdd, $id);
+$tab_infos_perso = getUserInfo($bdd, $_SESSION['id']);
+$followers = listFollower($bdd, $id);
+$follows = explode(';', $tab_infos['follows']);
+$myfollows = explode(';', $tab_infos_perso['follows']);
+if(count($follows) == 1 && empty($follows[0]))
+{
+	$follows = array();
+}
+if(count($myfollows) == 1 && empty($myfollows[0]))
+{
+	$myfollows = array();
+}
+foreach ($myfollows as $value)
+{
+	if ( $_GET['id'] == $value )
+	{
+		$abo = "ok";
+	}
+}
 
 if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 {
@@ -42,19 +63,6 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 		}
 	}
 }
-
-
-$id = $_GET['id'];
-$tab_infos = getUserInfo($bdd, $id);
-
-$followers = listFollower($bdd, $id);
-$follows = explode(';', $tab_infos['follows']);
-if(count($follows) == 1 && empty($follows[0]))
-{
-	$follows = array();
-}
-
-
 
 ?>
 <div class="container body-complete">
@@ -115,14 +123,25 @@ if($_GET['id'] == $_SESSION['id'])
 {
 ?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
-				<li><button class="btn">Editer le profil</button></li>
+				<li><a class="btn" id="edit_link" href="index.php?page=edit_user">Editer le profil</a></li>
+<?php
+}
+elseif ( isset($abo) )
+{
+?>
+				<form method="POST">
+					<input type="hidden" name="id_del" value="<?php echo $_GET['id'];?>">
+					<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+				</form>
 <?php
 }
 else
 {
 ?>
-
-
+				<form method="POST">
+					<input type="hidden" name="id_add_abo" value="<?php echo $id; ?>">
+					<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
+				</form>
 
 <?php
 }
@@ -135,60 +154,105 @@ else
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Abonnements</h4>
 			<ul>
+<?php
+$id_msg = 1;
+if (isset($raw_follow) AND !empty($raw_follow) )
+{
+	foreach ($raw_follow as $value)
+	{
+		$follow_abo=getUserInfo($bdd, $value);
+?>
+				<li>
+					<div class="imgtweets">
+						<a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">
+							<img src="<?php echo getAvatar($value); ?>" alt="avatar">
+						</a>
+					</div>
+					<div class="tweet">
+						<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
+						<span>@<?php echo $follow_abo['username']; ?></span>
+						<div class="date-tweet">
+<?php
 
-			<?php
-			if (isset($raw_follow) AND !empty($raw_follow) )
+		if(in_array($follow_abo['id'], $myfollows) && $follow_abo['id'] != $_SESSION['id'])
+		{
+?>
+							<form method="POST">
+								<input type="hidden" name="id_del" value="<?php echo $value;?>">
+								<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
+							</form>
+<?php
+		}
+		else if(!in_array($follow_abo['id'], $myfollows) && $follow_abo['id'] != $_SESSION['id'])
+		{
+?>
+							<form method="POST" action="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>&amp;id_abo=<?php echo $id_msg; ?>">
+								<input type="hidden" name="id_add_abo<?php echo $id_msg; ?>" value="<?php echo $follow_abo['id']; ?>">
+								<input type="submit" class="btn btn-info" name="btn_add_abo<?php echo $id_msg; ?>" value="Suivre">
+							</form>
+<?php
+		}
+		if($follow_abo['id'] != $_SESSION['id']  && $_SESSION['id'] != $id)
+		{
+?>
+			</div>
+			<br>
+			<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
+<?php
+		}
+		else
+		{
+			if($_SESSION['id'] == $id)
 			{
-				foreach ($raw_follow as $value)
-				{
-					?>
-					<li>
-						<?php $follow_abo=getUserInfo($bdd, $value); ?>
-						<div class="imgtweets">
-							<a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">
-								<img src="<?php echo getAvatar($value); ?>" alt="avatar">
-							</a>
-						</div>
-						<div class="tweet">
-							<b><a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>"><?php echo $follow_abo['username']; ?></a></b>
-							<span>@<?php echo $follow_abo['username']; ?></span>
-							<div class="date-tweet">
-<?php
-
-if($_GET['id'] == $_SESSION['id'])
-{
-?>
-								<form method="POST">
-									<input type="hidden" name="id_del" value="<?php echo $value;?>">
-									<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
-								</form>
-							</div>
-							<br>
-							<p>Vous suivez <?php echo $follow_abo['username']; ?><br><br></p>
-<?php
-}
-else
-{
-?>
-							</div>
-							<br>
-							<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>"><?php echo $tab_infos['username']; ?></a> suit <?php echo $follow_abo['username']; ?><br><br></p>
-<?php
-}
 ?>
 						</div>
-					</li>
-					<?php
-				}
+						<br>
+						<p>Vous suivez <a href="index.php?page=profil&amp;id=<?php echo $follow_abo['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+<?php
+			}
+			else if($follow_abo['id'] == $_SESSION['id'])
+			{
+?>
+						</div>
+						<br>
+						<p><a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a> vous suit<br><br></p>
+<?php
 			}
 			else
 			{
-				?>
-						<div class="tweet">
-							<li id="no_abo"><p>Vous ne suivez personne.</p></li>
+?>
 						</div>
-				<?php
+						<br>
+						<p><?php echo $tab_infos['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $follow_abo['username']; ?></a><br><br></p>
+<?php
 			}
+		}
+?>
+					</div>
+				</li>	
+<?php
+$id_msg++;
+	}
+}
+else
+{
+	if($_GET['id'] == $_SESSION['id'])
+	{
+?>
+				<div class="tweet">
+					<li id="no_abo"><p>Vous ne suivez personne.</p></li>
+				</div>
+<?php
+	}
+	else
+	{
+?>
+				<div class="tweet">
+					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
+				</div>
+<?php
+	}
+}
 			?>
 				<li id="back">
 					<div class="div-back">

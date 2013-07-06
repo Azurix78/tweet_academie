@@ -138,7 +138,7 @@ if($_GET['id'] == $_SESSION['id'])
 {
 ?>
 				<li><button class="btn"><i class="icon-envelope"></i></button></li>
-				<li><button class="btn">Editer le profil</button></li>
+				<li><a class="btn" id="edit_link" href="index.php?page=edit_user">Editer le profil</a></li>
 <?php
 }
 elseif ( isset($abo) )
@@ -211,7 +211,7 @@ if(count($followers) > 0)
 ?>
 			</div>
 			<br>
-			<p><?php echo $follow_abo['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?><br><br></p>
+			<p><?php echo $follow_abo['username']; ?> suit <a href="index.php?page=profil&amp;id=<?php echo $tab_infos['id']; ?>">@<?php echo $tab_infos['username']; ?></a><br><br></p>
 <?php
 		}
 		else
@@ -253,17 +253,17 @@ else
 	if($id == $_SESSION['id'])
 	{
 ?>
-					<div class="tweet">
-						<li id="no_abo"><p>Vous n'avez aucun follower.</p></li>
-					</div>
+				<div class="tweet">
+					<li id="no_abo"><p>Vous n'avez aucun follower.</p></li>
+				</div>
 <?php
 	}
 	else
 	{
 ?>
-					<div class="tweet">
-						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p><li>
-					</div>
+				<div class="tweet">
+					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p></li>
+				</div>
 <?php
 	}
 }

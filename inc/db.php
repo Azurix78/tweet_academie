@@ -61,7 +61,7 @@ function search_select($bdd, $table, $champ, $recherche)
 
 function getUsers($bdd)
 {
-	$result = mysqli_query($bdd, "SELECT * FROM users ORDER BY username DESC ");
+	$result = mysqli_query($bdd, "SELECT * FROM users WHERE registered != '9999-01-01' ORDER BY username DESC ");
 		$tab=array();
 		while($result_fetch = mysqli_fetch_assoc($result))
 		{
@@ -139,6 +139,40 @@ function addAbo($bdd, $id_add_abo)
 	}
 }
 
+function archiveUser($bdd, $id)
+{
+	$id= abs(intval($id));
+
+		$req = mysqli_prepare($bdd, "UPDATE users SET registered ='9999-01-01', follows='' WHERE id = ?");
+		mysqli_stmt_bind_param($req, "i", $id);
+		mysqli_stmt_execute($req);
+
+	$alluser=getUsers($bdd);
+	foreach ($alluser as $val)
+	{
+		$raw_follow = explode(";", $val['follows']);
+			
+			$id_del = $id;
+			foreach ($raw_follow as $key => $value)
+			{
+				if ( $value == $id)
+				{
+					unset($raw_follow[$key]);
+					if ( !empty($raw_follow) )
+					{
+						$new_abo = implode(";", $raw_follow);
+						delFollows($bdd, $new_abo, $val['id']);
+					}
+					else
+					{
+						$new_abo = "";
+						delFollows($bdd, $new_abo, $val['id']);
+					}
+				}
+			}
+	}
+}
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
@@ -157,6 +191,7 @@ function CheckLogin($bdd, $user, $password)
 		{
 			$return = true;
 		}
+		
 	}
 	return $return;
 }
@@ -266,7 +301,7 @@ function getMessagesId($bdd, $id_receiver, $id_sender)
 
 // AMBROISE
 
-function checkCookies()
+function checkCookies($bdd)
 {
 	if(isset($_COOKIE['id']) && !empty($_COOKIE['id']) && isset($_COOKIE['username']) && !empty($_COOKIE['username']) && isset($_COOKIE['email']) && !empty($_COOKIE['email']) && isset($_COOKIE['password']) && !empty($_COOKIE['password']))
 	{

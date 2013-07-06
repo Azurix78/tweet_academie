@@ -92,6 +92,11 @@ body{
 	display: none;
 }
 
+#stay_co_label
+{
+	display: inline-block;
+}
+
 .signin .input-medium
 {
 	display: inline-block;

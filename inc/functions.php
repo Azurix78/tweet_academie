@@ -54,6 +54,7 @@ function logOut()
     setcookie('username', '');
     setcookie('email', '');
     setcookie('password', '');
+    setcookie('locality', '');
     session_destroy();
     header('Location: ../index.php');
 }

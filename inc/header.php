@@ -2,6 +2,46 @@
 
 if(isset($_POST['bouton']))
 {
+	if(isset($_FILES['img-tweet']) && $_FILES['img-tweet']['error'] == 0)
+	{
+		if ($_FILES['img-tweet']['size'] <= 6000000)
+        {
+			$infosfichier = pathinfo($_FILES['img-tweet']['name']);
+			$extension_upload = $infosfichier['extension'];
+			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+	        if (in_array($extension_upload, $extensions_autorisees))
+	        {
+
+	        }
+	        else
+	        {
+?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+<?php
+	        }
+	    }
+	    else
+	    {
+?>
+			<div class="alert alert-error">
+				<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+<?php
+	    }
+	}
+	else
+	{
+?>
+		<div class="alert alert-error">
+			<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+<?php
+	}
 	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], NULL, $_SESSION['locality'], NULL, NULL);
 }
 
@@ -34,7 +74,7 @@ if(isset($_POST['bouton']))
 							<b>Quoi de neuf?</b>
 							<a href="#" onClick="closeTweet()"><i class="icon-remove"></i></a>
 						</div>
-						<form method="POST">
+						<form method="POST" enctype="multipart/form-data">
 							<textarea  id="tweet-area" name="tweet-area" maxlength="141"  onKeyDown="nbcharTweet('tweet-area','nbcaract', 'max');" onKeyUp="nbcharTweet('tweet-area','nbcaract', 'max');"></textarea>
 							<input type="file" name="img-tweet"><span class="btn"><img class="size24" src="img/image-tweet.png" alt=""></span>
 							<b style="display:none;" id="max">Nombre de caractères maximum atteint !</b><em id="nbcaract">140</em>
