@@ -162,16 +162,14 @@ function CheckLogin($bdd, $user, $password)
 		{
 			$password_hash = $result_fetch['password'];
 		}
-		if ($result_fetch['registered'] != "0000-00-00")
+		if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
 		{
-			if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
-			{
-				$return = true;
-			}
+			$return = true;
 		}
 		
 	}
 	return $return;
+	
 }
 
 function getUserInfo($bdd, $user)
