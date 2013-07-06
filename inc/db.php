@@ -50,11 +50,15 @@ function getTweet($bdd, $id)
 
 function search_select($bdd, $table, $champ, $recherche)
 {
-	$result = mysqli_query($bdd, "SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE t.hashtags LIKE '%$recherche%' ORDER BY date DESC");
+	$result = mysqli_query($bdd, "SELECT t.id, t.id_user, t.content, t.hashtags, t.image, t.date, t.locality, t.id_reply, t.id_retweet, u.username, u.registered FROM tweets t LEFT JOIN users u ON t.id_user = u.id WHERE u.registered != '9999-01-01' AND t.hashtags LIKE '%$recherche%' ORDER BY date DESC");
 		$tab=array();
-		while($result_fetch = mysqli_fetch_assoc($result))
+
+		if (isset($result))
 		{
-			$tab[] = $result_fetch;
+			while($result_fetch = mysqli_fetch_assoc($result))
+			{
+				$tab[] = $result_fetch;
+			}
 		}
 	return $tab;
 }
