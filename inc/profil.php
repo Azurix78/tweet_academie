@@ -364,7 +364,7 @@ else
 	{
 ?>
 					<div class="tweet">
-						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a publi&eacute; aucun tweet pour l'instant.</p><li>
+						<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a publi&eacute; aucun tweet pour l'instant.</p></li>
 					</div>
 <?php
 	}
