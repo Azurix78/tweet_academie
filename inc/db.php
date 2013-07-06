@@ -266,7 +266,7 @@ function getMessagesId($bdd, $id_receiver, $id_sender)
 
 // AMBROISE
 
-function checkCookies()
+function checkCookies($bdd)
 {
 	if(isset($_COOKIE['id']) && !empty($_COOKIE['id']) && isset($_COOKIE['username']) && !empty($_COOKIE['username']) && isset($_COOKIE['email']) && !empty($_COOKIE['email']) && isset($_COOKIE['password']) && !empty($_COOKIE['password']))
 	{
