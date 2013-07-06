@@ -10,7 +10,7 @@ if(isset($_POST['bouton_retweet']))
 		{
 			$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
 			$id_retweeted_reply = abs(intval($_POST['id_retweeted_reply']));
-			newTweet($bdd, $_SESSION['id'], "", '', '', $id_retweeted_reply, $id_ans_tweet);
+			newTweet($bdd, $_SESSION['id'], "", '', $_SESSION['locality'], $id_retweeted_reply, $id_ans_tweet);
 			?>
 				<div class="alert alert-success">
 					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 require_once("inc/config.php");
 require_once("inc/db.php");
 require_once("inc/functions.php");
@@ -15,10 +16,15 @@ if(isset($_POST['bouton']))
 		$password = htmlentities($_POST['signin-password']);
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
+			setcookie('id', $result_fetch['id'], time()+(60*60*24*30));
+			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
+			setcookie('email', $result_fetch['email'], time()+(60*60*24*30));
+			setcookie('password', $result_fetch['password'], time()+(60*60*24*30));
 			$userinfo = getUserInfo($bdd,$user);
 			$_SESSION['id'] = $userinfo['id'];
 			$_SESSION['username'] = $userinfo['username'];
 			$_SESSION['email'] = $userinfo['email'];
+			$_SESSION['locality'] = $userinfo['locality'];
 			unset($_POST['signin-email']);
 			unset($_POST['signin-password']);
 			header('Location: index.php');

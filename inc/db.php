@@ -155,11 +155,6 @@ function CheckLogin($bdd, $user, $password)
 		}
 		if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
 		{
-			setcookie('id', $result_fetch['id'], time()+(60*60*24*30));
-			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
-			setcookie('email', $result_fetch['email'], time()+(60*60*24*30));
-			setcookie('password', $result_fetch['password'], time()+(60*60*24*30));
-
 			$return = true;
 		}
 	}

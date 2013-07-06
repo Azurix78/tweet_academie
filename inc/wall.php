@@ -8,7 +8,7 @@ if ( isset($_GET['id_rep']) )
 		{
 			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
 			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
-			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
+			newTweet($bdd, $_SESSION['id'], "$content", NULL, $_SESSION['locality'], abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
 			?>
 				<div class="alert alert-success">
 					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
