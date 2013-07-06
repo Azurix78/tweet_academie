@@ -1,8 +1,7 @@
 <?php
-var_dump($_FILES);
 if(isset($_POST['modifier_theme_user']))
 {
-		if((uploadImage($bdd, "upload/bgimg", "img", $_SESSION['id'])) == true)
+		if((uploadImage($bdd, "upload/bgimg/", "mod_bgimg", $_SESSION['id'])) == true)
 		{
 			if(!empty($_FILES['mod_bgimg']['name'])){ $bgimg = "/upload/bgimg/" . $_SESSION['id'] . ".png"; } else { $bgimg = ''; }
 			updateThemeInfos($bdd, $_SESSION['id'], $_POST['mod_bgcolor'], $_POST['mod_fgcolor'], $bgimg, $_POST['mod_scrollcolor']);
@@ -99,7 +98,7 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 							<span onClick="colorInput('','mod_fgcolor')" class="transparent"><i class="icon-remove"></i></span>
 						</div>
 					</li>
-					<li><label for="mod_bgimg">Ajouter une image en arri&egrave;re-plan :</label><input type="file" id="mod_bgimg" name="img"></li>
+					<li><label for="mod_bgimg">Ajouter une image en arri&egrave;re-plan :</label><input type="file" id="mod_bgimg" name="mod_bgimg"></li>
 					<li><label for="mod_scrollcolor">What is that fucking "scrollcolor" ? :</label><input type="text" class="color" id="mod_scrollcolor" name="mod_scrollcolor" value="<?php if(isset($_POST['mod_scrollcolor'])) { echo htmlentities($_POST['mod_scrollcolor']);} else { echo $infos_perso['scrollcolor'];} ?>">
 						<span class="box-theme" style="background-color:<?php if(isset($infos_perso['scrollcolor'])){ echo '#' . $infos_perso['scrollcolor'];} else {echo 'transparent';} ?>"></span>
 						<div class="color-choice">
