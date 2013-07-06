@@ -429,8 +429,8 @@ function updateUserPassword($bdd, $id, $currentPass, $newPass1, $newPass2)
 {
 	$id = abs(intval($id));
 	$currentPass = htmlentities($currentPass);
-	$currentPass = htmlentities($newPass1);
-	$currentPass = htmlentities($newPass2);
+	$newPass1 = htmlentities($newPass1);
+	$newPass2 = htmlentities($newPass2);
 	$search_password = mysqli_query($bdd, 'SELECT password FROM users WHERE id = '.$id);
 	if($search_password != false && mysqli_num_rows($search_password) == 1)
 	{
