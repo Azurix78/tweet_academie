@@ -179,16 +179,27 @@ else
 						</div>
 					</li>
 					<?php
-				}
-			}
-			else
-			{
-				?>
+}
+}
+else
+{
+	if($_GET['id'] == $_SESSION['id'])
+	{
+?>
 						<div class="tweet">
 							<li id="no_abo"><p>Vous ne suivez personne.</p></li>
 						</div>
-				<?php
-			}
+<?php
+	}
+	else
+	{
+?>
+						<div class="tweet">
+							<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
+						</div>
+<?php
+	}
+}
 			?>
 				<li id="back">
 					<div class="div-back">
