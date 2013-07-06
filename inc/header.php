@@ -27,7 +27,7 @@ if(isset($_POST['bouton']))
 							<b>Quoi de neuf?</b>
 							<a href="#" onClick="closeTweet()"><i class="icon-remove"></i></a>
 						</div>
-						<form method="POST">
+						<form method="POST" enctype="multipart/form-data">
 							<textarea  id="tweet-area" name="tweet-area" maxlength="141"  onKeyDown="nbcharTweet('tweet-area','nbcaract', 'max');" onKeyUp="nbcharTweet('tweet-area','nbcaract', 'max');"></textarea>
 							<input type="file" name="img-tweet"><span class="btn"><img class="size24" src="img/image-tweet.png" alt=""></span>
 							<b style="display:none;" id="max">Nombre de caractères maximum atteint !</b><em id="nbcaract">140</em>

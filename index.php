@@ -16,7 +16,7 @@ require_once("inc/header.php");
 
 anti_repost();
 
-checkCookies();
+checkCookies($bdd);
 
 if(isset($_GET['id']))
 {
