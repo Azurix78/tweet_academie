@@ -139,6 +139,15 @@ function addAbo($bdd, $id_add_abo)
 	}
 }
 
+function archiveUser($bdd, $id)
+{
+	$id= abs(intval($id));
+
+		$req = mysqli_prepare($bdd, "UPDATE users SET registered ='0000-00-00' WHERE id = ?");
+		mysqli_stmt_bind_param($req, "i", $id);
+		mysqli_stmt_execute($req);
+}
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
@@ -153,10 +162,14 @@ function CheckLogin($bdd, $user, $password)
 		{
 			$password_hash = $result_fetch['password'];
 		}
-		if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
+		if ($result_fetch['registered'] != "0000-00-00")
 		{
-			$return = true;
+			if(hash("ripemd160", $password."si tu aime la wac leve les bras") == $password_hash)
+			{
+				$return = true;
+			}
 		}
+		
 	}
 	return $return;
 }
