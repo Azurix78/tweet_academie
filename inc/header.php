@@ -53,10 +53,11 @@ if(isset($_POST['bouton']))
 				<div class="nav_right">
 					<ul class="inline nav_right-recherche">
 							<li>
-								<form method="POST" action="index.php?page=recherche">
+								<form method="GET" action="index.php">
 									<div class="input-append">
-										<input class="span2" id="appendedInputButton" name="recherche_hashtags" placeholder="Recherche..." type="text">
-										<button type="submit" name="btn_recherche_hashtags" class="btn recherche"><i class="icon-search"></i></button>
+										<input class="span2" id="appendedInputButton" name="q" placeholder="Recherche..." type="text">
+										<button type="submit" class="btn" id="recherche"><i class="icon-search"></i></button>
+										<input type="hidden" name="page" value="recherche">
 									</div>
 								</form>
 							</li>

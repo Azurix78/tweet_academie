@@ -48,7 +48,8 @@ if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isse
 		</div>
 		<div class="bloc wall-menu" id="msg_priv">
 			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
+				<li><a href="index.php?page=edit_user">Modifier mon compte<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li><a href="index.php?page=edit_password">Modifier mot de passe<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 			</ul>
 		</div>
 
@@ -74,7 +75,7 @@ if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isse
 
 
 	<div class="right">
-		<div class="bloc wall-tweets">
+		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
 			<ul>
 				<form method="POST">

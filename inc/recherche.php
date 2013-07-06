@@ -9,12 +9,12 @@ if ( isset($_GET['id_rep']) )
 			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
 			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
-			?>
-				<div class="alert alert-success">
+			
+				$error = "<div class='alert alert-success'>
 					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 
 		}
 		else
@@ -38,22 +38,22 @@ if(isset($_POST['bouton_retweet']))
 		{
 				$id_ans_tweet = abs(intval($_POST['id_ans_tweet']));
 				newTweet($bdd, $_SESSION['id'], "", '', '', NULL, $id_ans_tweet);
-				?>
-				<div class="alert alert-success">
+				
+				$error = "<div class='alert alert-success'>
 					<strong>Succ&egrave;s :</strong> Message retweet&eacute; !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 		}
 	}
 	else
 	{
-		?>
-				<div class="alert alert-error">
+		
+				$error = "<div class='alert alert-error'>
 					<strong>Erreur :</strong> Don't fuck with Swiffer !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 	}
 }
 
@@ -63,39 +63,39 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 	if ( strlen($_POST['new-tweet']) <= 140 )
 	{
 		newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
-		?>
-				<div class="alert alert-success">
+		
+				$error = "<div class='alert alert-success'>
 					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 	}
 	else
 	{
-		?>
-				<div class="alert alert-error">
+		
+				$error = "<div class='alert alert-error'>
 					<strong>Erreur :</strong> Don't fuck with Swiffer !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 	}
 }
 
 if (isset($error_content))
 {
-		?>
-				<div class="alert alert-error">
+		
+				$error = "<div class='alert alert-error'>
 					<strong>Erreur :</strong> Don't fuck with Swiffer !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 		unset($error_content);
 }
 
 
-if(isset($_POST['btn_recherche_hashtags']) AND isset($_POST['recherche_hashtags']) )
+if(isset($_GET['q']))
 {
-	$_SESSION['recherche'] = $_POST['recherche_hashtags'];
+	$_SESSION['recherche'] = $_GET['q'];
 	if ( !empty($_SESSION['recherche']) )
 	{
 		$recherche = $_SESSION['recherche'];
@@ -105,12 +105,12 @@ if(isset($_POST['btn_recherche_hashtags']) AND isset($_POST['recherche_hashtags'
 	{
 
 		$tweets = array();
-		?>
-				<div class="alert alert-error">
+		
+				$error = "<div class='alert alert-error'>
 					<strong>Erreur :</strong> Veuillez rentrez un hashtags dans la recherche !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 	}
 }
 elseif( isset($_SESSION['recherche']) )
@@ -121,16 +121,17 @@ elseif( isset($_SESSION['recherche']) )
 else
 {
 	$tweets = array();
-		?>
-				<div class="alert alert-error">
+		
+				$error = "<div class='alert alert-error'>
 					<strong>Erreur :</strong> Veuillez rentrez un hashtags dans la recherche !
-  					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				</div>
-		<?php
+  					<button type='button' class='close' data-dismiss='alert'>&times;</button>
+				</div>";
+		
 }
 
 ?>
 <div class="container body-complete">
+	<?php if(isset($error)){ echo $error;} ?>
 	<div class="left">
 		<div class="bloc wall-profil">
 			<div class="imgfullname">
