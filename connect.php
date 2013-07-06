@@ -181,8 +181,11 @@ if(isset($_POST['bouton-register']))
      	   		<label for="signin-password">Mot de passe</label>
     	    	<input class="input-medium" type="password" name="signin-password" id="signin-password" placeholder="Mot de passe">
     	    	<br>
-    	    	<label for="stay_co" id="stay_co_label">Se souvenir de moi</label>
-    	    	<input type="checkbox" name="stay_co" id="stay_co">
+    	    	<br>
+    	    	<label for="stay_co" id="stay_co_label" class="checkbox">
+  					<input type="checkbox" name="stay_co" id="stay_co">
+  					Se souvenir de moi
+				</label>
     	    	<br>
     	    	<input class="btn btn-info" type="submit" value="Se connecter" name="bouton">
    			</form>
