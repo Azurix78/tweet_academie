@@ -22,21 +22,32 @@ if(isset($_POST['bouton']))
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
 			$userinfo = getUserInfo($bdd,$user);
-			$_SESSION['id'] = $userinfo['id'];
-			$_SESSION['username'] = $userinfo['username'];
-			$_SESSION['email'] = $userinfo['email'];
-			$_SESSION['locality'] = $userinfo['locality'];
-			if($_POST['stay_co'])
+			if ( $userinfo['registered'] != "0000-00-00" )
 			{
-				setcookie('id', $userinfo['id'], time()+(60*60*24*30));
-				setcookie('username', $userinfo['username'], time()+(60*60*24*30));
-				setcookie('email', $userinfo['email'], time()+(60*60*24*30));
-				setcookie('password', $userinfo['password'], time()+(60*60*24*30));
-				setcookie('locality', $userinfo['locality'], time()+(60*60*24*30));
+				$_SESSION['id'] = $userinfo['id'];
+				$_SESSION['username'] = $userinfo['username'];
+				$_SESSION['email'] = $userinfo['email'];
+				$_SESSION['locality'] = $userinfo['locality'];
+				if($_POST['stay_co'])
+				{
+					setcookie('id', $userinfo['id'], time()+(60*60*24*30));
+					setcookie('username', $userinfo['username'], time()+(60*60*24*30));
+					setcookie('email', $userinfo['email'], time()+(60*60*24*30));
+					setcookie('password', $userinfo['password'], time()+(60*60*24*30));
+					setcookie('locality', $userinfo['locality'], time()+(60*60*24*30));
+				}
+				unset($_POST['signin-email']);
+				unset($_POST['signin-password']);
+				header('Location: index.php');
 			}
-			unset($_POST['signin-email']);
-			unset($_POST['signin-password']);
-			header('Location: index.php');
+			elseif( $userinfo['registered'] == "0000-00-00" )
+			{
+				$error = "<div class=\"alert alert-error\">
+  				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+  				<strong>Erreur :</strong> Compte supprim&eacute;.
+				</div>";
+			}
+
 		}
 		else
 		{
