@@ -19,7 +19,7 @@ if(isset($_POST['bouton']))
 	{
 		$user = htmlentities($_POST['signin-email']);
 		$password = htmlentities($_POST['signin-password']);
-		if($result_fetch = CheckLogin($bdd, $user, $password))
+		if(CheckLogin($bdd, $user, $password) == true)
 		{
 			$userinfo = getUserInfo($bdd,$user);
 			$_SESSION['id'] = $userinfo['id'];
