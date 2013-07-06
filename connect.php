@@ -20,6 +20,7 @@ if(isset($_POST['bouton']))
 			setcookie('username', $result_fetch['username'], time()+(60*60*24*30));
 			setcookie('email', $result_fetch['email'], time()+(60*60*24*30));
 			setcookie('password', $result_fetch['password'], time()+(60*60*24*30));
+			setcookie('locality', $result_fetch['locality'], time()+(60*60*24*30));
 			$userinfo = getUserInfo($bdd,$user);
 			$_SESSION['id'] = $userinfo['id'];
 			$_SESSION['username'] = $userinfo['username'];

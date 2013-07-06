@@ -1,5 +1,24 @@
 <?php
 $infos_perso = getUserInfo($bdd, $_SESSION['id']);
+
+if(isset($_POST['modifier_infos_user']) && isset($_POST['mod_username']) && isset($_POST['mod_mail']) && isset($_POST['mod_locality']))
+{
+	if(!empty($_POST['mod_mail']))
+	{
+		if(!empty($_POST['mod_username']))
+		{
+			updateUserInfos($bdd, $_SESSION['id'], $_POST['mod_username'], $_POST['mod_mail'], $_POST['mod_locality']);
+		}
+		else
+		{
+			// MESSAGE D'ERREUR
+		}
+	}
+	else
+	{
+		// MESSAGE D'ERREUR
+	}
+}
 ?>
 <div class="container body-complete">
 	<div class="left">
@@ -42,17 +61,12 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
 			<ul>
-				<form>
+				<form method="POST">
 					<li><label>Nom d'utilisateur :</label><input type="text" name="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
 					<li><label>Email :</label><input type="text" name="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
 					<li><label>Location :</label><input type="text" name="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
-					<li><label>Mot de passe :</label><input type="text" name="mod_mdp" value=""></li>
-					<li><label>Couleur de fond :</label><input name="mod_bgcolor" class="color" value="60a3d2"></li>
-					<li><label>Couleur du recouvrement  :</label><input class="color" name="mod_fgcolor" value="FFF"></li>
-					<li><label>Ajouter une image en arri&egrave;re-plan :</label><input type="file" name="mod_bgimg"></li>
-					<li><label>What is that fucking "scrollcolor" ? :</label><input name="mod_scrollcolor" class="color" value="FF61A5"></li>
 					<li>
-		 				<button type="submit" class="btn btn-primary">Enregistrer</button>
+		 				<button type="submit" class="btn btn-primary" name="modifier_infos_user">Enregistrer</button>
 		  				<button type="button" class="btn">Annuler</button>
 		  			</li>
 				</form>

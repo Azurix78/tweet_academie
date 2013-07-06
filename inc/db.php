@@ -384,4 +384,31 @@ function checkTags($bdd, $string, $id_user)
 	return $string_return;
 }
 
+function updateUserInfos($bdd, $id, $username, $email, $locality)
+{
+	$id = abs(intval($id));
+	$username = htmlentities($username);
+	$email = htmlentities($email);
+	$locality = htmlentities($locality);
+	$username = mysqli_real_escape_string($bdd, $username);
+	$email = mysqli_real_escape_string($bdd, $email);
+	$locality = mysqli_real_escape_string($bdd, $locality);
+
+	$update_username = mysqli_query($bdd, 'UPDATE users SET username = "'.$username.'" WHERE id = '.$id);
+	$update_email = mysqli_query($bdd, 'UPDATE users SET email = "'.$email.'" WHERE id = '.$id);
+	$update_locality = mysqli_query($bdd, 'UPDATE users SET locality = "'.$locality.'" WHERE id = '.$id);
+
+	if($update_username == true && $update_email == true && $update_locality == true)
+	{
+		$_SESSION['username'] = $username;
+		$_SESSION['email'] = $email;
+		$_SESSION['locality'] = $locality;
+
+		$_COOKIE['username'] = $username;
+		$_COOKIE['email'] = $email;
+		$_COOKIE['locality'] = $locality;
+		// MESSAGE DE CONFIRMATION
+	}
+}
+
 ?>
