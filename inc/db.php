@@ -169,7 +169,6 @@ function CheckLogin($bdd, $user, $password)
 		
 	}
 	return $return;
-	
 }
 
 function getUserInfo($bdd, $user)
