@@ -59,4 +59,22 @@ function logOut()
     header('Location: ../index.php');
 }
 
+function curl_get_result($url)
+{
+    $curl = curl_init();
+    $timeout = 5;
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+    $exec = curl_exec($curl);
+    curl_close($curl);
+    return $exec;
+}
+
+function bitly($url, $login, $appkey, $format='txt')
+{
+    $connectURL = 'http://api.bit.ly/v3/shorten?login='.$login.'&apiKey='.$appkey.'&uri='.urlencode($url).'&format='.$format;
+    return curl_get_result($connectURL);
+}
+
 ?>

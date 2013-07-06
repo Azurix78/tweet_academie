@@ -2,6 +2,7 @@
 
 if(isset($_POST['bouton']))
 {
+	$image = NULL;
 	if(isset($_FILES['img-tweet']) && $_FILES['img-tweet']['error'] == 0)
 	{
 		if ($_FILES['img-tweet']['size'] <= 6000000)
@@ -11,7 +12,9 @@ if(isset($_POST['bouton']))
 			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
 	        if (in_array($extension_upload, $extensions_autorisees))
 	        {
-
+	        	move_uploaded_file($_FILES['img-tweet']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
+	        	$image = basename($_FILES['img-tweet']['name']);
+	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
 	        }
 	        else
 	        {
@@ -42,7 +45,7 @@ if(isset($_POST['bouton']))
 		</div>
 <?php
 	}
-	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], NULL, $_SESSION['locality'], NULL, NULL);
+	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], $image, $_SESSION['locality'], NULL, NULL);
 }
 
 ?>
