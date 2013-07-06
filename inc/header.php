@@ -1,4 +1,17 @@
 <?php
+if ( isset($_GET['id']) )
+{
+	$sup = getUserInfo($bdd, $_GET['id']);
+	if ( $sup['registered'] == "9999-01-01" )
+	{
+		$user_sup = 1;
+	}
+
+	if ( isset($user_sup) )
+	{
+		header('location:index.php?page=404');
+	}
+}
 
 if(isset($_POST['bouton']))
 {
