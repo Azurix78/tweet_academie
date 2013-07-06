@@ -1,5 +1,7 @@
 <?php
+
 $infos_perso = getUserInfo($bdd, $_SESSION['id']);
+
 
 if(isset($_POST['modifier_theme_user']))
 {
