@@ -139,6 +139,15 @@ function addAbo($bdd, $id_add_abo)
 	}
 }
 
+function archiveUser($bdd, $id)
+{
+	$id= abs(intval($id));
+
+		$req = mysqli_prepare($bdd, "UPDATE users SET registered ='0000-00-00' WHERE id = ?");
+		mysqli_stmt_bind_param($req, "i", $id);
+		mysqli_stmt_execute($req);
+}
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)
@@ -157,8 +166,10 @@ function CheckLogin($bdd, $user, $password)
 		{
 			$return = true;
 		}
+		
 	}
 	return $return;
+	
 }
 
 function getUserInfo($bdd, $user)
