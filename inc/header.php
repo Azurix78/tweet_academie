@@ -2,7 +2,7 @@
 
 if(isset($_POST['bouton']))
 {
-	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], NULL, '', NULL, NULL);
+	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], NULL, $_SESSION['locality'], NULL, NULL);
 }
 
 ?>

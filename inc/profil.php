@@ -281,7 +281,7 @@ if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 							<span>@<?php echo $reply['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $reply['content'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, $reply['content'], $reply['id_user'])); ?></p>
 						</div>
 <?php
 }
@@ -293,7 +293,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $retweet['content'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, $retweet['content'], $retweet['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $retweet['id'];
@@ -306,7 +306,7 @@ else
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $value['content'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, $value['content'], $value['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $value['id'];

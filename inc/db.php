@@ -354,7 +354,7 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	return true;
 }
 
-function checkTags($bdd, $string)
+function checkTags($bdd, $string, $id_user)
 {
 	$htags = preg_grep("%^#.+%", explode(" ", $string));
 	$usertags = preg_grep("%^@.+%", explode(" ", $string));
@@ -372,7 +372,12 @@ function checkTags($bdd, $string)
 		if($test_result != false && mysqli_num_rows($test_result) == 1)
 		{
 			$id = mysqli_fetch_assoc($test_result);
-			$string_return = str_replace($value, '<a href="index.php?page=profil&amp;id='.$id['id'].'">'.$value.'</a>', $string_return);
+			$infos_user = getUserInfo($bdd, $id_user);
+			if(in_array($id['id'], explode(";", $infos_user['follows'])) || $id['id'] == $id_user)
+			{
+				$string_return = str_replace($value, '<a href="index.php?page=profil&amp;id='.$id['id'].'">'.$value.'</a>', $string_return);
+			}
+			mysqli_free_result($test_result);
 		}
 	}
 
