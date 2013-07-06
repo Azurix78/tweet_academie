@@ -262,7 +262,7 @@ else
 	{
 ?>
 				<div class="tweet">
-					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p><li>
+					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a aucun follower.</p></li>
 				</div>
 <?php
 	}

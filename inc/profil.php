@@ -1,6 +1,6 @@
 <?php
 
-if ( !isset($_GET['id']))
+if ( !isset($_GET['id']) )
 	header("Location: index.php?page=404");
 
 $id = $_GET['id'];
@@ -160,8 +160,24 @@ foreach ($myfollows as $value)
 	}
 }
 
+$sup = getUserInfo($bdd, $_GET['id']);
+if ( $sup['registered'] == "9999-01-01" )
+{
+	$user_sup = 1;
+}
+
 ?>
-<div class="container body-complete">
+<div class="container body-complete" <?php if(isset($_GET['id'])){
+		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($tab_infos['fgcolor'])){
+				echo "style='background-color:#" . $tab_infos['fgcolor'] . "'";
+			}
+		} ?>>
+<?php
+if ( !isset($user_sup) )
+{
+	
+}
+?>
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
@@ -297,7 +313,7 @@ if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 							<span>@<?php echo $reply['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($reply['content']), $reply['id_user'])); ?><br><a href="tweet_image/<?php echo $reply['image']; ?>" target="_blank"><?php echo $reply['image']; ?></a></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($reply['content']), $reply['id_user'])); ?><br><a href="<?php echo $reply['image']; ?>" target="_blank"><?php echo $reply['image']; ?></a></p>
 						</div>
 <?php
 }
@@ -309,7 +325,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?><br><a href="tweet_image/<?php echo $retweet['image']; ?>" target="_blank"><?php echo $retweet['image']; ?></a></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?><br><a href="<?php echo $retweet['image']; ?>" target="_blank"><?php echo $retweet['image']; ?></a></p>
 						</div>
 <?php
 $id_real_tweet = $retweet['id'];
@@ -322,7 +338,7 @@ else
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($value['content']), $value['id_user'])); ?><br><a href="tweet_image/<?php echo $value['image']; ?>" target="_blank"><?php echo $value['image']; ?></a></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($value['content']), $value['id_user'])); ?><br><a href="<?php echo $value['image']; ?>" target="_blank"><?php echo $value['image']; ?></a></p>
 						</div>
 <?php
 $id_real_tweet = $value['id'];

@@ -70,19 +70,32 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
 				document.body.style.overflow = "visible";
 			}
 
-			// Cacher la div si on clique en dehors - Popup tweet
-			$(document).mouseup(function (e){
-   			 var container = $("#tweet-new");
-   			 var container2 = $("#contain-tweetnew");
-    		if (container2.has(e.target).length === 0)
-     		   container.hide();
-     			$('html, body').css('overflow', 'visible');
-			});
-
 
       function boutons(url)
       {
                 var loc = window.location;
                 window.location = loc + "&idmsg=" + url;
+      }
+
+      function colorInput(color,input)
+      {
+        document.getElementById(input).value = color;
+        if(color != '')
+        {
+          document.getElementById(input).style.backgroundColor = "#"+color;
+        }
+        else
+        {
+          document.getElementById(input).style.backgroundColor = "white";
+        }
+        if(color == "000000" || color == "824500" || color == "009DB5" || color == "7004DB")
+        {
+          document.getElementById(input).style.color = "white";
+        }
+        else
+        {
+          document.getElementById(input).style.color = "black";
+        }
+
       }
 

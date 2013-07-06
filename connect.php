@@ -8,6 +8,9 @@ anti_repost();
 if ( isset($_POST['sup_ok']) )
 {
 	archiveUser($bdd, $_SESSION['id']);
+		$error = "<div class=\"alert alert-success\">
+				<strong>Succ&egrave;s :</strong> Votre compte a bien &eacute;t&eacute; supprim&eacute;.<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+				</div>";
 	session_destroy();
 }
 
@@ -22,21 +25,32 @@ if(isset($_POST['bouton']))
 		if(CheckLogin($bdd, $user, $password) == true)
 		{
 			$userinfo = getUserInfo($bdd,$user);
-			$_SESSION['id'] = $userinfo['id'];
-			$_SESSION['username'] = $userinfo['username'];
-			$_SESSION['email'] = $userinfo['email'];
-			$_SESSION['locality'] = $userinfo['locality'];
-			if($_POST['stay_co'])
+			if ( $userinfo['registered'] != "9999-01-01" )
 			{
-				setcookie('id', $userinfo['id'], time()+(60*60*24*30));
-				setcookie('username', $userinfo['username'], time()+(60*60*24*30));
-				setcookie('email', $userinfo['email'], time()+(60*60*24*30));
-				setcookie('password', $userinfo['password'], time()+(60*60*24*30));
-				setcookie('locality', $userinfo['locality'], time()+(60*60*24*30));
+				$_SESSION['id'] = $userinfo['id'];
+				$_SESSION['username'] = $userinfo['username'];
+				$_SESSION['email'] = $userinfo['email'];
+				$_SESSION['locality'] = $userinfo['locality'];
+				if($_POST['stay_co'])
+				{
+					setcookie('id', $userinfo['id'], time()+(60*60*24*30));
+					setcookie('username', $userinfo['username'], time()+(60*60*24*30));
+					setcookie('email', $userinfo['email'], time()+(60*60*24*30));
+					setcookie('password', $userinfo['password'], time()+(60*60*24*30));
+					setcookie('locality', $userinfo['locality'], time()+(60*60*24*30));
+				}
+				unset($_POST['signin-email']);
+				unset($_POST['signin-password']);
+				header('Location: index.php');
 			}
-			unset($_POST['signin-email']);
-			unset($_POST['signin-password']);
-			header('Location: index.php');
+			elseif( $userinfo['registered'] == "9999-01-01" )
+			{
+				$error = "<div class=\"alert alert-error\">
+  				<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+  				<strong>Erreur :</strong> Compte supprim&eacute;.
+				</div>";
+			}
+
 		}
 		else
 		{
@@ -170,8 +184,11 @@ if(isset($_POST['bouton-register']))
      	   		<label for="signin-password">Mot de passe</label>
     	    	<input class="input-medium" type="password" name="signin-password" id="signin-password" placeholder="Mot de passe">
     	    	<br>
-    	    	<label for="stay_co" id="stay_co_label">Se souvenir de moi</label>
-    	    	<input type="checkbox" name="stay_co" id="stay_co">
+    	    	<br>
+    	    	<label for="stay_co" id="stay_co_label" class="checkbox">
+  					<input type="checkbox" name="stay_co" id="stay_co">
+  					Se souvenir de moi
+				</label>
     	    	<br>
     	    	<input class="btn btn-info" type="submit" value="Se connecter" name="bouton">
    			</form>

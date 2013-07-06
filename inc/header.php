@@ -13,7 +13,7 @@ if(isset($_POST['bouton']))
 	        if (in_array($extension_upload, $extensions_autorisees))
 	        {
 	        	move_uploaded_file($_FILES['img-tweet']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
-	        	$image = basename($_FILES['img-tweet']['name']);
+	        	$image = 'http://christ-a.wac.epitech.eu/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
 	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
 	        }
 	        else
@@ -60,7 +60,14 @@ if(isset($_POST['bouton']))
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
-	<body>
+	<body <?php if(isset($_GET['id'])){
+		$infos_perso = getUserInfo($bdd, $_GET['id']);
+		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($infos_perso['bgcolor'])){
+				echo "style='background-color:#" . $infos_perso['bgcolor'] . "'";
+			}
+		} ?>
+	>
+
 		<div id="tweet-new">
 				<div id="ctn-tweet">
 				</div>
