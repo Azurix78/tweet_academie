@@ -168,7 +168,7 @@ function CheckLogin($bdd, $user, $password)
 		}
 		
 	}
-	return false;
+	return $return;
 	
 }
 
