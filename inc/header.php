@@ -1,4 +1,5 @@
 <?php
+>>>>>>> ab149ae61177224668e3ce8b50e1a6e007fd5d07
 if ( isset($_GET['id']) )
 {
 	$sup = getUserInfo($bdd, $_GET['id']);
