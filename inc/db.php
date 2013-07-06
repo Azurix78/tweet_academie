@@ -354,4 +354,29 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 	return true;
 }
 
+function checkTags($bdd, $string)
+{
+	$htags = preg_grep("%^#.+%", explode(" ", $string));
+	$usertags = preg_grep("%^@.+%", explode(" ", $string));
+
+	$string_return = $string;
+
+	foreach($htags AS $value)
+	{
+		$string_return = str_replace($value, '<a href="index.php?page=recherche&amp;q='.substr($value, 1).'">'.$value.'</a>', $string_return);
+	}
+
+	foreach($usertags AS $value)
+	{
+		$test_result = mysqli_query($bdd, 'SELECT id FROM users WHERE username = "'.substr($value, 1).'"');
+		if($test_result != false && mysqli_num_rows($test_result) == 1)
+		{
+			$id = mysqli_fetch_assoc($test_result);
+			$string_return = str_replace($value, '<a href="index.php?page=profil&amp;id='.$id['id'].'">'.$value.'</a>', $string_return);
+		}
+	}
+
+	return $string_return;
+}
+
 ?>
