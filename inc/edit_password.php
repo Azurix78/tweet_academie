@@ -69,7 +69,7 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 
 	<div class="right">
 		<div class="bloc wall-tweets">
-			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
+			<h4 class="tweets">Modifiez votre mot de passe</h4>
 			<ul>
 				<form method="POST">
 					<li><label for="mod_old_pass">Mot de passe actuel :</label><input type="password" name="mod_old_pass"</li>
