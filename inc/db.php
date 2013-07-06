@@ -384,4 +384,93 @@ function checkTags($bdd, $string, $id_user)
 	return $string_return;
 }
 
+function updateUserInfos($bdd, $id, $username, $email, $locality)
+{
+	$id = abs(intval($id));
+	$username = htmlentities($username);
+	$email = htmlentities($email);
+	$locality = htmlentities($locality);
+	$username = mysqli_real_escape_string($bdd, $username);
+	$email = mysqli_real_escape_string($bdd, $email);
+	$locality = mysqli_real_escape_string($bdd, $locality);
+
+	$update_username = mysqli_query($bdd, 'UPDATE users SET username = "'.$username.'" WHERE id = '.$id);
+	$update_email = mysqli_query($bdd, 'UPDATE users SET email = "'.$email.'" WHERE id = '.$id);
+	$update_locality = mysqli_query($bdd, 'UPDATE users SET locality = "'.$locality.'" WHERE id = '.$id);
+
+	if($update_username == true && $update_email == true && $update_locality == true)
+	{
+		$_SESSION['username'] = $username;
+		$_SESSION['email'] = $email;
+		$_SESSION['locality'] = $locality;
+
+		$_COOKIE['username'] = $username;
+		$_COOKIE['email'] = $email;
+		$_COOKIE['locality'] = $locality;
+?>		
+		<div class="alert alert-success">
+			<strong>Succ&egrave;s :</strong> Vos informations ont bien &eacute;t&eacute; modifi&eacute;es
+  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+<?php
+	}
+	else
+	{
+?>
+		<div class="alert alert-error">
+			<strong>Erreur :</strong> L'actualisation de vos informations a &eacute;chou&eacute;
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+<?php
+	}
+}
+
+function updateUserPassword($bdd, $id, $currentPass, $newPass1, $newPass2)
+{
+	$id = abs(intval($id));
+	$currentPass = htmlentities($currentPass);
+	$newPass1 = htmlentities($newPass1);
+	$newPass2 = htmlentities($newPass2);
+	$search_password = mysqli_query($bdd, 'SELECT password FROM users WHERE id = '.$id);
+	if($search_password != false && mysqli_num_rows($search_password) == 1)
+	{
+		$password = mysqli_fetch_assoc($search_password);
+		if(hash("ripemd160", $currentPass."si tu aime la wac leve les bras") == $password['password'])
+		{
+			if($newPass1 == $newPass2)
+			{
+				$newPass = hash("ripemd160", $newPass2."si tu aime la wac leve les bras");
+				$update_password = mysqli_query($bdd, 'UPDATE users SET password = "'.$newPass.'" WHERE id = '.$id);
+				if($update_password == true)
+				{
+?>		
+					<div class="alert alert-success">
+						<strong>Succ&egrave;s :</strong> Votre mot de passe a bien &eacute;t&eacute; modifi&eacute;
+			  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+				}
+			}
+			else
+			{
+?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Les deux nouveaux mots de passe doivent correspondre
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+<?php
+			}
+		}
+		else
+		{
+?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Mauvais mot de passe
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+<?php
+		}
+	}
+}
+
 ?>
