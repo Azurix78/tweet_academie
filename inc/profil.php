@@ -160,24 +160,12 @@ foreach ($myfollows as $value)
 	}
 }
 
-$sup = getUserInfo($bdd, $_GET['id']);
-if ( $sup['registered'] == "9999-01-01" )
-{
-	$user_sup = 1;
-}
-
 ?>
 <div class="container body-complete" <?php if(isset($_GET['id'])){
 		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($tab_infos['fgcolor'])){
 				echo "style='background-color:#" . $tab_infos['fgcolor'] . "'";
 			}
 		} ?>>
-<?php
-if ( !isset($user_sup) )
-{
-	
-}
-?>
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
