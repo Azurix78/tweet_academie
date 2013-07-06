@@ -1,5 +1,4 @@
 <?php
-
 if(isset($_POST['modifier_theme_user']))
 {
 		if((uploadImage($bdd, "upload/bgimg/", "mod_bgimg", $_SESSION['id'])) == true)
