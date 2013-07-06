@@ -17,7 +17,14 @@ if(isset($_POST['bouton']))
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
-	<body>
+	<body <?php if(isset($_GET['id'])){
+		$infos_perso = getUserInfo($bdd, $_GET['id']);
+		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($infos_perso['bgcolor'])){
+				echo "style='background-color:#" . $infos_perso['bgcolor'] . "'";
+			}
+		} ?>
+	>
+
 		<div id="tweet-new">
 				<div id="ctn-tweet">
 				</div>

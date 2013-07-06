@@ -473,4 +473,19 @@ function updateUserPassword($bdd, $id, $currentPass, $newPass1, $newPass2)
 	}
 }
 
+function updateThemeInfos($bdd, $id, $bgcolor, $fgcolor,$bgimg, $scrollcolor)
+{
+	$id = abs(intval($id));
+	$username = htmlentities($bgcolor);
+	$email = htmlentities($fgcolor);
+	$locality = htmlentities($scrollcolor);
+	$username = mysqli_real_escape_string($bdd, $bgcolor);
+	$email = mysqli_real_escape_string($bdd, $fgcolor);
+	$locality = mysqli_real_escape_string($bdd, $scrollcolor);
+
+	$req = mysqli_prepare($bdd, 'UPDATE users SET bgcolor = ?, fgcolor = ?, bgimg = ?, scrollcolor = ? WHERE id = ?');
+		mysqli_stmt_bind_param($req, "ssssi", $bgcolor, $fgcolor, $bgimg, $scrollcolor, $id);
+		mysqli_stmt_execute($req);
+}
+
 ?>

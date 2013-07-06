@@ -58,4 +58,65 @@ function logOut()
     header('Location: ../index.php');
 }
 
+function uploadImage($bdd, $destination, $name, $id = false){
+    if(!empty($_FILES[$name]['name']))
+    {
+        if(is_writable($destination))
+        {
+            $fichier = basename($_FILES[$name]['name']);
+            $taille_maxi = 100000;
+            $taille = filesize($_FILES[$name]['tmp_name']);
+            $extensions = array('.png', '.bmp', '.jpg', '.jpeg');
+            $extension = strrchr($_FILES[$name]['name'], '.'); 
+            if(!in_array($extension, $extensions)) //Si l'extension est mauvaise
+            {
+                 $erreur = "<div class=\"alert alert-error\>
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <strong>Erreur :</strong> Les formats acceptés sont .png, .bmp, .jpg, .jpeg .
+                        </div>";
+            }
+            if($taille>$taille_maxi)
+            {
+                 $erreur = "<div class=\"alert alert-error\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <strong>Succès :</strong> Le fichier envoyé est trop gros.
+                        </div>";
+            }
+            if(!isset($erreur)) //Si les vérifications ne renvoient pas d'erreurs, on upload.
+            {
+                $fichier = $id . ".png";
+                if(move_uploaded_file($_FILES[$name]['tmp_name'], $destination . $fichier)) 
+                {
+                    return true;
+                }
+                else
+                {
+                    echo "<div class=\"alert alert-error\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <strong>Erreur :</strong> Echec de l'envoi de votre fichier. 
+                        </div>";
+                    return false;
+                }
+            }
+            else
+            {
+                echo $erreur;
+                return false;
+            }
+        }
+        else
+        {
+            echo "<div class=\"alert alert-error\" >
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <strong>Erreur :</strong> Le dossier d'upload n'est pas accessible en écriture, changez les permissions de celui-ci ($destination).
+                        </div>";
+                    return false;
+        }
+    }
+    else
+    {
+        return true;
+    }
+}
+
 ?>

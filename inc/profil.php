@@ -145,7 +145,11 @@ foreach ($myfollows as $value)
 	}
 }
 ?>
-<div class="container body-complete">
+<div class="container body-complete" <?php if(isset($_GET['id'])){
+		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($tab_infos['fgcolor'])){
+				echo "style='background-color:#" . $tab_infos['fgcolor'] . "'";
+			}
+		} ?>>
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
