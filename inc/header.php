@@ -72,6 +72,15 @@ if(isset($_POST['bouton']))
 		<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript">// <![CDATA[
+			$(document).ready(function() {
+				$.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
+				setInterval(function() {
+				$('#compteur_newtweet').load('inc/tweetCount.php');}, 3000); // the "3000" here refers to the time to refresh the div.  it is in milliseconds. 
+		});
+		// ]]>
+		</script>
 	</head>
 	<body style="<?php 
 		if(isset($_GET['id'])){

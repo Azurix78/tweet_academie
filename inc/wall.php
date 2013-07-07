@@ -96,6 +96,10 @@ if (isset($error_content))
 		<?php
 		unset($error_content);
 }
+	$result = mysqli_query($bdd, "SELECT count(*) FROM tweets ");
+	$oldtweetCount = mysqli_fetch_array($result, MYSQL_NUM);
+	$_SESSION['old'] = count(getTweetsAll($bdd, $_SESSION['id']));
+
 ?>
 
 <div class="container body-complete" style="<?php 
@@ -145,6 +149,10 @@ if (isset($error_content))
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Tweets</h4>
 			<ul>
+				<li>
+					<div id="compteur_newtweet" class="" >	
+					</div>
+				</li>
 
 <?php
 $tweets = getTweetsAll($bdd, $_SESSION['id']);

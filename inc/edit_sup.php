@@ -47,17 +47,15 @@
 	<div class="right">
 		<div class="bloc wall-tweets">
 			<h4 class="tweets">Suppression du compte</h4>
+			<form method="POST" action="connect.php">
 			<ul>
-				<form method="POST" action="connect.php">
 					<li>
 						<label for="sup_ok">Voulez-supprimer votre compte définitivement ?</label>
 						<button type="submit" id="sup_ok" class="btn btn-info" name="sup_ok">Oui</button>
 						<a href="index.php?page=edit_user" class="btn btn-danger" name="modifier_pass_user">Non</a>
 					</li>
-				</form>
-
-
 			</ul>
+			</form>
 		</div>
 		
 	</div>
