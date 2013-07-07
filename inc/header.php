@@ -26,7 +26,7 @@ if(isset($_POST['bouton']))
 	        if (in_array($extension_upload, $extensions_autorisees))
 	        {
 	        	move_uploaded_file($_FILES['img-tweet']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
-	        	$image = 'http://christ-a.wac.epitech.eu/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
+	        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
 	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
 	        }
 	        else
