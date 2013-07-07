@@ -161,15 +161,15 @@ foreach ($myfollows as $value)
 }
 
 ?>
-<div class="container body-complete" <?php if(isset($_GET['id'])){
-		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($tab_infos['fgcolor'])){
-				echo "style='background-color:#" . $tab_infos['fgcolor'] . "'";
-			}
-		} ?>>
+<div class="container body-complete" style="<?php if(isset($_GET['id'])){
+		$infos_perso = getUserInfo($bdd, $_GET['id']);
+				$fgcolor = hex2rgb($infos_perso['fgcolor']); 
+				echo "background-color:rgba(" . $fgcolor . ",0.3)";
+		} ?>">
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Tweets<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li class="active"><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Tweets<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>

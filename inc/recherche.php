@@ -130,7 +130,11 @@ else
 }
 
 ?>
-<div class="container body-complete">
+<div class="container body-complete" style="<?php 
+		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
+		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
+				echo "background-color:rgba(" . $fgcolor . ",0.3)";
+		 ?>">
 	<?php if(isset($error)){ echo $error;} ?>
 	<div class="left">
 		<div class="bloc wall-profil">

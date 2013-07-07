@@ -53,13 +53,13 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
     }
 }
 
-    function newTweet() // Popup pour écrire un tweet
+    function displayBloc(bloc) // Popup pour écrire un tweet
 			{
-				document.getElementById('tweet-new').style.opacity = 0;
-				document.getElementById("tweet-new").style.display = "block";
+				document.getElementById(bloc).style.opacity = 0;
+				document.getElementById(bloc).style.display = "block";
 				for(var i = 0; i < 11; i++)
 				{
-					window.setInterval(function(){document.getElementById("tweet-new").style.opacity = i / 10} ,i * 1000);
+					window.setInterval(function(){document.getElementById(bloc).style.opacity = i / 10} ,i * 1000);
 				}
 				document.body.style.overflow = "hidden";
 			}
@@ -82,7 +82,7 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
         document.getElementById(input).value = color;
         if(color != '')
         {
-          document.getElementById(input).style.backgroundColor = "#"+color;
+          document.getElementById(input).style.backgroundColor = color;
         }
         else
         {

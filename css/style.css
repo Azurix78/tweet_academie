@@ -243,7 +243,7 @@ header
 }
 
 
-#ctn-tweet, #ctn-pm
+#ctn-tweet, #ctn-mp
 {
   height:50%;
 }
@@ -991,10 +991,15 @@ header
 	margin-right:10px;
 }
 
-.wall-menu li a:hover, .wall-menu li:hover{
+.wall-menu li a:hover, .wall-menu li:hover, .active{
 	background-color: rgba(255,255,255,1);
 	cursor: pointer;
 	text-decoration: none;
+}
+
+.active a{
+	font-weight: bold;
+	color: black;
 }
 
 .wall-menu .fin-li{
@@ -1131,16 +1136,16 @@ header
 	display: inline-block;
 }
 
-.edit-theme .button{
+#button{
 	height:30px;
 	border-bottom: 0;
 }
 
-.edit-theme .button:hover{
+#button:hover{
 	background-color: inherit;
 }
 
-.edit-theme button{
+#button button{
 	float:right;
 	margin:10px 70px 0 0;
 }

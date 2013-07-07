@@ -82,14 +82,27 @@ if(isset($_POST['bouton']))
 			// ]]>
 		</script>
 	</head>
-	<body <?php if(isset($_GET['id'])){
-		$infos_perso = getUserInfo($bdd, $_GET['id']);
-		 if(isset($_GET['page']) && $_GET['page'] == "profil" && !empty($infos_perso['bgcolor'])){
-				echo "style='background-color:#" . $infos_perso['bgcolor'] . "'";
-			}
-		} ?>
-	>
+	<body style="<?php if(isset($_GET['page'])){
+		if(isset($_GET['id'])){
+			$infos_perso = getUserInfo($bdd, $_GET['id']);
+		}
+		else
+		{
+			$infos_perso = getUserInfo($bdd, $_SESSION['id']);
+		}
+		 	if(!empty($infos_perso['bgcolor']))
+		 	{
+		 		echo "background-color:" . $infos_perso['bgcolor'] . ";";
+		 	}
+		 	if(!empty($infos_perso['bgimg']))
+		 	{
+		 		echo "background-image:url(" . $infos_perso['bgimg'] . ");background-repeat:no-repeat; background-position:center 40px;";
+		 	}
+				
 
+		} ?>"
+	>
+		<?php require_once('inc/PrivateMessages.php'); ?>
 		<div id="tweet-new">
 				<div id="ctn-tweet">
 				</div>
@@ -113,7 +126,7 @@ if(isset($_POST['bouton']))
 				<div class="nav_left">
 					<ul class="inline text_degrade">
 						<li><a href="index.php?page=wall"><i class="icon-home icon-white"></i> Accueil</a></li>
-						<li><a href="connect.php"><i class="icon-star icon-white"></i> Connecter</a></li>
+						<li><a href="#"><i class="icon-star icon-white"></i> Connecter</a></li>
 						<li><a href="index.php?page=discover"><i class="icon-eye-open icon-white"></i> D&eacute;couvrir</a></li>
 						<li><a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>"><i class="icon-user icon-white"></i> Moi</a></li>
 					</ul>
@@ -151,13 +164,13 @@ if(isset($_POST['bouton']))
 							   				<li class="divider"></li>
 							   				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnements</a></li>
 							   				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnés</a></li>
-							   				<li><a href="">Messages privés</a></li>
+							   				<li><a onClick="displayBloc('mp-new');" href="#">Messages privés</a></li>
 							   				<li class="divider"></li>
 							   				<li><a href="inc/logout.php">Deconnexion</a></li>
 							  			</ul>
 								</div>
 							</li>
-							<li><button onClick="newTweet();" class="btn btn-info write-tweet"><img src="img/pencil.png" class="size24" alt=""></button></li>
+							<li><button onClick="displayBloc('tweet-new');" class="btn btn-info write-tweet"><img src="img/pencil.png" class="size24" alt=""></button></li>
 					</ul>
 					
 
