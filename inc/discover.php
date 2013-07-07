@@ -97,6 +97,8 @@ if (isset($error_content) )
 $users = getUsers($bdd);
 foreach($users AS $value)
 {
+	if ( $value['id'] != $_SESSION['id'])
+	{
 ?>
 				<li>
 					<div class="imgtweets">
@@ -117,6 +119,7 @@ foreach($users AS $value)
 					</div>
 				</li>
 <?php
+	}
 }
 
 ?>
