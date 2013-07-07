@@ -31,6 +31,21 @@ if(isset($_POST['modifier_infos_user']))
 	<?php
 		}
 	}
+	if (isset($_POST['supavatar']))
+	{
+		if (supavatar($_SESSION['id']) )
+		{
+		}
+		else
+		{
+			?>	
+			<div class="alert alert-error">
+				<strong>Erreur :</strong> Une erreur s'est produite lors de la suppression de l'avatar
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+			<?php
+		}
+	}
 }
 
 ?>
@@ -86,6 +101,14 @@ if(isset($_POST['modifier_infos_user']))
 					<li><label for="mod_mail">Email :</label><input type="text" name="mod_mail" id="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
 					<li><label for="mod_locality">Location :</label><input type="text" name="mod_locality" id="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
 					<li><label for="avatar">Ajouter un avatar :</label><input type="file" id="avatar" name="avatar"></li>
+					<?php
+					if (is_file('upload/img/' . $_SESSION['id'] . '.png'))
+					{
+						?>
+						<li><label for="supavatar">Supprimer son avatar</label><input type="checkbox" id="supavatar" name="supavatar"></li>
+						<?php
+					}
+					?>
 					<li id="button">
 		 				<button type="submit" class="btn btn-info" name="modifier_infos_user">Enregistrer</button>
 		  			</li>

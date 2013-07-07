@@ -70,7 +70,7 @@ if(isset($_POST['bouton-newtweet']) AND isset($_POST['new-tweet']) )
 		newTweet($bdd, $_SESSION['id'], $_POST['new-tweet'], NULL, '', NULL, NULL);
 		?>
 				<div class="alert alert-success">
-					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+					<strong>Succ&egrave;s :</strong> Message envoy&eacute; !
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 		<?php

@@ -177,6 +177,13 @@ function archiveUser($bdd, $id)
 	}
 }
 
+function delbgimg($bdd, $id)
+{
+	$req = $req = mysqli_prepare($bdd, "UPDATE users SET bgimg ='' WHERE id = ?");
+		mysqli_stmt_bind_param($req, "i", $id);
+		mysqli_stmt_execute($req);
+}
+
 // Nico 
 
 function CheckLogin($bdd, $user, $password)

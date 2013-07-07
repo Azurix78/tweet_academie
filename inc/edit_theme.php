@@ -9,6 +9,22 @@ if(isset($_POST['modifier_theme_user']))
 			updateThemeInfos($bdd, $_SESSION['id'], $_POST['mod_bgcolor'], $_POST['mod_fgcolor'], $bgimg, $_POST['mod_scrollcolor']);
 			
 		}
+		if (isset($_POST['supbgimg']))
+		{
+			if (supbgimg($_SESSION['id']) )
+			{
+				delbgimg($bdd, $_SESSION['id']);
+			}
+			else
+			{
+				?>	
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Une erreur s'est produite lors de la suppression de l'image
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
+			}
+		}
 }
 
 $infos_perso = getUserInfo($bdd, $_SESSION['id']);
@@ -103,6 +119,14 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 						</div>
 					</li>
 					<li><label for="mod_bgimg">Ajouter une image en arri&egrave;re-plan :</label><input type="file" id="mod_bgimg" name="mod_bgimg"></li>
+					<?php
+					if (is_file('upload/bgimg/' . $_SESSION['id'] . '.png'))
+					{
+						?>
+						<li><label for="supbgimg">Supprimer l'image d'arri&egrave;re-plan :</label><input type="checkbox" id="supbgimg" name="supbgimg"></li>
+						<?php
+					}
+					?>
 					<li><label for="mod_scrollcolor">What is that fucking "scrollcolor" ? :</label><input type="text" class="color" id="mod_scrollcolor" name="mod_scrollcolor" value="<?php if(isset($_POST['mod_scrollcolor'])) { echo htmlentities($_POST['mod_scrollcolor']);} else { echo $infos_perso['scrollcolor'];} ?>">
 						<span class="box-theme" style="background-color:<?php if(isset($infos_perso['scrollcolor'])){ echo $infos_perso['scrollcolor'];} else {echo 'transparent';} ?>"></span>
 						<div class="color-choice">

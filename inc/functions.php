@@ -110,4 +110,28 @@ function hex2rgb($hex) {
    return $rgb; // returns an array with the rgb values
 }
 
+function supavatar($id)
+{
+   if ( unlink('upload/img/' . $id . '.png') )
+   {
+    return true;
+   }
+   else
+   {
+    return false;
+   }
+}
+
+function supbgimg($id)
+{
+    if ( unlink('upload/bgimg/' . $id . '.png') )
+   {
+    return true;
+   }
+   else
+   {
+    return false;
+   }
+}
+
 ?>
