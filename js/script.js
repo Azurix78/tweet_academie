@@ -64,9 +64,9 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
 				document.body.style.overflow = "hidden";
 			}
 
-			function closeTweet()
+			function closeBloc(bloc)
 			{
-				document.getElementById("tweet-new").style.display = "none";
+				document.getElementById(bloc).style.display = "none";
 				document.body.style.overflow = "visible";
 			}
 

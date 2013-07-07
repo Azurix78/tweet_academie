@@ -260,7 +260,7 @@ function Inscription($bdd, $fullname, $email, $password)
 
 function getMessages($bdd, $id)
 {
-	$result = mysqli_query($bdd, "SELECT id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver = $id GROUP BY id_sender ORDER BY date DESC");
+	$result = mysqli_query($bdd, "SELECT * FROM messages  WHERE id_receiver = $id OR id_sender = $id ORDER BY date DESC");
 	$tab = array();
 	if($result != false)
 	{
@@ -273,24 +273,10 @@ function getMessages($bdd, $id)
 	return $tab;
 }
 
-function getContent($bdd, $id_receiver, $id_sender)
-{
-	$result = mysqli_query($bdd, "SELECT id_parent,content, date as date_re FROM messages WHERE id_receiver  AND id_sender in ($id_receiver, $id_sender) ORDER BY id_parent DESC");
-	$tab = array();
-	if($result != false)
-	{
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$tab[] = $row;
-		}
-		mysqli_free_result($result);
-	}
-	return $tab;
-}
 
 function getMessagesId($bdd, $id_receiver, $id_sender)
 {
-	$result = mysqli_query($bdd, "SELECT date, content,id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver  AND id_sender in ($id_receiver, $id_sender)");
+	$result = mysqli_query($bdd, "SELECT date, id_parent,content,id_sender, id_receiver, users.username AS username, messages.id AS id_msg FROM messages LEFT JOIN users ON messages.id_sender = users.id  WHERE id_receiver in ($id_receiver, $id_sender) AND id_sender in ($id_receiver, $id_sender)");
 	$tab = array();
 	if($result != false)
 	{
@@ -301,6 +287,34 @@ function getMessagesId($bdd, $id_receiver, $id_sender)
 		mysqli_free_result($result);
 	}
 	return $tab;
+}
+
+function getNameInfo($bdd, $id_user)
+{
+	$result = mysqli_query($bdd, "SELECT username FROM users WHERE id = $id_user ");
+	$row = mysqli_fetch_assoc($result);
+	mysqli_free_result($result);
+	return $row['username'];
+}
+
+function SendMessage($bdd, $id_parent, $id_sender,$id_receiver, $content)
+{
+	$id_receiver = abs(intval($id_receiver));
+	$id_sender = abs(intval($id_sender));
+	$content = mysqli_real_escape_string($bdd, $content);
+	$result = mysqli_prepare($bdd, 'INSERT INTO messages(id_parent,id_sender,id_receiver,content,date) VALUES (?,?,?,?, NOW())');
+	mysqli_stmt_bind_param($result, "iiis", $id_parent, $id_sender, $id_receiver, $content);
+	mysqli_stmt_execute($result);
+}
+
+function checkMaxMessages($bdd, $id_receiver, $id_sender)
+{
+	$id_receiver = abs(intval($id_receiver));
+	$id_sender = abs(intval($id_sender));
+	$result = mysqli_query($bdd, "SELECT MAX(id) AS max FROM messages WHERE id_receiver in ($id_receiver, $id_sender) AND id_sender in ($id_receiver, $id_sender)");
+	$row = mysqli_fetch_assoc($result);
+	mysqli_free_result($result);
+	return $row['max'];
 }
 
 // AMBROISE

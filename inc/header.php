@@ -72,15 +72,6 @@ if(isset($_POST['bouton']))
 		<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/style.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script type="text/javascript">// <![CDATA[
-			$(document).ready(function() {
-			$.ajaxSetup({ cache: false }); // This part addresses an IE bug.  without it, IE will only load the first number and will never refresh
-			setInterval(function() {
-			$('#compteur_newtweet').load('inc/tweetCount.php');}, 3000); // the "3000" here refers to the time to refresh the div.  it is in milliseconds. 
-			});
-			// ]]>
-		</script>
 	</head>
 	<body style="<?php if(isset($_GET['page'])){
 		if(isset($_GET['id'])){
@@ -110,7 +101,7 @@ if(isset($_POST['bouton']))
 					<div id="tweet-bloc">
 						<div class="title-bloc-tweet">
 							<b>Quoi de neuf?</b>
-							<a href="#" onClick="closeTweet()"><i class="icon-remove"></i></a>
+							<a href="#" onClick="closeBloc('tweet-new')"><i class="icon-remove"></i></a>
 						</div>
 						<form method="POST" enctype="multipart/form-data">
 							<textarea  id="tweet-area" name="tweet-area" maxlength="141"  onKeyDown="nbcharTweet('tweet-area','nbcaract', 'max');" onKeyUp="nbcharTweet('tweet-area','nbcaract', 'max');"></textarea>
@@ -164,7 +155,7 @@ if(isset($_POST['bouton']))
 							   				<li class="divider"></li>
 							   				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnements</a></li>
 							   				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnés</a></li>
-							   				<li><a onClick="displayBloc('mp-new');" href="#">Messages privés</a></li>
+							   				<li><a href="<?php echo $_SERVER['REQUEST_URI'] . "&amp;bloc=msg"; ?>">Messages privés</a></li>
 							   				<li class="divider"></li>
 							   				<li><a href="inc/logout.php">Deconnexion</a></li>
 							  			</ul>
