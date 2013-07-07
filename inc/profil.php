@@ -343,7 +343,7 @@ $id_real_tweet = $value['id'];
 							<form class="newtweet" method="POST">
 								<input type="hidden" name="id_ans_tweet" value="<?php echo $id_real_tweet; ?>">
 								<input type="hidden" name="id_retweeted_reply" value="<?php echo $value['id_reply']; ?>">
-								<input type="submit" value="Retweet" class="btn btn-info" name="bouton_retweet">
+								<input type="submit" style="float:left;margin-top:-20px;" value="Retweet" class="btn btn-info" name="bouton_retweet">
 							</form>
 						</div>
 					</div>
