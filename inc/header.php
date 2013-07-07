@@ -15,48 +15,55 @@ if ( isset($_GET['id']) )
 
 if(isset($_POST['bouton']))
 {
-	$image = NULL;
-	if(isset($_FILES['img-tweet']) && $_FILES['img-tweet']['error'] == 0)
+	if($_FILES['img-tweet']['name'] == "")
 	{
-		if ($_FILES['img-tweet']['size'] <= 6000000)
-        {
-			$infosfichier = pathinfo($_FILES['img-tweet']['name']);
-			$extension_upload = $infosfichier['extension'];
-			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
-	        if (in_array($extension_upload, $extensions_autorisees))
+		unset($_FILES['img-tweet']);
+	}
+	$image = NULL;
+	if(isset($_FILES['img-tweet']))
+	{
+		if($_FILES['img-tweet']['error'] == 0)
+		{
+			if ($_FILES['img-tweet']['size'] <= 6000000)
 	        {
-	        	move_uploaded_file($_FILES['img-tweet']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
-	        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
-	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
-	        }
-	        else
-	        {
+				$infosfichier = pathinfo($_FILES['img-tweet']['name']);
+				$extension_upload = $infosfichier['extension'];
+				$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+		        if (in_array($extension_upload, $extensions_autorisees))
+		        {
+		        	move_uploaded_file($_FILES['img-tweet']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
+		        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
+		        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
+		        }
+		        else
+		        {
+?>
+					<div class="alert alert-error">
+						<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+		        }
+		    }
+		    else
+		    {
 ?>
 				<div class="alert alert-error">
-					<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+					<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 <?php
-	        }
-	    }
-	    else
-	    {
+		    }
+		}
+		else
+		{
 ?>
 			<div class="alert alert-error">
-				<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
+				<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
 <?php
-	    }
-	}
-	else
-	{
-?>
-		<div class="alert alert-error">
-			<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
-<?php
+		}
 	}
 	newTweet($bdd, $_SESSION['id'], $_POST['tweet-area'], $image, $_SESSION['locality'], NULL, NULL);
 }
