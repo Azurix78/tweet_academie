@@ -6,8 +6,8 @@ if ( isset($_GET['id_rep']) )
 	{
 		if ( strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) <= 140 AND strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) > 0 AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
 		{
-			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
-			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
+			$user = $_POST['user_rep' . abs(intval($_GET['id_rep'])) ];
+			$content = "@". $user . " " . $_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ];
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
 			
 				$error = "<div class='alert alert-success'>
@@ -96,6 +96,8 @@ if (isset($error_content))
 if(isset($_GET['q']))
 {
 	$_SESSION['recherche'] = $_GET['q'];
+	$_SESSION['recherche'] = htmlentities($_SESSION['recherche']);
+	$_SESSION['recherche'] = mysqli_real_escape_string($bdd, $_SESSION['recherche']);
 	if ( !empty($_SESSION['recherche']) )
 	{
 		$recherche = $_SESSION['recherche'];
@@ -225,7 +227,7 @@ if ( isset($value['id_reply']) AND $value['id_reply'] != NULL)
 							<span>@<?php echo $reply['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($reply['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $reply['content'], $reply['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($reply['content']), $reply['id_user'])); ?></p>
 						</div>
 <?php
 }
@@ -237,7 +239,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $retweet['content'], $retweet['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $retweet['id'];
@@ -250,7 +252,7 @@ else
 							<span>@<?php echo $value['username']; ?></span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
-							<p><?php echo nl2br2(checkTags($bdd, $value['content'], $value['id_user'])); ?></p>
+							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($value['content']), $value['id_user'])); ?></p>
 						</div>
 <?php
 $id_real_tweet = $value['id'];

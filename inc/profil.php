@@ -112,8 +112,8 @@ if ( isset($_GET['id_rep']) )
 	{
 		if ( strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) <= 140 AND strlen($_POST['rep_tweet'. $_GET['id_rep'] ]) > 0 AND isset($_POST['user_rep' . $_GET['id_rep'] ]) )
 		{
-			$user = htmlentities( $_POST['user_rep' . abs(intval($_GET['id_rep'])) ] );
-			$content = "@". $user . " " . htmlentities($_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ]);
+			$user = $_POST['user_rep' . abs(intval($_GET['id_rep'])) ];
+			$content = "@". $user . " " . $_POST['rep_tweet' . abs(intval($_GET['id_rep'])) ];
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, '', abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
 			?>
 				<div class="alert alert-success">
