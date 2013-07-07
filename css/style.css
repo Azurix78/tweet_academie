@@ -691,7 +691,7 @@ header
 	bottom:9px;
 }
 
-#nbcaract,#nb-caract{
+#nbcaract,#nb-caract, #nbcaract-tot{
 	position: absolute;
 	right:90px;
 	bottom:15px;
@@ -700,7 +700,7 @@ header
 	color: rgba(0,0,0,0.25);
 }
 
-#max, #max-caract{
+#max, #max-caract, #tweet-wall-max{
 	font-size: 10px;
 	margin-right: 50px;
 	color:red;
@@ -946,6 +946,7 @@ header
 .wall-profil{
 	height:100px;
 	line-height: 16px;
+	position:relative;
 }
 
 .imgfullname{
@@ -955,22 +956,91 @@ header
 .wall-profil .newtweet{
 	width:100%;
 	background-color: rgba(0,0,0,0.02);
-	height:50px;
 	margin:0;
-	padding:0;
+	padding:10px 18px;
 	display: block;
 	float: left;
 	position: absolute;
 	bottom:0;
 }
 
+.newtweet form{
+	margin:0;
+}
+
 .wall-profil .newtweet input[type=text]{
-	margin: 10px 25px;
-	width:276px;
+	width:290px;
+	margin:0;
 }
 
 .wall-profil .newtweet input[type=submit]{
-	display:none;
+	float:right;
+	position:absolute;
+	bottom:0px;
+	right:0px;
+
+}
+
+.wall-profil .newtweet input[type=file]{
+	position:absolute;
+	z-index:5;
+	bottom:0px;
+	left:0px;
+	width:50px;
+	height:30px;
+	opacity: 0;
+	overflow: hidden;
+}
+
+.newtweet span
+{
+	width:20px;
+	height:20px;
+	padding:4px 12px;
+	position:absolute;
+	z-index:2;
+	bottom:0px;
+	left:0px;
+	cursor: pointer;
+}
+
+.newtweet span img
+{
+	opacity: 0.5;
+	width:20px;
+	height:20px;
+}
+
+#tweetwall {
+	width: 304px;
+	height:140px;
+	margin: 0;
+	position: relative;
+	display: none;
+}
+
+#tweetwall textarea
+{
+	width:290px;
+	height:95px;
+	resize:none;
+	margin:0 0 5px 0;
+}
+
+#tweetwall #nbcaract-tot
+{
+	position: absolute;
+	bottom:7px;
+	right:85px;
+}
+
+#tweet-wall-max
+{
+	position: absolute;
+	bottom:7px;
+	left:65px;
+	margin:0;
+	width:130px;
 }
 
 .wall-menu ul{

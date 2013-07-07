@@ -99,3 +99,20 @@ function nbcharTweet(area,compteur,max) // Nombre de caractères restants
 
       }
 
+function newtweet()
+{
+  document.getElementById('tweet-new-wall').style.height = '210px';
+  document.getElementById('tweetwall').style.display = "block";
+   document.getElementById("tweet-wall-textarea").focus();
+}
+
+// Cacher la div si on clique en dehors - Popup tweet
+     $(document).mouseup(function (e){
+         var container = $("#tweetwall");
+         var container2 = $("#tweet-new-wall");
+       if (container2.has(e.target).length === 0 && !$("#tweet-wall-textarea").val() && $("#tweet-new-wall").css("height") != "none"){
+          container.hide();
+        $("#tweet-new-wall").css("height","100px");
+        $("#new-tweet").css("display","block");
+      }
+     });

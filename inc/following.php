@@ -79,11 +79,6 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 				<li ><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 			</ul>
 		</div>
-		<div class="bloc wall-menu" id="msg_priv">
-			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
-			</ul>
-		</div>
 
 		<div class="bloc wall-footer">
 			<ul>
@@ -122,7 +117,12 @@ if ( isset($user_abo['follows']) AND !empty($user_abo['follows']) )
 			</ul>
 			<ul class="inline btn-nav">
 <?php
-
+if(in_array($_GET['id'], listFollower($bdd, $_SESSION['id'] )))
+{
+	?>
+	<li><a href="<?php echo str_replace('&', '&amp;',$_SERVER['REQUEST_URI']) . "&amp;bloc=msg&amp;idmsg=" . $_GET['id']; ?>" class="btn"><i class="icon-envelope"></i></a></li>
+	<?php
+}
 if($_GET['id'] == $_SESSION['id'])
 {
 ?>
@@ -133,19 +133,19 @@ if($_GET['id'] == $_SESSION['id'])
 elseif ( isset($abo) )
 {
 ?>
-				<form method="POST">
+				<li><form method="POST">
 					<input type="hidden" name="id_del" value="<?php echo $_GET['id'];?>">
 					<input type="submit" class="btn btn-danger" name="btn-delabo" value="Se d&eacute;sabonner">
-				</form>
+				</form></li>
 <?php
 }
 else
 {
 ?>
-				<form method="POST">
+				<li><form method="POST">
 					<input type="hidden" name="id_add_abo" value="<?php echo $id; ?>">
 					<input type="submit" class="btn btn-info" name="btn_add_abo" value="Suivre">
-				</form>
+				</form></li>
 
 <?php
 }
@@ -250,10 +250,8 @@ else
 	}
 	else
 	{
-?>
-				<div class="tweet">
-					<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
-				</div>
+?>			
+	<li id="no_abo"><p><?php echo $tab_infos['username']; ?> ne suit personne.</p></li>
 <?php
 	}
 }

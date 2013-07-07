@@ -100,6 +100,54 @@ if (isset($error_content))
 	$oldtweetCount = mysqli_fetch_array($result, MYSQL_NUM);
 	$_SESSION['old'] = count(getTweetsAll($bdd, $_SESSION['id']));
 
+
+if(isset($_POST['bouton-tweet-wall']))
+{
+	$image = NULL;
+	if(isset($_FILES['tweet-wall-img']) && $_FILES['tweet-wall-img']['error'] == 0)
+	{
+		if ($_FILES['tweet-wall-img']['size'] <= 6000000)
+        {
+			$infosfichier = pathinfo($_FILES['tweet-wall-img']['name']);
+			$extension_upload = $infosfichier['extension'];
+			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+	        if (in_array($extension_upload, $extensions_autorisees))
+	        {
+	        	move_uploaded_file($_FILES['tweet-wall-img']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
+	        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
+	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
+	        }
+	        else
+	        {
+?>
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+<?php
+	        }
+	    }
+	    else
+	    {
+?>
+			<div class="alert alert-error">
+				<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+<?php
+	    }
+	}
+	else
+	{
+?>
+		<div class="alert alert-error">
+			<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+<?php
+	}
+	newTweet($bdd, $_SESSION['id'], $_POST['tweet-wall-textarea'], $image, $_SESSION['locality'], NULL, NULL);
+}
 ?>
 
 <div class="container body-complete" style="<?php 
@@ -108,7 +156,7 @@ if (isset($error_content))
 				echo "background-color:rgba(" . $fgcolor . ",0.3)";
 		 ?>">
 	<div class="left">
-		<div class="bloc wall-profil">
+		<div class="bloc wall-profil" id="tweet-new-wall">
 			<div class="imgfullname">
 				<img src="<?php echo getAvatar($_SESSION['id']); ?>" alt="avatar">
 				<span class="fullname">
@@ -116,10 +164,17 @@ if (isset($error_content))
 					<a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Voir ma page de profil</a>
 				</span>
 			</div>
-				<form method="POST" class="newtweet">
-					<input type="text" name="new-tweet" placeholder="Ecrire un nouveau tweet...">
-					<input type="submit" name="bouton-newtweet">
+			<div class="newtweet">
+				<form method="POST" >
+					<input type="text" name="new-tweet" id="new-tweet" placeholder="Ecrire un nouveau tweet..." onClick="newtweet(); closeBloc('new-tweet')">
+					<div id="tweetwall" style="display:none">
+						<textarea  id="tweet-wall-textarea" name="tweet-wall-textarea" maxlength="141"  onKeyDown="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');" onKeyUp="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');"></textarea>
+						<input type="file" name="tweet-wall-img"><span class="btn"><img class="size24" src="img/image-tweet.png" alt=""></span>
+						<b style="display:none;" id="tweet-wall-max">Nombre maximum atteint !</b><em id="nbcaract-tot">140</em>
+						<input type="submit" class="btn btn-info" name="bouton-tweet-wall" value="Tweeter">
+					</div>
 				</form>
+			</div>
 		</div>
 		<div class="bloc wall-menu">
 			<ul>
