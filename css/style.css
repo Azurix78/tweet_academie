@@ -892,6 +892,13 @@ header
 	color: black;
 }
 
+.error404
+{
+	margin-left: 290px;
+	margin-top: 60px;
+	margin-bottom: 60px;
+	width: 365px;
+}
 
 /*### Nico ###*/
 .body-complete{
