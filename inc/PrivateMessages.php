@@ -2,11 +2,11 @@
 	if(isset($_GET['idmsg'])){
 		$msgId = getMessagesId($bdd, $_SESSION['id'], $_GET['idmsg']);
 		$link = preg_replace('#\&idmsg\=(.+)#isU', '', $_SERVER['REQUEST_URI']); 
-		$title = "<b ><a id=\"title-a\" href=\"" . $link . "\">Messages Privés</a> > " . getNameInfo($bdd, $_GET['idmsg']) . "</b>";
+		$title = "<b ><a id=\"title-a\" href=\"" . $link . "\"> Messages Privés </a> > " . getNameInfo($bdd, $_GET['idmsg']) . "</b>";
 	}
 	else
 	{
-		$title = "<b>Messages Privés</b>";
+		$title = "<b> Messages Privés </b>";
 	}
 	$linkclose = preg_replace('#\&idmsg\=(.+)#isU', '', $_SERVER['REQUEST_URI']); 
 	$linkclose = preg_replace('#\&bloc\=msg#isU', '', $linkclose); 
@@ -21,7 +21,7 @@
 				<?php echo $title; ?> 
 				<a href="<?php echo $linkclose; ?> " ><i class="icon-remove"></i></a>
 				<?php if(!isset($_GET['idmsg'])){ ?><ul class="new-mp">
-					<li><a href="#">Nouveau Message</a>
+					<li><a href="">Nouveau Message</a>
 						<ul class="subnav">
 							<?php $listabo = listFollower($bdd, $_SESSION['id']);
 							foreach ($listabo as $value)

@@ -1137,6 +1137,10 @@ header
 	display: inline-block;
 }
 
+.edit-user ul{
+	display: block;
+}
+
 #button{
 	height:30px;
 	border-bottom: 0;

@@ -73,7 +73,7 @@ if(isset($_POST['bouton']))
 		<link rel="stylesheet" href="css/bootstrap.css" />
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
-	<body style="<?php if(isset($_GET['page'])){
+	<body style="<?php 
 		if(isset($_GET['id'])){
 			$infos_perso = getUserInfo($bdd, $_GET['id']);
 		}
@@ -91,7 +91,7 @@ if(isset($_POST['bouton']))
 		 	}
 				
 
-		} ?>"
+		 ?>"
 	>
 		<?php require_once('inc/PrivateMessages.php'); ?>
 		<div id="tweet-new">

@@ -56,12 +56,11 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 		</div>
 	</div>
 
-
 	<div class="right">
 		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
+			<form method="POST" class="edit-theme" enctype="multipart/form-data">
 			<ul>
-				<form method="POST" class="edit-theme" enctype="multipart/form-data">
 					<li>
 						<label for="mod_bgcolor">Couleur de fond :</label><input id="mod_bgcolor" type="text" name="mod_bgcolor"  value="<?php if(isset($_POST['mod_bgcolor'])) { echo htmlentities($_POST['mod_bgcolor']);} else { echo $infos_perso['bgcolor'];} ?>">
 						<span class="box-theme" style="background-color:<?php if(!empty($infos_perso['bgcolor'])){ echo $infos_perso['bgcolor'];} else {echo '#60a3d2';} ?>"></span>
@@ -128,7 +127,7 @@ $infos_perso = getUserInfo($bdd, $_SESSION['id']);
 						<button type="submit" class="btn btn-info" name="modifier_theme_user">Enregistrer</button>
 					</li>
 			</ul>
+			</form>
 		</div>
-		
 	</div>
 </div>

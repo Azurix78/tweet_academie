@@ -80,17 +80,19 @@ if(isset($_POST['modifier_infos_user']))
 	<div class="right">
 		<div class="bloc wall-tweets edit-user">
 			<h4 class="tweets">Choisissez vos param&egrave;tres</h4>
-			<form method="POST" enctype="multipart/form-data">
 			<ul>
-					<li><label for="mod_username">Nom d'utilisateur :</label><input type="text" name="mod_username" id="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
-					<li><label for="mod_mail">Email :</label><input type="text" name="mod_mail" id="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
-					<li><label for="mod_locality">Location :</label><input type="text" name="mod_locality" id="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
+				<form method="POST" enctype="multipart/form-data">
+					<li><label for="mod_username">Nom d'utilisateur :</label><input type="text" name="mod_username" value="<?php echo $infos_perso['username'];?>"></li>
+					<li><label for="mod_mail">Email :</label><input type="text" name="mod_mail" value="<?php echo $infos_perso['email'];?>"></li>
+					<li><label for="mod_locality">Location :</label><input type="text" name="mod_locality" value="<?php if( isset($infos_perso['locality']) )echo $infos_perso['locality'];?>"></li>
 					<li><label for="avatar">Ajouter un avatar :</label><input type="file" id="avatar" name="avatar"></li>
 					<li id="button">
 		 				<button type="submit" class="btn btn-info" name="modifier_infos_user">Enregistrer</button>
 		  			</li>
-		  	</ul>
-			</form>
+				</form>
+
+
+			</ul>
 		</div>
 		
 	</div>
