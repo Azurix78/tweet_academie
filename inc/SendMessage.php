@@ -43,7 +43,7 @@
 			<div class="ctn-msg <?php if($value['id_sender'] == $_SESSION['id']){ echo "ctn-msg-right";} ?>">
 				<div class="ctn-msg-date"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></div>
 				<img src="<?php echo getAvatar($value['id_sender'])?>" alt="">
-				<p><?php echo $value['content'] ?></p>
+				<p><?php echo checkTags($bdd, html_entity_decode($value['content']), $value['id_sender']); ?></p>
 			</div>
 
 				<?php } ?>

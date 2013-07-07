@@ -17,7 +17,7 @@
 						<b><?php echo getNameInfo($bdd, $iduser) ?></b>
 						<span><?php echo getNameInfo($bdd, $iduser) ?></span>
 						<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?> <a href=""><i class="icon-chevron-right"></i></a></span>
-						<p><?php echo $value['content']; ?></p>
+						<p><?php echo checkTags($bdd, html_entity_decode($value['content']), $value['id_sender']); ?></p>
 					</div>
 					</li>
 					<?php $test = $test . $iduser . ";";
