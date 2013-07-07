@@ -13,6 +13,35 @@ if ( isset($_GET['id']) )
 	}
 }
 
+$infos_perso = getUserInfo($bdd, $_SESSION['id']);
+
+if(isset($_POST['modifier_theme_user']))
+{
+		if((uploadImage($bdd, "upload/bgimg/", "mod_bgimg", $_SESSION['id'])) == true)
+		{
+			if(!empty($_FILES['mod_bgimg']['name'])){ $bgimg = "upload/bgimg/" . $_SESSION['id'] . ".png"; } else { $bgimg = $infos_perso['bgimg']; }
+			updateThemeInfos($bdd, $_SESSION['id'], $_POST['mod_bgcolor'], $_POST['mod_fgcolor'], $bgimg, $_POST['mod_scrollcolor']);
+			header('Location: index.php?page=edit_theme');
+			
+		}
+		if (isset($_POST['supbgimg']))
+		{
+			if (supbgimg($_SESSION['id']) )
+			{
+				delbgimg($bdd, $_SESSION['id']);
+			}
+			else
+			{
+				?>	
+				<div class="alert alert-error">
+					<strong>Erreur :</strong> Une erreur s'est produite lors de la suppression de l'image
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+				<?php
+			}
+		}
+}
+
 if(isset($_POST['bouton']))
 {
 	if($_FILES['img-tweet']['name'] == "")
