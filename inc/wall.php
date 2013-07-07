@@ -11,7 +11,7 @@ if ( isset($_GET['id_rep']) )
 			newTweet($bdd, $_SESSION['id'], "$content", NULL, $_SESSION['locality'], abs(intval($_POST['id_ans_tweet' . $_GET['id_rep'] ])), NULL );
 			?>
 				<div class="alert alert-success">
-					<strong>Succ&egrave;s :</strong> Message envoyé&eacute; !
+					<strong>Succ&egrave;s :</strong> Message envoy&eacute; !
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 			<?php
