@@ -168,7 +168,7 @@ if(isset($_POST['bouton-tweet-wall']))
 				</span>
 			</div>
 			<div class="newtweet">
-				<form method="POST" >
+				<form method="POST" enctype="multipart/form-data">
 					<input type="text" name="new-tweet" id="new-tweet" placeholder="Ecrire un nouveau swiff..." onClick="newtweet(); closeBloc('new-tweet')">
 					<div id="tweetwall" style="display:none">
 						<textarea  id="tweet-wall-textarea" name="tweet-wall-textarea" maxlength="141"  onKeyDown="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');" onKeyUp="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');"></textarea>

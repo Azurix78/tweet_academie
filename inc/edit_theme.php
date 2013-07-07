@@ -7,6 +7,7 @@ if(isset($_POST['modifier_theme_user']))
 		{
 			if(!empty($_FILES['mod_bgimg']['name'])){ $bgimg = "upload/bgimg/" . $_SESSION['id'] . ".png"; } else { $bgimg = $infos_perso['bgimg']; }
 			updateThemeInfos($bdd, $_SESSION['id'], $_POST['mod_bgcolor'], $_POST['mod_fgcolor'], $bgimg, $_POST['mod_scrollcolor']);
+			header('Location: index.php?page=edit_theme');
 			
 		}
 		if (isset($_POST['supbgimg']))
