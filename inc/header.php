@@ -104,8 +104,7 @@ if(isset($_POST['bouton']))
 		 	if(!empty($infos_perso['bgimg']))
 		 	{
 		 		echo "background-image:url(" . $infos_perso['bgimg'] . ");background-repeat:repeat; background-position:center 40px;";
-		 	}
-				
+		 	}			
 
 		 ?>"
 	>

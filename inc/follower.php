@@ -89,7 +89,7 @@ foreach ($myfollows as $value)
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Tweets<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Swiffs<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 				<li ><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 
 				<li class="active"><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
@@ -127,7 +127,7 @@ foreach ($myfollows as $value)
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Swiffs</p></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
