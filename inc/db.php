@@ -414,8 +414,10 @@ function newTweet($bdd, $id_user, $content, $image=NULL, $locality, $id_reply=NU
 
 function checkTags($bdd, $string, $id_user)
 {
-	$htags = preg_grep("%^#.+%", explode(" ", $string));
-	$usertags = preg_grep("%^@.+%", explode(" ", $string));
+	$string_tmp = explode(" ", $string);
+	$htags = preg_grep("%^#.+%", $string_tmp);
+	$usertags = preg_grep("%^@.+%", $string_tmp);
+	$links = preg_grep("%^http.%", $string_tmp);
 
 	$string_return = $string;
 
@@ -438,6 +440,13 @@ function checkTags($bdd, $string, $id_user)
 			mysqli_free_result($test_result);
 		}
 	}
+
+	foreach($links AS $value)
+	{
+		$string_return = str_replace($value, '<a href="'.$value.'" target="_blank">'.$value.'</a>', $string_return);
+	}
+
+	$string_return = str_replace("\'", "'", $string_return);
 
 	return $string_return;
 }
