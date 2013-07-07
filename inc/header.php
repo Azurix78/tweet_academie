@@ -96,7 +96,7 @@ if(isset($_POST['bouton']))
 		 	}
 		 	if(!empty($infos_perso['bgimg']))
 		 	{
-		 		echo "background-image:url(" . $infos_perso['bgimg'] . ");background-repeat:no-repeat; background-position:center 40px;";
+		 		echo "background-image:url(" . $infos_perso['bgimg'] . ");background-repeat:repeat; background-position:center 40px;";
 		 	}
 				
 
@@ -164,7 +164,7 @@ if(isset($_POST['bouton']))
 							   				<li class="divider"></li>
 							   				<li><a href="index.php?page=following&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnements</a></li>
 							   				<li><a href="index.php?page=follower&amp;id=<?php echo $_SESSION['id']; ?>">Mes abonnés</a></li>
-							   				<li><a href="<?php echo $_SERVER['REQUEST_URI'] . "&amp;bloc=msg"; ?>">Messages privés</a></li>
+							   				<li><a href="<?php echo str_replace('&', '&amp;',$_SERVER['REQUEST_URI']) . "&amp;bloc=msg"; ?>">Messages privés</a></li>
 							   				<li class="divider"></li>
 							   				<li><a href="inc/logout.php">Deconnexion</a></li>
 							  			</ul>
