@@ -169,7 +169,7 @@ foreach ($myfollows as $value)
 	<div class="left">
 		<div class="bloc wall-menu">
 			<ul>
-				<li class="active"><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Tweets<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
+				<li class="active"><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>">Swiffs<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>">Abonnements<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
 
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>">Abonnés<span class="menu-chev"><i class="icon-chevron-right"></i></span></a></li>
@@ -206,7 +206,7 @@ foreach ($myfollows as $value)
 		</div>
 		<div class="ban-nav">
 			<ul class="inline link-nav">
-				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Tweets</p></a></li>
+				<li><a href="index.php?page=profil&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count(getTweetsPerso($bdd, $id)); ?></strong>Swiffs</p></a></li>
 				<li><a href="index.php?page=following&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($follows); ?></strong>Abonnements</p></a></li>
 				<li><a href="index.php?page=follower&amp;id=<?php echo $_GET['id']; ?>"><p><strong><?php echo count($followers); ?></strong>Abonn&eacute;s</p></a></li>
 			</ul>
@@ -253,7 +253,7 @@ else
 
 	<div class="right">
 		<div class="bloc wall-tweets">
-			<h4 class="tweets">Tweets</h4>
+			<h4 class="tweets">Swiffs</h4>
 			<ul>
 <?php
 
@@ -311,7 +311,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 ?>
 						<div id="<?php echo $id_msg; ?>" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $retweet['id_user']; ?>"><?php echo $retweet['username']; ?></a></b>
-							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
+							<span>@<?php echo $retweet['username']; ?> (re-swiffé par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
 							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?><br><a href="<?php echo $retweet['image']; ?>" target="_blank"><?php echo $retweet['image']; ?></a></p>
@@ -338,13 +338,13 @@ $id_real_tweet = $value['id'];
 								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
 								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
 								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
-								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
+								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Swiffer">
 								<div class="separ_btn_rep"></div>
 							</form>
 							<form class="newtweet" method="POST">
 								<input type="hidden" name="id_ans_tweet" value="<?php echo $id_real_tweet; ?>">
 								<input type="hidden" name="id_retweeted_reply" value="<?php echo $value['id_reply']; ?>">
-								<input type="submit" style="float:left;margin-top:-20px;" value="Retweet" class="btn btn-info" name="bouton_retweet">
+								<input type="submit" style="float:left;margin-top:-20px;" value="Reswiff" class="btn btn-info" name="bouton_retweet">
 							</form>
 						</div>
 					</div>
@@ -361,14 +361,14 @@ else
 	{
 ?>
 					<div class="tweet">
-						<li id="no_abo"><p>Vous n'avez publi&eacute; aucun tweet pour l'instant.</p></li>
+						<li id="no_abo"><p>Vous n'avez publi&eacute; aucun swiff pour l'instant.</p></li>
 					</div>
 <?php
 	}
 	else
 	{
 ?>
-	<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a publi&eacute; aucun tweet pour l'instant.</p></li>
+	<li id="no_abo"><p><?php echo $tab_infos['username']; ?> n'a publi&eacute; aucun swiff pour l'instant.</p></li>
 <?php
 	}
 }

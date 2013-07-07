@@ -9,13 +9,13 @@ if ( $newtweetCount != $_SESSION['old'] )
 	if ($res == 1)
 	{
 	?>
-		<a class="btn" href="index.php"><?php echo $res; ?> nouveau tweet !</a>
+		<a class="new-btn" href="index.php"><?php echo $res; ?> nouveau swiff !</a>
 	<?php
 	}
 	if ($res > 1)
 	{
 		?>
-		<a class="btn" href="index.php"><?php echo $res; ?> nouveaux tweet !</a>
+		<a class="new-btn" href="index.php"><?php echo $res; ?> nouveaux swiffs !</a>
 		<?php
 	}
 }

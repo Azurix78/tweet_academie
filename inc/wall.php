@@ -104,47 +104,50 @@ if (isset($error_content))
 if(isset($_POST['bouton-tweet-wall']))
 {
 	$image = NULL;
-	if(isset($_FILES['tweet-wall-img']) && $_FILES['tweet-wall-img']['error'] == 0)
+	if(isset($_FILES['tweet-wall-img']))
 	{
-		if ($_FILES['tweet-wall-img']['size'] <= 6000000)
-        {
-			$infosfichier = pathinfo($_FILES['tweet-wall-img']['name']);
-			$extension_upload = $infosfichier['extension'];
-			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
-	        if (in_array($extension_upload, $extensions_autorisees))
+		if($_FILES['tweet-wall-img']['error'] == 0)
+		{
+			if ($_FILES['tweet-wall-img']['size'] <= 6000000)
 	        {
-	        	move_uploaded_file($_FILES['tweet-wall-img']['tmp_name'], 'tweet_image/'.basename($_FILES['img-tweet']['name']));
-	        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['img-tweet']['name']);
-	        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
-	        }
-	        else
-	        {
+				$infosfichier = pathinfo($_FILES['tweet-wall-img']['name']);
+				$extension_upload = $infosfichier['extension'];
+				$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+		        if (in_array($extension_upload, $extensions_autorisees))
+		        {
+		        	move_uploaded_file($_FILES['tweet-wall-img']['tmp_name'], 'tweet_image/'.basename($_FILES['tweet-wall-img']['name']));
+		        	$image = 'http://'.$_SERVER['HTTP_HOST'].'/tweet_academie/tweet_image/'.basename($_FILES['tweet-wall-img']['name']);
+		        	$image = bitly($image, 'sirwinn3r', 'R_a986bc181deda4a7ecabf5b69ac6663e');
+		        }
+		        else
+		        {
+?>
+					<div class="alert alert-error">
+						<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+					</div>
+<?php
+		        }
+		    }
+		    else
+		    {
 ?>
 				<div class="alert alert-error">
-					<strong>Erreur :</strong> Ce type de fichier n'est pas autoris&eacute;
+					<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 <?php
-	        }
-	    }
-	    else
-	    {
+		    }
+		}
+		else
+		{
 ?>
 			<div class="alert alert-error">
-				<strong>Erreur :</strong> Votre fichier d&eacute;passe la taille maximale autoris&eacute;e
+				<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			</div>
 <?php
-	    }
-	}
-	else
-	{
-?>
-		<div class="alert alert-error">
-			<strong>Erreur :</strong> Une erreur s'est produite lors de l'importation de votre fichier
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
-<?php
+		}
 	}
 	newTweet($bdd, $_SESSION['id'], $_POST['tweet-wall-textarea'], $image, $_SESSION['locality'], NULL, NULL);
 }
@@ -166,20 +169,15 @@ if(isset($_POST['bouton-tweet-wall']))
 			</div>
 			<div class="newtweet">
 				<form method="POST" >
-					<input type="text" name="new-tweet" id="new-tweet" placeholder="Ecrire un nouveau tweet..." onClick="newtweet(); closeBloc('new-tweet')">
+					<input type="text" name="new-tweet" id="new-tweet" placeholder="Ecrire un nouveau swiff..." onClick="newtweet(); closeBloc('new-tweet')">
 					<div id="tweetwall" style="display:none">
 						<textarea  id="tweet-wall-textarea" name="tweet-wall-textarea" maxlength="141"  onKeyDown="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');" onKeyUp="nbcharTweet('tweet-wall-textarea','nbcaract-tot', 'tweet-wall-max');"></textarea>
 						<input type="file" name="tweet-wall-img"><span class="btn"><img class="size24" src="img/image-tweet.png" alt=""></span>
 						<b style="display:none;" id="tweet-wall-max">Nombre maximum atteint !</b><em id="nbcaract-tot">140</em>
-						<input type="submit" class="btn btn-info" name="bouton-tweet-wall" value="Tweeter">
+						<input type="submit" class="btn btn-info" name="bouton-tweet-wall" value="Swiffer">
 					</div>
 				</form>
 			</div>
-		</div>
-		<div class="bloc wall-menu">
-			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
-			</ul>
 		</div>
 		<div class="bloc wall-footer">
 			<ul>
@@ -202,12 +200,10 @@ if(isset($_POST['bouton-tweet-wall']))
 	</div>
 	<div class="right">
 		<div class="bloc wall-tweets">
-			<h4 class="tweets">Tweets</h4>
+			<h4 class="tweets">Swiffs</h4>
+			<div id="compteur_newtweet" class="" >	
+			</div>
 			<ul>
-				<li>
-					<div id="compteur_newtweet" class="" >	
-					</div>
-				</li>
 
 <?php
 $tweets = getTweetsAll($bdd, $_SESSION['id']);
@@ -262,7 +258,7 @@ if(isset($value['id_retweet']) && $value['id_retweet'] !=  NULL)
 ?>
 						<div id="<?php echo $id_msg; ?>" onclick="tweet_rep('<?php echo $id_msg; ?>')">
 							<b><a href="index.php?page=profil&amp;id=<?php echo $retweet['id_user']; ?>"><?php echo $retweet['username']; ?></a></b>
-							<span>@<?php echo $retweet['username']; ?> (re-tweeté par <?php echo $username['username']; ?>)</span>
+							<span>@<?php echo $retweet['username']; ?> (re-swiffé par <?php echo $username['username']; ?>)</span>
 							<span class="date-tweet"><?php echo date("j F y", date_timestamp_get(date_create($value['date']))); ?></span>
 							<br>
 							<p><?php echo nl2br2(checkTags($bdd, html_entity_decode($retweet['content']), $retweet['id_user'])); ?><br><a href="<?php echo $retweet['image']; ?>" target="_blank"><?php echo $retweet['image']; ?></a></p>
@@ -289,13 +285,13 @@ $id_real_tweet = $value['id'];
 								<input type="hidden" name="id_ans_tweet<?php echo $id_msg; ?>" value="<?php echo $value['id']; ?>">
 								<input type="hidden" name="user_rep<?php echo $id_msg; ?>" value="<?php echo $value['username']; ?>">
 								<textarea required maxlength="140" id="<?php echo $id_msg; ?>text" style="resize:none;" name="rep_tweet<?php echo $id_msg; ?>" placeholder="R&eacute;pondre au tweet de <?php echo $value['username']; ?>"></textarea>
-								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Tweeter">
+								<input type="submit" name="bouton_rep_tweet<?php echo $id_msg; ?>" class="btn btn-info" value="Swiffer">
 								<div class="separ_btn_rep"></div>
 							</form>
 							<form class="newtweet" method="POST">
 								<input type="hidden" name="id_ans_tweet" value="<?php echo $id_real_tweet; ?>">
 								<input type="hidden" name="id_retweeted_reply" value="<?php echo $value['id_reply']; ?>">
-								<input type="submit" style="float:left;margin-top:-20px;" value="Retweet" class="btn btn-info" name="bouton_retweet">
+								<input type="submit" style="float:left;margin-top:-20px;" value="Reswiffer" class="btn btn-info" name="bouton_retweet">
 							</form>
 						</div>
 					</div>
