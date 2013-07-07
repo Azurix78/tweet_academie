@@ -30,7 +30,7 @@ if(isset($_POST['modifier_pass_user']) && isset($_POST['mod_old_pass']) && isset
 	}
 }
 ?>
-<div class="container body-complete" style="<?php 
+<div class="container body-complete" id="body-complete" style="<?php 
 		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
 		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
 				echo "background-color:rgba(" . $fgcolor . ",0.3)";

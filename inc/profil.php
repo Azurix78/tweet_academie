@@ -161,7 +161,7 @@ foreach ($myfollows as $value)
 }
 
 ?>
-<div class="container body-complete" style="<?php if(isset($_GET['id'])){
+<div class="container body-complete" id="body-complete" style="<?php if(isset($_GET['id'])){
 		$infos_perso = getUserInfo($bdd, $_GET['id']);
 				$fgcolor = hex2rgb($infos_perso['fgcolor']); 
 				echo "background-color:rgba(" . $fgcolor . ",0.3)";

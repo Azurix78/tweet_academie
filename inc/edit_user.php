@@ -49,7 +49,7 @@ if(isset($_POST['modifier_infos_user']))
 }
 
 ?>
-<div class="container body-complete" style="<?php 
+<div class="container body-complete" id="body-complete" style="<?php 
 		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
 		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
 				echo "background-color:rgba(" . $fgcolor . ",0.3)";

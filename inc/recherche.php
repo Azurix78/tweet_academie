@@ -132,31 +132,13 @@ else
 }
 
 ?>
-<div class="container body-complete" style="<?php 
+<div class="container body-complete" id="body-complete" style="<?php 
 		$infos_perso = getUserInfo($bdd, $_SESSION['id']);		
 		$fgcolor = hex2rgb($infos_perso['fgcolor']); 
 				echo "background-color:rgba(" . $fgcolor . ",0.3)";
 		 ?>">
 	<?php if(isset($error)){ echo $error;} ?>
 	<div class="left">
-		<div class="bloc wall-profil">
-			<div class="imgfullname">
-				<img src="<?php echo getAvatar($_SESSION['id']); ?>" alt="avatar">
-				<span class="fullname">
-					<b><?php echo $_SESSION['username']; ?></b>
-					<a href="index.php?page=profil&amp;id=<?php echo $_SESSION['id']; ?>">Voir ma page de profil</a>
-				</span>
-			</div>
-				<form method="POST" class="newtweet">
-					<input type="text" name="new-tweet" placeholder="Ecrire un nouveau tweet...">
-					<input type="submit" name="bouton-newtweet">
-				</form>
-		</div>
-		<div class="bloc wall-menu">
-			<ul>
-				<li><a href=""><i class="icon-envelope"></i>Messages privés</a></li>
-			</ul>
-		</div>
 		<div class="bloc wall-footer">
 			<ul>
 				<li>&copy; 2013 Swiffer</li>

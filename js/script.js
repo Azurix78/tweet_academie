@@ -3,6 +3,9 @@
 #####RICKY#######
 ################*/
 
+var taille = window.innerHeight - 40;
+document.getElementById('body-complete').style.minHeight = taille+'px';
+
 function tweet_rep(id)
 {
   if ( document.getElementById(id+'rep').style.display == "block")

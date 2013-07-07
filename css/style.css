@@ -892,12 +892,20 @@ header
 	color: black;
 }
 
-.error404
+.error404 img
 {
-	margin-left: 290px;
-	margin-top: 60px;
-	margin-bottom: 60px;
-	width: 365px;
+	margin-left: 20px;
+	margin-top: 20px;
+	width: 900px;
+}
+
+.error404 p
+{
+	text-align:center;
+	font-size: 25px;
+	font-weight: bold;
+	margin:5px 0;
+
 }
 
 /*### Nico ###*/
