@@ -103,6 +103,10 @@ if (isset($error_content))
 
 if(isset($_POST['bouton-tweet-wall']))
 {
+	if($_FILES['tweet-wall-img']['name'] == "")
+	{
+		unset($_FILES['tweet-wall-img']);
+	}
 	$image = NULL;
 	if(isset($_FILES['tweet-wall-img']))
 	{
