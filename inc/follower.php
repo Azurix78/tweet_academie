@@ -141,7 +141,7 @@ foreach ($myfollows as $value)
 if($_GET['id'] == $_SESSION['id'])
 {
 ?>
-				<li><a href="<?php echo $_SERVER['REQUEST_URI'] . "&amp;bloc=msg"; ?>" class="btn"><i class="icon-envelope"></i></a></li>
+				<li><a href="<?php echo str_replace('&', '&amp;',$_SERVER['REQUEST_URI']) . "&amp;bloc=msg"; ?>" class="btn"><i class="icon-envelope"></i></a></li>
 				<li><a class="btn" id="edit_link" href="index.php?page=edit_user">Editer le profil</a></li>
 <?php
 }
